@@ -1,5 +1,21 @@
 {
-  "node": {},
+  "node": {
+    "40807be106533d4006da9c4d8ad09ed86b97d8116a": {
+      "workers": {
+        "app/waitlist/page": {
+          "moduleId": "[project]/.next-internal/server/app/waitlist/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/join-waitlist.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "joinWaitlist",
+          "filename": "app/actions/join-waitlist.ts"
+        }
+      },
+      "layer": {
+        "app/waitlist/page": "action-browser"
+      },
+      "filename": "app/actions/join-waitlist.ts",
+      "exportedName": "joinWaitlist"
+    }
+  },
   "edge": {},
   "encryptionKey": "46AB7QyKlspCGj+YpT+t8iDkjr+S4BWI6KUBcGJN3bc="
 }

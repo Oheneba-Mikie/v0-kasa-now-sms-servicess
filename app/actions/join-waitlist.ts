@@ -32,7 +32,7 @@ export async function joinWaitlist(email: string) {
         // but ideally we want both to succeed.
         try {
             const { error: emailError } = await resend.emails.send({
-                from: 'KasaNow <onboarding@resend.dev>', // Use default testing domain or user's domain
+                from: 'KasaNow <hello@kasanow.app>', // Verified domain
                 to: email,
                 subject: 'Welcome to KasaNow Waitlist! 🚀',
 
