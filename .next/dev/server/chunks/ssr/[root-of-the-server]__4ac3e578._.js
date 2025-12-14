@@ -18,6 +18,85 @@ const mod = __turbopack_context__.x("node:crypto", () => require("node:crypto"))
 
 module.exports = mod;
 }),
+"[project]/lib/email.ts [app-rsc] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "sendWelcomeEmail",
+    ()=>sendWelcomeEmail
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$resend$2f$dist$2f$index$2e$mjs__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/resend/dist/index.mjs [app-rsc] (ecmascript)");
+;
+// Initialize Resend
+const resend = new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$resend$2f$dist$2f$index$2e$mjs__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["Resend"](process.env.RESEND_API_KEY);
+async function sendWelcomeEmail(email) {
+    try {
+        const { data, error } = await resend.emails.send({
+            from: 'KasaNow <hello@kasanow.app>',
+            to: email,
+            subject: 'Welcome to KasaNow Waitlist! 🚀',
+            html: `
+        <div style="font-family: sans-serif; color: #1a1a1a; max-width: 600px; margin: 0 auto; line-height: 1.6;">
+            <div style="text-align: center; padding: 24px 0;">
+              <h1 style="color: #3A57FC; margin-bottom: 8px;">Welcome to KasaNow!</h1>
+              <p style="font-size: 18px; color: #666;">You're on the list. 🚀</p>
+            </div>
+
+            <div style="background-color: #ffffff; padding: 32px; border-radius: 12px; border: 1px solid #e5e7eb;">
+              <p style="font-size: 16px;">Hi there,</p>
+              <p style="font-size: 16px;">Thanks for joining the waitlist! We are getting ready to launch very soon, and we can't wait to show you what we've been building.</p>
+              
+              <h2 style="color: #333; margin-top: 32px;">Why KasaNow?</h2>
+              <div style="margin-bottom: 24px;">
+                <p><strong>🔑  No API Keys needed</strong></p>
+                <p style="color: #555; margin-top: -12px; margin-bottom: 16px;">Start sending SMS campaigns instantly without complex technical setup.</p>
+                
+                <p><strong>⚡  Instant Setup</strong></p>
+                <p style="color: #555; margin-top: -12px; margin-bottom: 16px;">Create an account and launch your first campaign in minutes.</p>
+                
+                <p><strong>🌍  Global Reach</strong></p>
+                <p style="color: #555; margin-top: -12px; margin-bottom: 16px;">Connect with customers anywhere in the world efficiently.</p>
+              </div>
+
+              <h2 style="color: #333; margin-top: 32px;">What to Expect Next</h2>
+              <ul style="color: #555; padding-left: 20px;">
+                <li>We’ll notify you the moment we go live.</li>
+                <li>As an early member, you’ll get exclusive access to new features.</li>
+                <li>Special onboarding support to help you get started.</li>
+              </ul>
+
+              <div style="margin-top: 40px; border-top: 1px solid #e5e7eb; padding-top: 24px; text-align: center;">
+                <p style="color: #888; font-size: 14px;">We are thrilled to have you with us on this journey.</p>
+                <p style="color: #3A57FC; font-weight: bold;">- The KasaNow Team</p>
+              </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 24px; color: #999; font-size: 12px;">
+              <p>© 2025 KasaNow Ltd. All rights reserved.</p>
+            </div>
+          </div>
+      `
+        });
+        if (error) {
+            console.error('Email sending error:', error);
+            return {
+                success: false,
+                error
+            };
+        }
+        return {
+            success: true,
+            data
+        };
+    } catch (error) {
+        console.error('Email sending exception:', error);
+        return {
+            success: false,
+            error
+        };
+    }
+}
+}),
 "[project]/app/actions/join-waitlist.ts [app-rsc] (ecmascript)", ((__turbopack_context__) => {
 "use strict";
 
@@ -28,7 +107,9 @@ module.exports = mod;
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/build/webpack/loaders/next-flight-loader/server-reference.js [app-rsc] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$supabase$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/lib/supabase.ts [app-rsc] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$resend$2f$dist$2f$index$2e$mjs__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/resend/dist/index.mjs [app-rsc] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$email$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/lib/email.ts [app-rsc] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$action$2d$validate$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/build/webpack/loaders/next-flight-loader/action-validate.js [app-rsc] (ecmascript)");
+;
 ;
 ;
 ;
@@ -68,7 +149,7 @@ async function joinWaitlist(email) {
         // Note: We wrap this in try/catch to not fail the whole request if email fails, 
         // but ideally we want both to succeed.
         try {
-            await sendWelcomeEmail(email);
+            await (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$email$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["sendWelcomeEmail"])(email);
         } catch (e) {
             console.error('Email sending failed:', e);
         }
@@ -109,4 +190,4 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$join$2d$wa
 }),
 ];
 
-//# sourceMappingURL=%5Broot-of-the-server%5D__867f68a3._.js.map
+//# sourceMappingURL=%5Broot-of-the-server%5D__4ac3e578._.js.map

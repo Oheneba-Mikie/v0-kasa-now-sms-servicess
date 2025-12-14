@@ -8,6 +8,7 @@ import { Send, Loader2 } from "lucide-react"
 import { useState, useTransition, type FormEvent } from "react"
 import { joinWaitlist } from "@/app/actions/join-waitlist"
 import { toast } from "sonner" // Assuming sonner is installed based on package.json
+import { createClient } from "@/utils/supabase/client"
 
 export default function WaitlistPage() {
   const [email, setEmail] = useState("")
@@ -78,6 +79,15 @@ export default function WaitlistPage() {
                 size="lg"
                 variant="outline"
                 className="mb-6 h-14 w-full border-2 border-gray-300 bg-white text-base font-semibold text-gray-700 hover:bg-gray-50"
+                onClick={async () => {
+                  const supabase = createClient()
+                  await supabase.auth.signInWithOAuth({
+                    provider: 'google',
+                    options: {
+                      redirectTo: `${window.location.origin}/auth/callback`,
+                    },
+                  })
+                }}
               >
                 <svg className="mr-3 h-5 w-5" viewBox="0 0 24 24">
                   <path
@@ -167,6 +177,7 @@ export default function WaitlistPage() {
           <p>© 2025 KasaNow Ltd. Simplifying SMS communication worldwide.</p>
         </div>
       </div>
+
     </div>
   )
 }
