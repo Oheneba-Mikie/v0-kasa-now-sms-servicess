@@ -2,6 +2,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import { AnimatedText } from "@/components/ui/animated-text"
 import {
   Check,
   Send,
@@ -59,7 +60,9 @@ export default function HomePage() {
         <section className="bg-[#3A57FC] px-4 py-20 md:py-32">
           <div className="container mx-auto max-w-7xl">
             <div className="mb-12">
-              <h1 className="mb-8 max-w-4xl font-normal text-white">Make your business reachable—via SMS, instantly</h1>
+              <h1 className="mb-8 max-w-4xl font-normal text-white">
+                Make your <AnimatedText words={["business", "church", "company", "SME"]} duration={4000} /> reachable—via SMS, instantly
+              </h1>
 
               <p className="mb-10 max-w-2xl text-xl leading-relaxed text-white/90">
                 See what customers need, send what matters, track your results—that's what an SMS platform should do.
