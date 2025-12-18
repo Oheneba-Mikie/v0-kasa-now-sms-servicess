@@ -1,11 +1,24 @@
 
 import { Resend } from 'resend'
+import { getResendApiKey } from './config'
 
-// Initialize Resend
-const resend = new Resend(process.env.RESEND_API_KEY)
+// Create a function to get Resend instance with dynamic API key
+async function getResendInstance(): Promise<Resend | null> {
+  const apiKey = await getResendApiKey()
+  if (!apiKey) {
+    console.error('Failed to get Resend API key from configuration')
+    return null
+  }
+  return new Resend(apiKey)
+}
 
 export async function sendWelcomeEmail(email: string) {
     try {
+        const resend = await getResendInstance()
+        if (!resend) {
+            return { success: false, error: 'Failed to initialize email service' }
+        }
+
         const { data, error } = await resend.emails.send({
             from: 'KasaNow <hello@kasanow.app>',
             to: email,
