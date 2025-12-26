@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -23,17 +24,20 @@ export default function HomePage() {
       <header className="sticky top-0 z-50 w-full border-b bg-white">
         <div className="container mx-auto flex h-16 max-w-7xl items-center justify-between px-4">
           <Link href="/" className="flex items-center space-x-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#5B6EF5]">
-              <Send className="h-5 w-5 text-white" />
-            </div>
-            <span className="text-xl font-bold text-gray-900">KasaNow</span>
+            <Image
+              src="/logo.jpg"
+              alt="KasaNow"
+              width={160}
+              height={40}
+              className="h-10 w-auto object-contain"
+            />
           </Link>
 
           <nav className="hidden items-center space-x-8 md:flex">
             <Link href="#features" className="text-sm font-medium text-gray-700 transition-colors hover:text-gray-900">
               Features
             </Link>
-            <Link href="#pricing" className="text-sm font-medium text-gray-700 transition-colors hover:text-gray-900">
+            <Link href="/pricing" className="text-sm font-medium text-gray-700 transition-colors hover:text-gray-900">
               Pricing
             </Link>
             <Link href="#use-cases" className="text-sm font-medium text-gray-700 transition-colors hover:text-gray-900">
@@ -48,9 +52,11 @@ export default function HomePage() {
             <Button variant="ghost" size="sm" className="text-gray-700">
               Sign in
             </Button>
-            <Button size="sm" className="bg-[#FF8800] hover:bg-[#FF7700] font-medium">
-              Sign up
-            </Button>
+            <Link href="/waitlist">
+              <Button size="sm" className="bg-[#FF8800] hover:bg-[#FF7700] font-medium">
+                Join Waitlist
+              </Button>
+            </Link>
           </div>
         </div>
       </header>
@@ -74,7 +80,7 @@ export default function HomePage() {
                     size="lg"
                     className="h-14 bg-[#FF8800] px-8 text-base font-semibold text-white hover:bg-[#FF7700]"
                   >
-                    Sign up for KasaNow
+                    Join Waitlist
                   </Button>
                 </Link>
                 <Link href="/waitlist">
@@ -83,7 +89,7 @@ export default function HomePage() {
                     variant="outline"
                     className="h-14 border-2 border-white bg-transparent px-8 text-base font-semibold text-white hover:bg-white/10"
                   >
-                    Start for Free
+                    Join Waitlist
                   </Button>
                 </Link>
               </div>
@@ -746,16 +752,20 @@ export default function HomePage() {
               <span className="font-semibold text-white">21,332</span> users joined KasaNow in the last 7 days
             </p>
             <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
-              <Button size="lg" className="bg-[#FF8800] hover:bg-[#FF7700] text-white font-semibold h-14 px-8">
-                Sign up for KasaNow
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                className="border-2 border-white bg-transparent text-white hover:bg-white/10 h-14 px-8"
-              >
-                Start for Free
-              </Button>
+              <Link href="/waitlist">
+                <Button size="lg" className="bg-[#FF8800] hover:bg-[#FF7700] text-white font-semibold h-14 px-8">
+                  Join Waitlist
+                </Button>
+              </Link>
+              <Link href="/waitlist">
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="border-2 border-white bg-transparent text-white hover:bg-white/10 h-14 px-8"
+                >
+                  Join Waitlist
+                </Button>
+              </Link>
             </div>
           </div>
         </section>
@@ -767,10 +777,13 @@ export default function HomePage() {
           <div className="grid gap-8 md:grid-cols-4">
             <div>
               <div className="mb-4 flex items-center space-x-2">
-                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#5B6EF5]">
-                  <Send className="h-5 w-5 text-white" />
-                </div>
-                <span className="text-lg font-bold">KasaNow</span>
+                <Image
+                  src="/logo.jpg"
+                  alt="KasaNow"
+                  width={160}
+                  height={40}
+                  className="h-10 w-auto object-contain"
+                />
               </div>
               <p className="text-sm text-gray-600">SMS platform built for everyone</p>
             </div>

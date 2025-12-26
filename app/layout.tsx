@@ -9,7 +9,7 @@ const _geistMono = Geist_Mono({ subsets: ["latin"] })
 const siteConfig = {
   name: "KasaNow",
   url: "https://kasanow.com",
-  ogImage: "/placeholder-logo.png",
+  ogImage: "/logo.jpg",
   description:
     "The SMS platform built for everyone. Send thousands of messages instantly through web or mobile. No API keys, no technical setup—just results.",
   title: "KasaNow - Send Bulk SMS Instantly, No API Needed",
@@ -41,21 +41,8 @@ export const metadata: Metadata = {
     images: [siteConfig.ogImage],
   },
   icons: {
-    icon: [
-      {
-        url: "/icon-light-32x32.png",
-        media: "(prefers-color-scheme: light)",
-      },
-      {
-        url: "/icon-dark-32x32.png",
-        media: "(prefers-color-scheme: dark)",
-      },
-      {
-        url: "/icon.svg",
-        type: "image/svg+xml",
-      },
-    ],
-    apple: "/apple-icon.png",
+    icon: "/logo.jpg",
+    apple: "/logo.jpg",
   },
 }
 

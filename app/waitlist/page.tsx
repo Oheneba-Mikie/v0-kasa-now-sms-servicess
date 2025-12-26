@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Checkbox } from "@/components/ui/checkbox"
 import Link from "next/link"
+import Image from "next/image"
 import { Send, Loader2 } from "lucide-react"
 import { useState, useTransition, type FormEvent } from "react"
 import { joinWaitlist } from "@/app/actions/join-waitlist"
@@ -39,24 +40,25 @@ export default function WaitlistPage() {
       <div className="container mx-auto max-w-6xl">
         {/* Header */}
         <div className="mb-12 text-center">
-          <h1 className="mb-4 text-5xl font-normal text-white md:text-7xl">Start for Free</h1>
-          <p className="text-lg text-white/90">
-            Already have a KasaNow account?{" "}
-            <Link href="/login" className="font-semibold text-white underline hover:no-underline">
-              Log in
-            </Link>
-          </p>
+          <h1 className="mb-4 text-5xl font-normal text-white md:text-7xl">Join Waitlist</h1>
+
         </div>
 
         {/* Signup Card */}
         <div className="mx-auto max-w-md rounded-lg bg-white p-8 shadow-xl">
           <div className="mb-6 flex items-start justify-between">
             <div>
-              <h2 className="mb-2 text-2xl font-semibold text-gray-900">Join the KasaNow Waitlist</h2>
+              <h2 className="mb-2 text-2xl font-semibold text-gray-900">Get Early Access</h2>
               <p className="text-base text-gray-600">Be the first to send SMS without API keys!</p>
             </div>
             <div className="flex-shrink-0">
-              <Send className="h-12 w-12 text-[#3A57FC]" />
+              <Image
+                src="/logo.jpg"
+                alt="KasaNow"
+                width={60}
+                height={60}
+                className="h-12 w-auto object-contain"
+              />
             </div>
           </div>
 
