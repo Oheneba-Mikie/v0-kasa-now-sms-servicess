@@ -34,9 +34,7 @@ export default function PricingPage() {
                     </nav>
 
                     <div className="flex items-center space-x-4">
-                        <Button variant="ghost" size="sm" className="text-gray-700">
-                            Sign in
-                        </Button>
+
                         <Link href="/waitlist">
                             <Button size="sm" className="bg-[#FF8800] hover:bg-[#FF7700] font-medium">
                                 Join Waitlist

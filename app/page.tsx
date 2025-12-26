@@ -15,6 +15,12 @@ import {
   ArrowRight,
   Star,
   TrendingUp,
+  BookOpen,
+  Code2,
+  FileText,
+  HelpCircle,
+  Video,
+  Activity,
 } from "lucide-react"
 
 export default function HomePage() {
@@ -49,9 +55,7 @@ export default function HomePage() {
           </nav>
 
           <div className="flex items-center space-x-4">
-            <Button variant="ghost" size="sm" className="text-gray-700">
-              Sign in
-            </Button>
+
             <Link href="/waitlist">
               <Button size="sm" className="bg-[#FF8800] hover:bg-[#FF7700] font-medium">
                 Join Waitlist
@@ -526,83 +530,61 @@ export default function HomePage() {
             </h2>
 
             <div className="mt-16 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-              {/* Academy */}
+              {/* Documentation */}
               <div className="group">
                 <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-white/10">
-                  <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
-                  </svg>
+                  <BookOpen className="h-6 w-6 text-white" />
                 </div>
-                <h3 className="mb-2 text-xl font-bold">Academy</h3>
-                <p className="text-white/80">Take free courses on our academy.</p>
+                <h3 className="mb-2 text-xl font-bold">Documentation</h3>
+                <p className="text-white/80">Comprehensive guides for developers and marketers.</p>
               </div>
 
-              {/* Certification */}
+              {/* API Reference */}
               <div className="group">
                 <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-white/10">
-                  <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M20 7h-5V4c0-1.1-.9-2-2-2h-2c-1.1 0-2 .9-2 2v3H4c-1.1 0-2 .9-2 2v11c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2zM9 4h6v3H9V4zm11 16H4V9h16v11z" />
-                  </svg>
+                  <Code2 className="h-6 w-6 text-white" />
                 </div>
-                <h3 className="mb-2 text-xl font-bold">Certification</h3>
-                <p className="text-white/80">Get officially KasaNow certified.</p>
+                <h3 className="mb-2 text-xl font-bold">API Reference</h3>
+                <p className="text-white/80">Complete API endpoints and code examples.</p>
               </div>
 
-              {/* Blog */}
+              {/* Case Studies */}
               <div className="group">
                 <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-white/10">
-                  <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z" />
-                  </svg>
+                  <FileText className="h-6 w-6 text-white" />
                 </div>
-                <h3 className="mb-2 text-xl font-bold">Blog</h3>
-                <p className="text-white/80">Read detailed guides and case studies.</p>
+                <h3 className="mb-2 text-xl font-bold">Case Studies</h3>
+                <p className="text-white/80">See how other businesses use KasaNow.</p>
               </div>
 
-              {/* Webinars */}
+              {/* Help Center */}
               <div className="group">
                 <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-white/10">
-                  <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M21 3H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h5v2h8v-2h5c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 14H3V5h18v12z" />
-                  </svg>
+                  <HelpCircle className="h-6 w-6 text-white" />
                 </div>
-                <h3 className="mb-2 text-xl font-bold">Webinars</h3>
-                <p className="text-white/80">Watch free live trainings and attend AMAs.</p>
+                <h3 className="mb-2 text-xl font-bold">Help Center</h3>
+                <p className="text-white/80">Find answers to common questions immediately.</p>
               </div>
 
-              {/* YouTube */}
+              {/* Video Tutorials */}
               <div className="group">
                 <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-white/10">
-                  <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M10 16.5l6-4.5-6-4.5v9zM23 12s0-3.9-.5-5.8c-.3-1-.9-1.7-1.9-2C18.9 3.7 12 3.7 12 3.7s-6.9 0-8.6.5c-1 .3-1.6 1-1.9 2C1 8.1 1 12 1 12s0 3.9.5 5.8c.3 1 .9 1.7 1.9 2 1.7.5 8.6.5 8.6.5s6.9 0 8.6-.5c1-.3 1.6-1 1.9-2 .5-1.9.5-5.8.5-5.8z" />
-                  </svg>
+                  <Video className="h-6 w-6 text-white" />
                 </div>
-                <h3 className="mb-2 text-xl font-bold">YouTube</h3>
-                <p className="text-white/80">Watch binge-worthy tutorials.</p>
+                <h3 className="mb-2 text-xl font-bold">Video Tutorials</h3>
+                <p className="text-white/80">Watch step-by-step guides on our channel.</p>
               </div>
 
-              {/* Podcast */}
+              {/* System Status */}
               <div className="group">
                 <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-white/10">
-                  <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8zm0-12.5c-2.49 0-4.5 2.01-4.5 4.5s2.01 4.5 4.5 4.5 4.5-2.01 4.5-4.5-2.01-4.5-4.5-4.5zm0 5.5c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z" />
-                  </svg>
+                  <Activity className="h-6 w-6 text-white" />
                 </div>
-                <h3 className="mb-2 text-xl font-bold">Podcast</h3>
-                <p className="text-white/80">Pick the brains of the brightest in the industry.</p>
-              </div>
-
-              {/* Events */}
-              <div className="group">
-                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-white/10">
-                  <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z" />
-                  </svg>
-                </div>
-                <h3 className="mb-2 text-xl font-bold">Events</h3>
-                <p className="text-white/80">Meet us in person and attend live events.</p>
+                <h3 className="mb-2 text-xl font-bold">System Status</h3>
+                <p className="text-white/80">Check real-time uptime and performance.</p>
               </div>
             </div>
+
 
             {/* Orange Stats Banner */}
             <div className="mt-20 rounded-2xl bg-[#FF8800] p-12 md:p-16">
@@ -742,10 +724,10 @@ export default function HomePage() {
               </div>
             </div>
           </div>
-        </section>
+        </section >
 
         {/* Final CTA - Matching Ahrefs */}
-        <section className="bg-[#5B6EF5] py-20 text-white md:py-32">
+        < section className="bg-[#5B6EF5] py-20 text-white md:py-32" >
           <div className="container mx-auto max-w-7xl px-4 text-center">
             <h2 className="mb-6 text-4xl font-bold md:text-5xl">Stay connected—via SMS, instantly</h2>
             <p className="mb-8 text-lg text-white/80">
@@ -768,11 +750,11 @@ export default function HomePage() {
               </Link>
             </div>
           </div>
-        </section>
-      </main>
+        </section >
+      </main >
 
       {/* Footer */}
-      <footer className="border-t bg-white py-12">
+      < footer className="border-t bg-white py-12" >
         <div className="container mx-auto max-w-7xl px-4">
           <div className="grid gap-8 md:grid-cols-4">
             <div>
@@ -871,7 +853,7 @@ export default function HomePage() {
             © 2025 KasaNow. All rights reserved.
           </div>
         </div>
-      </footer>
-    </div>
+      </footer >
+    </div >
   )
 }
