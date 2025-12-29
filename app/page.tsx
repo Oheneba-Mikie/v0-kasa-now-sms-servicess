@@ -87,13 +87,13 @@ export default function HomePage() {
                     Join Waitlist
                   </Button>
                 </Link>
-                <Link href="/waitlist">
+                <Link href="#features">
                   <Button
                     size="lg"
                     variant="outline"
                     className="h-14 border-2 border-white bg-transparent px-8 text-base font-semibold text-white hover:bg-white/10"
                   >
-                    Join Waitlist
+                    View Features
                   </Button>
                 </Link>
               </div>

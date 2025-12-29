@@ -1,0 +1,46 @@
+﻿--- STARTING EMAIL TEST ---
+Testing with email: test-1767014219917@example.com
+[joinWaitlist] Attempting to join: test-1767014219917@example.com
+[joinWaitlist] Successfully inserted into DB: test-1767014219917@example.com
+[joinWaitlist] Triggering welcome email to: test-1767014219917@example.com
+node.exe : [config] 
+Failed to fetch 
+config for 
+RESEND_API_KEY (Env: 
+production): Cannot 
+coerce the result to 
+a single JSON object
+At line:1 char:1
++ & "C:\Program Files
+\nodejs/node.exe" 
+"C:\Program 
+Files\nodejs/node_mo 
+...
++ ~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~
+    + CategoryInfo   
+           : NotSpe  
+  cified: ([config   
+ ] Failed...gle J    
+SON object:Strin    
+g) [], RemoteExc    
+eption
+    + FullyQualified 
+   ErrorId : Native  
+  CommandError
+ 
+Failed to get Resend 
+API key from 
+configuration
+[joinWaitlist] 
+Welcome email 
+failed: Failed to 
+initialize email 
+service
+Result: {
+  "success": true,
+  "message": "Successfully joined the waitlist!"
+}
+--- TEST FINISHED ---

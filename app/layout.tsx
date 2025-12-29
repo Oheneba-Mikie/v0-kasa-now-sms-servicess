@@ -1,10 +1,11 @@
 import type React from "react"
 import type { Metadata } from "next"
 import { Inter, Geist_Mono } from "next/font/google"
+import { Toaster } from "sonner"
 import "./globals.css"
 
-const _inter = Inter({ subsets: ["latin"] })
-const _geistMono = Geist_Mono({ subsets: ["latin"] })
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" })
+const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-geist-mono" })
 
 const siteConfig = {
   name: "KasaNow",
@@ -53,8 +54,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`font-sans antialiased`}>
+      <body className={`${inter.variable} ${geistMono.variable} font-sans antialiased text-gray-900 border-gray-200`}>
         {children}
+        <Toaster position="top-center" richColors />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

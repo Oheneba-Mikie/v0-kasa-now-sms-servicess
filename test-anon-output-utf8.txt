@@ -1,0 +1,3 @@
+﻿Testing App Config access with Anon Key...
+Data found: []
+Rows count: 0

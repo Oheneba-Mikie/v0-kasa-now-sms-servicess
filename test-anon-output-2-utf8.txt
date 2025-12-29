@@ -1,0 +1,13 @@
+﻿Testing App Config access with Anon Key...
+Data found: [
+  {
+    id: 1,
+    key_name: 'RESEND_API_KEY',
+    key_value: 're_K6NqnFRN_952BysfnwkL6A8trTwmronY3',
+    environment: 'production',
+    description: 'Resend API key for sending emails',
+    created_at: '2025-12-18T15:28:35.376255+00:00',
+    updated_at: '2025-12-18T15:28:35.376255+00:00'
+  }
+]
+Rows count: 1

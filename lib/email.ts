@@ -1,6 +1,6 @@
 
 import { Resend } from 'resend'
-import { getResendApiKey } from './config'
+import { getResendApiKey, getResendFromEmail } from './config'
 
 // Create a function to get Resend instance with dynamic API key
 async function getResendInstance(): Promise<Resend | null> {
@@ -13,17 +13,19 @@ async function getResendInstance(): Promise<Resend | null> {
 }
 
 export async function sendWelcomeEmail(email: string) {
-    try {
-        const resend = await getResendInstance()
-        if (!resend) {
-            return { success: false, error: 'Failed to initialize email service' }
-        }
+  try {
+    const resend = await getResendInstance()
+    if (!resend) {
+      return { success: false, error: 'Failed to initialize email service' }
+    }
 
-        const { data, error } = await resend.emails.send({
-            from: 'KasaNow <hello@kasanow.app>',
-            to: email,
-            subject: 'Welcome to KasaNow Waitlist! 🚀',
-            html: `
+    const fromEmail = await getResendFromEmail() || 'hello@kasanow.app'
+
+    const { data, error } = await resend.emails.send({
+      from: fromEmail,
+      to: email,
+      subject: 'Welcome to KasaNow Waitlist! 🚀',
+      html: `
         <div style="font-family: sans-serif; color: #1a1a1a; max-width: 600px; margin: 0 auto; line-height: 1.6;">
             <div style="text-align: center; padding: 24px 0;">
               <h1 style="color: #3A57FC; margin-bottom: 8px;">Welcome to KasaNow!</h1>
@@ -64,16 +66,18 @@ export async function sendWelcomeEmail(email: string) {
             </div>
           </div>
       `,
-        })
+    })
 
-        if (error) {
-            console.error('Email sending error:', error)
-            return { success: false, error }
-        }
-
-        return { success: true, data }
-    } catch (error) {
-        console.error('Email sending exception:', error)
-        return { success: false, error }
+    if (error) {
+      console.error('[email] Resend API error:', error)
+      return { success: false, error }
     }
+
+    console.log('[email] Resend API success:', data?.id)
+
+    return { success: true, data }
+  } catch (error) {
+    console.error('Email sending exception:', error)
+    return { success: false, error }
+  }
 }
