@@ -26,9 +26,11 @@ export async function getConfig(keyName: string): Promise<string | null> {
       .single()
 
     if (error || !data) {
-      console.error(`Failed to fetch config for ${keyName}:`, error)
+      console.warn(`[config] Failed to fetch config for ${keyName} (Env: production):`, error?.message || 'No data found')
       return null
     }
+
+    console.log(`[config] Successfully fetched config for: ${keyName}`)
 
     // Cache the result
     configCache.set(keyName, {
@@ -47,6 +49,10 @@ export async function getResendApiKey(): Promise<string | null> {
   return await getConfig('RESEND_API_KEY')
 }
 
+export async function getResendFromEmail(): Promise<string | null> {
+  return await getConfig('RESEND_FROM_EMAIL')
+}
+
 export async function getSupabaseUrl(): Promise<string | null> {
   return await getConfig('NEXT_PUBLIC_SUPABASE_URL')
 }
@@ -58,12 +64,12 @@ export async function getSupabaseAnonKey(): Promise<string | null> {
 // Utility to get multiple config values at once
 export async function getMultipleConfigs(keys: string[]): Promise<Record<string, string | null>> {
   const results = await Promise.all(keys.map(key => getConfig(key)))
-  
+
   const config: Record<string, string | null> = {}
   keys.forEach((key, index) => {
     config[key] = results[index]
   })
-  
+
   return config
 }
 

@@ -1,0 +1,4 @@
+﻿--- Testing New User: universal-test-1767017374940@example.com ---
+Success: { success: true, message: 'Successfully joined the waitlist!' }
+--- Testing Existing User: universal-test-1767017374940@example.com ---
+Success: { success: true, message: 'You have already joined the waitlist!' }

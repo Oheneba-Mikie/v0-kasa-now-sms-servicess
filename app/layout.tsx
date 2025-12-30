@@ -1,15 +1,16 @@
 import type React from "react"
 import type { Metadata } from "next"
 import { Inter, Geist_Mono } from "next/font/google"
+import { Toaster } from "sonner"
 import "./globals.css"
 
-const _inter = Inter({ subsets: ["latin"] })
-const _geistMono = Geist_Mono({ subsets: ["latin"] })
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" })
+const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-geist-mono" })
 
 const siteConfig = {
   name: "KasaNow",
   url: "https://kasanow.com",
-  ogImage: "/placeholder-logo.png",
+  ogImage: "/logo.jpg",
   description:
     "The SMS platform built for everyone. Send thousands of messages instantly through web or mobile. No API keys, no technical setup—just results.",
   title: "KasaNow - Send Bulk SMS Instantly, No API Needed",
@@ -41,21 +42,8 @@ export const metadata: Metadata = {
     images: [siteConfig.ogImage],
   },
   icons: {
-    icon: [
-      {
-        url: "/icon-light-32x32.png",
-        media: "(prefers-color-scheme: light)",
-      },
-      {
-        url: "/icon-dark-32x32.png",
-        media: "(prefers-color-scheme: dark)",
-      },
-      {
-        url: "/icon.svg",
-        type: "image/svg+xml",
-      },
-    ],
-    apple: "/apple-icon.png",
+    icon: "/logo.jpg",
+    apple: "/logo.jpg",
   },
 }
 
@@ -66,8 +54,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`font-sans antialiased`}>
+      <body className={`${inter.variable} ${geistMono.variable} font-sans antialiased text-gray-900 border-gray-200`}>
         {children}
+        <Toaster position="top-center" richColors />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

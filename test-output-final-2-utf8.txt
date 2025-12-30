@@ -1,0 +1,14 @@
+﻿--- STARTING EMAIL TEST ---
+Testing with email: test-1767014388914@example.com
+[joinWaitlist] Attempting to join: test-1767014388914@example.com
+[joinWaitlist] Successfully inserted into DB: test-1767014388914@example.com
+[joinWaitlist] Triggering welcome email to: test-1767014388914@example.com
+[config] Successfully fetched config for: RESEND_API_KEY
+[config] Successfully fetched config for: RESEND_FROM_EMAIL
+[email] Resend API success: 72273240-b404-41af-829f-0fa3caf8e7d5
+[joinWaitlist] Welcome email sent successfully to: test-1767014388914@example.com
+Result: {
+  "success": true,
+  "message": "Successfully joined the waitlist!"
+}
+--- TEST FINISHED ---
