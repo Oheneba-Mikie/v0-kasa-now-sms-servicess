@@ -75,7 +75,7 @@ export default function WaitlistPage() {
 
           {successMessage ? (
             <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-6 rounded-lg text-center">
-              <h3 className="text-lg font-semibold mb-2">You're in! 🎉</h3>
+              <h3 className="text-lg font-semibold mb-2">Joined Waitlist</h3>
               <p>{successMessage}</p>
               <Button
                 variant="link"
@@ -115,7 +115,7 @@ export default function WaitlistPage() {
                       Joining...
                     </>
                   ) : (
-                    "Continue with Email"
+                    "Join Waitlist"
                   )}
                 </Button>
 

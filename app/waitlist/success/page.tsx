@@ -34,15 +34,14 @@ function SuccessContent() {
         </div>
 
         {/* Heading */}
-        <h1 className="text-5xl md:text-6xl font-normal text-white mb-6 leading-tight">Check your email</h1>
+        <h1 className="text-5xl md:text-6xl font-normal text-white mb-6 leading-tight">Joined Waitlist</h1>
 
         {/* Email display */}
         {email && <p className="text-xl md:text-2xl text-white/90 mb-8 font-medium">{email}</p>}
 
         {/* Message */}
         <p className="text-lg md:text-xl text-white/80 mb-12 max-w-xl mx-auto leading-relaxed">
-          We've sent you a confirmation email. Please check your inbox and spam folder to confirm your spot on the
-          waitlist.
+          We'll notify you when we go live!
         </p>
 
         {/* CTA Button */}
