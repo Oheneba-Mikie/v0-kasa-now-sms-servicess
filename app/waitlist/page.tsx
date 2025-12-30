@@ -16,6 +16,7 @@ export default function WaitlistPage() {
   const [accepted, setAccepted] = useState(false)
   const [isPending, startTransition] = useTransition()
   const [successMessage, setSuccessMessage] = useState("")
+  const [isNewUser, setIsNewUser] = useState(true)
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
@@ -33,6 +34,7 @@ export default function WaitlistPage() {
         }
 
         if (data?.success) {
+          setIsNewUser(data.isNew)
           setSuccessMessage(data.message)
           toast.success(data.message)
           setEmail("")
@@ -74,8 +76,13 @@ export default function WaitlistPage() {
           </div>
 
           {successMessage ? (
-            <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-6 rounded-lg text-center">
-              <h3 className="text-lg font-semibold mb-2">Joined Waitlist</h3>
+            <div className={`px-4 py-6 rounded-lg text-center border ${isNewUser
+                ? "bg-green-50 border-green-200 text-green-700"
+                : "bg-blue-50 border-blue-200 text-blue-700"
+              }`}>
+              <h3 className="text-lg font-semibold mb-2">
+                {isNewUser ? "Welcome to KasaNow! 🎉" : "Welcome Back! 👋"}
+              </h3>
               <p>{successMessage}</p>
               <Button
                 variant="link"
