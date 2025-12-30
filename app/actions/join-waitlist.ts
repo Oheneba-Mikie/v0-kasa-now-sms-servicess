@@ -1,11 +1,6 @@
-'use server'
+'use client'
 
 import { supabase } from '@/lib/supabase'
-import { Resend } from 'resend'
-import { sendWelcomeEmail } from '@/lib/email'
-
-// Initialize Resend with key from env
-const resend = new Resend(process.env.RESEND_API_KEY)
 
 export async function joinWaitlist(email: string) {
     try {
@@ -14,30 +9,17 @@ export async function joinWaitlist(email: string) {
             return { success: false, message: 'Invalid email address' }
         }
 
-        // 2. Insert into Supabase
-        const { error: dbError } = await supabase
-            .from('waitlist')
-            .insert([{ email, status: 'pending' }])
+        // 2. Call Edge Function
+        const { data, error } = await supabase.functions.invoke('join-waitlist', {
+            body: { email }
+        })
 
-        if (dbError) {
-            // Handle duplicate email specifically if possible
-            if (dbError.code === '23505') { // Postgres unique violation code
-                return { success: true, message: 'You are already on the waitlist!' }
-            }
-            console.error('Database error:', dbError)
+        if (error) {
+            console.error('Edge function error:', error)
             return { success: false, message: 'Failed to join waitlist. Please try again.' }
         }
 
-        // 3. Send Email via Resend
-        // Note: We wrap this in try/catch to not fail the whole request if email fails, 
-        // but ideally we want both to succeed.
-        try {
-            await sendWelcomeEmail(email)
-        } catch (e) {
-            console.error('Email sending failed:', e)
-        }
-
-        return { success: true, message: 'Successfully joined the waitlist!' }
+        return data || { success: true, message: 'Successfully joined the waitlist!' }
 
     } catch (err) {
         console.error('Unexpected error:', err)
