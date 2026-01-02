@@ -1,6 +1,6 @@
 [build]
   command = "pnpm install && pnpm run build"
-  publish = ".next"
+  # publish is handled by @netlify/plugin-nextjs - do not set it manually
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
