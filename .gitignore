@@ -6,3 +6,6 @@ node_modules
 dist
 build
 npm_output.log
+
+# Local Netlify folder
+.netlify
