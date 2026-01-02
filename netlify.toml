@@ -4,9 +4,14 @@
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
+  # Pin to a specific version for stability (uncomment and update version if needed)
+  # version = "4.0.0"
 
 [build.environment]
   PNPM_VERSION = "10"
+  # Workaround for blob upload failures: Uncomment the line below to skip blob uploads
+  # This disables caching but allows deployment to succeed
+  # NETLIFY_NEXT_PLUGIN_SKIP_BLOB_UPLOAD = "true"
 
 # Environment variables will be set in Netlify dashboard
 # - NEXT_PUBLIC_SUPABASE_URL
