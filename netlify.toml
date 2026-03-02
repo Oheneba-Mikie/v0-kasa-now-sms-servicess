@@ -1,12 +1,15 @@
 [build]
   command = "pnpm install && pnpm run build"
-  publish = ".next"
+  # publish is handled by @netlify/plugin-nextjs - do not set it manually
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
 
 [build.environment]
   PNPM_VERSION = "10"
+  # Workaround for blob upload failures: Skip blob uploads to allow deployment to succeed
+  # This disables caching but allows deployment to proceed
+  NETLIFY_NEXT_PLUGIN_SKIP_BLOB_UPLOAD = "true"
 
 # Environment variables will be set in Netlify dashboard
 # - NEXT_PUBLIC_SUPABASE_URL
