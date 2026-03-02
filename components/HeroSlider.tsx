@@ -21,10 +21,10 @@ const slides = [
     {
         badge: "SMS Delivery Guaranteed",
         title: "Send SMS",
-        highlight: "Instantly",
-        titleSuffix: "Across Ghana",
-        subtext: "Reliable bulk SMS delivery to MTN, Telecel & AirtelTigo. Reach thousands of customers in seconds with our premium network routing.",
-        primaryCTA: "Get Started Free",
+        highlight: "Instantly,",
+        titleSuffix: "No API Needed",
+        subtext: "Reliable bulk SMS delivery to MTN, Telecel & AirtelTigo. Reach thousands of customers in seconds with our premium network routing—directly from your browser.",
+        primaryCTA: "Join Waitlist",
         secondaryCTA: "See How It Works",
         dashboard: "main"
     },
@@ -44,7 +44,7 @@ const slides = [
         highlight: "Campaigns",
         titleSuffix: "with Ease",
         subtext: "Reach thousands instantly with automated bulk messaging. Segment your audience and track real-time engagement and ROI.",
-        primaryCTA: "Start Campaign",
+        primaryCTA: "Join Waitlist",
         secondaryCTA: "Case Studies",
         dashboard: "marketing"
     },
@@ -54,7 +54,7 @@ const slides = [
         highlight: "Alerts",
         titleSuffix: "That Deliver",
         subtext: "Secure and ultra-fast delivery for mission-critical alerts. 2FA, password resets, and transaction notifications delivered globally.",
-        primaryCTA: "Register App",
+        primaryCTA: "Join Waitlist",
         secondaryCTA: "Pricing",
         dashboard: "security"
     }
@@ -89,9 +89,9 @@ export default function HeroSlider() {
                                     {slides[currentSlide].badge}
                                 </Badge>
 
-                                <h1 className="mb-6 text-5xl font-extrabold tracking-tight md:text-7xl leading-[1.1]">
+                                <h1 className="mb-6 text-5xl font-extrabold tracking-tight md:text-7xl leading-[1.1] text-shine">
                                     {slides[currentSlide].title}{" "}
-                                    <span className="text-blue-gradient italic">
+                                    <span className="text-highlight-vibrant italic px-1">
                                         {slides[currentSlide].highlight}
                                     </span>
                                     <br className="hidden md:block" />
@@ -103,10 +103,12 @@ export default function HeroSlider() {
                                 </p>
 
                                 <div className="flex flex-col sm:flex-row gap-4">
-                                    <Button className="bg-[#F97316] hover:bg-[#EA580C] text-white font-bold h-14 px-8 rounded-2xl text-lg shadow-xl shadow-orange-500/30 transition-all hover:scale-105 active:scale-95">
-                                        {slides[currentSlide].primaryCTA} <ArrowRight className="ml-2 h-5 w-5" />
-                                    </Button>
-                                    <Button variant="outline" className="border-white/30 bg-white/10 hover:bg-white/20 text-white font-bold h-14 px-8 rounded-2xl text-lg backdrop-blur-md transition-all">
+                                    <Link href="/waitlist" className="w-full sm:w-auto">
+                                        <Button className="w-full bg-emerald-gradient hover:opacity-90 text-white font-bold h-14 px-8 rounded-2xl text-lg shadow-xl shadow-emerald-500/30 transition-all hover:scale-105 active:scale-95 border-none">
+                                            {slides[currentSlide].primaryCTA} <ArrowRight className="ml-2 h-5 w-5" />
+                                        </Button>
+                                    </Link>
+                                    <Button variant="outline" className="border-white/30 bg-white/10 hover:bg-white/20 text-white font-bold h-14 px-8 rounded-2xl text-lg backdrop-blur-md transition-all sm:w-auto">
                                         {slides[currentSlide].secondaryCTA}
                                     </Button>
                                 </div>
@@ -136,7 +138,7 @@ export default function HeroSlider() {
                                                     <div className="h-2.5 w-2.5 rounded-full bg-yellow-500/50" />
                                                     <div className="h-2.5 w-2.5 rounded-full bg-green-500/50" />
                                                 </div>
-                                                <span className="text-xs font-bold text-white/40 uppercase tracking-[0.2em] ml-2">Analytics Pro</span>
+                                                <span className="text-xs font-bold text-white/70 uppercase tracking-[0.2em] ml-2">Analytics Pro</span>
                                             </div>
                                             <div className="h-2 w-2 rounded-full bg-green-400 animate-pulse shadow-[0_0_10px_rgba(74,222,128,0.5)]" />
                                         </div>
@@ -260,16 +262,16 @@ function APIDashboard() {
     return (
         <div className="space-y-6">
             <div className="flex items-center justify-between mb-2">
-                <div className="text-white/40 text-[10px] font-bold uppercase tracking-[0.2em]">API Endpoint Status</div>
+                <div className="text-white/70 text-[10px] font-bold uppercase tracking-[0.2em]">API Endpoint Status</div>
                 <div className="text-[#22C55E] text-[10px] font-bold">200 OK</div>
             </div>
 
             <div className="bg-white/5 rounded-2xl p-5 border border-white/10 font-mono text-sm overflow-hidden">
-                <div className="flex gap-2 text-blue-400 mb-2">
+                <div className="flex gap-2 text-blue-300 font-bold mb-2">
                     <span>POST</span>
-                    <span className="text-white/60">/v1/sms/send</span>
+                    <span className="text-white/90">/v1/sms/send</span>
                 </div>
-                <div className="text-white/40 space-y-1 text-xs">
+                <div className="text-white/80 space-y-1 text-xs">
                     <div>{"{"}</div>
                     <div className="pl-4">"to": "+233241234567",</div>
                     <div className="pl-4">"message": "Hello from KasaNow!",</div>

@@ -56,7 +56,9 @@ export default function PricingPage() {
                                     ))}
                                 </ul>
 
-                                <Button className={`w-full h-16 rounded-2xl font-black text-lg ${tier.hot ? "bg-blue-600 hover:bg-blue-700 shadow-xl shadow-blue-500/20" : "bg-gray-100 hover:bg-gray-200 text-[#1E3A8A]"}`}>Choose {tier.title}</Button>
+                                <Link href="/waitlist">
+                                    <Button className={`w-full h-16 rounded-2xl font-black text-lg ${tier.hot ? "bg-blue-600 hover:bg-blue-700 shadow-xl shadow-blue-500/20" : "bg-gray-100 hover:bg-gray-200 text-[#1E3A8A]"}`}>Join Waitlist</Button>
+                                </Link>
                             </div>
                         ))}
                     </div>
@@ -122,8 +124,12 @@ export default function PricingPage() {
                     <div className="bg-blue-gradient p-12 md:p-20 rounded-[48px] text-white shadow-2xl">
                         <h2 className="text-4xl font-black mb-8 tracking-tighter italic">Join 2,000+ happy businesses</h2>
                         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                            <Button className="bg-[#F97316] hover:bg-orange-700 text-white font-black h-14 px-10 rounded-2xl shadow-xl">Get Started Free</Button>
-                            <Button variant="outline" className="border-white/20 bg-white/10 text-white font-bold h-14 px-10 rounded-2xl backdrop-blur-md">Talk to Sales</Button>
+                            <Link href="/waitlist">
+                                <Button className="bg-[#F97316] hover:bg-orange-700 text-white font-black h-14 px-10 rounded-2xl shadow-xl w-full sm:w-auto">Join Waitlist</Button>
+                            </Link>
+                            <Link href="/waitlist">
+                                <Button variant="outline" className="border-white/20 bg-white/10 text-white font-bold h-14 px-10 rounded-2xl backdrop-blur-md w-full sm:w-auto">Talk to Sales</Button>
+                            </Link>
                         </div>
                     </div>
                 </div>

@@ -70,7 +70,7 @@ export default function WaitlistPage() {
                 alt="KasaNow"
                 width={60}
                 height={60}
-                className="h-12 w-auto object-contain mix-blend-multiply"
+                className="h-10 w-auto object-contain mix-blend-multiply"
               />
             </div>
           </div>

@@ -14,7 +14,7 @@ export default function Footer() {
                                 alt="KasaNow"
                                 width={180}
                                 height={50}
-                                className="h-12 w-auto object-contain mix-blend-multiply"
+                                className="h-10 w-auto object-contain mix-blend-multiply"
                             />
                         </Link>
                         <p className="text-gray-500 text-lg max-w-xs leading-relaxed mb-8">

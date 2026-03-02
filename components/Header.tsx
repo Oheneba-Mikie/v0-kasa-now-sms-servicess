@@ -12,9 +12,9 @@ export default function Header() {
                     <Image
                         src="/logo.jpg"
                         alt="KasaNow"
-                        width={160}
-                        height={40}
-                        className="h-10 w-auto object-contain"
+                        width={200}
+                        height={50}
+                        className="h-12 w-auto object-contain"
                     />
                 </Link>
 
@@ -39,7 +39,7 @@ export default function Header() {
                     </Link>
                     <Link href="/waitlist">
                         <Button size="lg" className="bg-[#F97316] hover:bg-[#EA580C] text-white font-bold rounded-xl px-6 transition-transform hover:scale-105 active:scale-95 shadow-lg shadow-orange-500/20">
-                            Get Started
+                            Join Waitlist
                         </Button>
                     </Link>
                 </div>

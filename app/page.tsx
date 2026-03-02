@@ -125,7 +125,9 @@ export default function HomePage() {
                   </div>
                 ))}
               </div>
-              <Button className="mt-12 bg-[#1E3A8A] hover:bg-[#1E3A8A]/90 text-white font-bold h-14 px-10 rounded-2xl shadow-xl">Start Sending For Free</Button>
+              <Link href="/waitlist">
+                <Button className="mt-12 bg-emerald-gradient hover:opacity-90 text-white font-bold h-14 px-10 rounded-2xl shadow-xl shadow-emerald-500/20 border-none transition-transform hover:scale-105">Join Waitlist</Button>
+              </Link>
             </div>
             <div className="lg:w-1/2 relative bg-gray-50 rounded-[48px] p-12 overflow-hidden border border-gray-100">
               <div className="relative z-10 bg-white rounded-3xl shadow-2xl p-8 border border-gray-100">
@@ -176,7 +178,9 @@ export default function HomePage() {
                     </li>
                   ))}
                 </ul>
-                <Button className={`w-full h-14 rounded-2xl font-bold text-lg ${tier.hot ? "bg-blue-600 hover:bg-blue-700 text-white" : "bg-gray-100 hover:bg-gray-200 text-[#1E3A8A]"}`}>Select Plan</Button>
+                <Link href="/waitlist">
+                  <Button className={`w-full h-14 rounded-2xl font-bold text-lg border-none transition-all ${tier.hot ? "bg-emerald-gradient text-white shadow-xl shadow-emerald-500/20 hover:opacity-90" : "bg-gray-100 hover:bg-gray-200 text-[#1E3A8A]"}`}>Join Waitlist</Button>
+                </Link>
               </div>
             ))}
           </div>
@@ -220,8 +224,12 @@ export default function HomePage() {
               <h2 className="text-4xl font-extrabold md:text-7xl mb-8 tracking-tighter">Ready to send SMS today?</h2>
               <p className="text-white/70 text-xl md:text-2xl mb-12 max-w-2xl mx-auto">Join thousands of Ghanaian businesses growing with KasaNow.</p>
               <div className="flex flex-col sm:flex-row gap-6 justify-center">
-                <Button className="bg-white text-blue-700 hover:bg-white/90 font-black h-16 px-12 rounded-2xl text-xl shadow-2xl hover:scale-105 transition-transform">Create Free Account</Button>
-                <Button variant="outline" className="border-white/30 bg-white/10 hover:bg-white/20 text-white font-bold h-16 px-12 rounded-2xl text-xl backdrop-blur-md">Talk to Sales</Button>
+                <Link href="/waitlist">
+                  <Button className="bg-emerald-gradient hover:opacity-90 text-white font-black h-16 px-12 rounded-2xl text-xl shadow-2xl shadow-emerald-500/30 hover:scale-105 transition-transform w-full sm:w-auto border-none">Join Waitlist</Button>
+                </Link>
+                <Link href="/waitlist">
+                  <Button variant="outline" className="border-white/30 bg-white/10 hover:bg-white/20 text-white font-bold h-16 px-12 rounded-2xl text-xl backdrop-blur-md w-full sm:w-auto">Talk to Sales</Button>
+                </Link>
               </div>
               <div className="mt-12 flex items-center justify-center gap-2 text-white/50 text-sm font-bold uppercase tracking-[0.2em]">
                 <div className="h-2 w-2 rounded-full bg-green-400" /> 21,332 users joined in the last 7 days
