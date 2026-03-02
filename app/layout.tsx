@@ -47,15 +47,22 @@ export const metadata: Metadata = {
   },
 }
 
+import Header from "@/components/Header"
+import Footer from "@/components/Footer"
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="scroll-smooth">
       <body className={`${inter.variable} ${geistMono.variable} font-sans antialiased text-gray-900 border-gray-200`}>
-        {children}
+        <Header />
+        <main className="min-h-screen pt-20">
+          {children}
+        </main>
+        <Footer />
         <Toaster position="top-center" richColors />
         <script
           type="application/ld+json"

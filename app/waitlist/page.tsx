@@ -70,15 +70,15 @@ export default function WaitlistPage() {
                 alt="KasaNow"
                 width={60}
                 height={60}
-                className="h-12 w-auto object-contain"
+                className="h-12 w-auto object-contain mix-blend-multiply"
               />
             </div>
           </div>
 
           {successMessage ? (
             <div className={`px-4 py-6 rounded-lg text-center border ${isNewUser
-                ? "bg-green-50 border-green-200 text-green-700"
-                : "bg-blue-50 border-blue-200 text-blue-700"
+              ? "bg-green-50 border-green-200 text-green-700"
+              : "bg-blue-50 border-blue-200 text-blue-700"
               }`}>
               <h3 className="text-lg font-semibold mb-2">
                 {isNewUser ? "Welcome to KasaNow! 🎉" : "Welcome Back! 👋"}
