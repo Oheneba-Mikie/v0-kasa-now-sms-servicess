@@ -1,9 +1,15 @@
+"use client"
+
 import Link from "next/link"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { ArrowRight } from "lucide-react"
+import { usePathname } from "next/navigation"
 
 export default function Header() {
+  const pathname = usePathname()
+  if (pathname === '/login' || pathname === '/sign-up' || pathname === '/signup' || pathname === '/waitlist') return null;
+
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-white">
       <div className="container mx-auto flex h-16 max-w-7xl items-center justify-between px-4">
@@ -37,8 +43,8 @@ export default function Header() {
         </nav>
 
         <div className="flex items-center space-x-6">
-          <Link href="/login" className="text-sm font-medium text-gray-600 transition-colors hover:text-gray-900">
-            Sign in
+          <Link href="/sign-up" className="text-sm font-medium text-gray-600 transition-colors hover:text-gray-900">
+            Sign up
           </Link>
           <Link href="/waitlist">
             <Button size="sm" className="bg-[#F97316] hover:bg-[#EA580C] px-5 font-bold rounded-lg text-white shadow-sm transition-transform hover:scale-105 border-none">

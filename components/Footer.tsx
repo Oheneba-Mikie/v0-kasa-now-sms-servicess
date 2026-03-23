@@ -1,7 +1,13 @@
+"use client"
+
 import Link from "next/link"
 import Image from "next/image"
+import { usePathname } from "next/navigation"
 
 export default function Footer() {
+  const pathname = usePathname()
+  if (pathname === '/login' || pathname === '/sign-up' || pathname === '/signup' || pathname === '/waitlist') return null;
+
   return (
     <footer className="border-t bg-white py-12">
       <div className="container mx-auto max-w-7xl px-4">
