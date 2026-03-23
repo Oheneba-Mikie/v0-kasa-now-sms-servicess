@@ -1,7 +1,10 @@
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import HeroSlider from "@/components/HeroSlider"
 import Link from "next/link"
+import NewHero from "@/components/NewHero"
+import Image from "next/image"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { AnimatedText } from "@/components/ui/animated-text"
 import {
   Check,
   Send,
@@ -9,236 +12,630 @@ import {
   BarChart3,
   Clock,
   Smartphone,
+  MessageSquare,
   ArrowRight,
   Star,
   TrendingUp,
+  BookOpen,
   Code2,
-  Zap,
-  ShieldCheck,
-  LifeBuoy,
-  ChevronRight,
-  Database
+  FileText,
+  HelpCircle,
+  Video,
+  Activity,
 } from "lucide-react"
 
 export default function HomePage() {
   return (
-    <div className="flex flex-col bg-white">
-      <HeroSlider />
+    <div className="flex min-h-screen flex-col">
 
-      {/* 1. Trust Bar */}
-      <section className="bg-white py-16 border-y border-gray-100">
-        <div className="container mx-auto max-w-7xl px-4 text-center">
-          <p className="text-xs font-bold text-gray-400 uppercase tracking-[0.3em] mb-10">Trusted by Ghana's Leading Networks & Businesses</p>
-          <div className="flex flex-wrap items-center justify-center gap-12 opacity-40 grayscale hover:grayscale-0 transition-all duration-500">
-            <span className="text-2xl font-black tracking-tighter text-gray-900">MTN</span>
-            <span className="text-2xl font-black tracking-tighter text-gray-900">Telecel</span>
-            <span className="text-2xl font-black tracking-tighter text-gray-900">AT</span>
-            <span className="text-2xl font-black tracking-tighter text-gray-900">GHANA POST</span>
-            <span className="text-2xl font-black tracking-tighter text-gray-900">HUBTEL</span>
+
+      <main className="flex-1">
+        <NewHero />
+
+        {/* Trust Bar */}
+        <section className="bg-white py-12">
+          <div className="container mx-auto max-w-7xl px-4 text-center">
+            <p className="text-sm text-gray-600">
+              Marketers at 44% of the Fortune 500 use KasaNow to stay ahead in SMS marketing.
+            </p>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* 2. Features Grid (6 Cards) */}
-      <section id="features" className="bg-white py-24 md:py-32">
-        <div className="container mx-auto max-w-7xl px-4 text-center">
-          <Badge className="mb-6 bg-blue-100 text-[#1E3A8A] border-blue-200 px-4 py-1.5 text-xs font-bold uppercase tracking-wider">Capabilities</Badge>
-          <h2 className="mb-4 text-4xl font-extrabold text-[#1E3A8A] md:text-6xl tracking-tight">
-            Powerful features for <span className="text-blue-gradient italic">limitless</span> messaging
-          </h2>
-          <p className="mb-20 text-xl text-gray-600 max-w-2xl mx-auto">Everything you need to reach your customers at scale, with tools built for speed and absolute reliability.</p>
+        {/* Features Grid - "Your SMS platform" section */}
+        <section id="features" className="bg-gray-50 py-20 md:py-32">
+          <div className="container mx-auto max-w-7xl px-4">
+            <h2 className="mb-16 text-4xl font-bold text-gray-900 md:text-5xl lg:text-6xl">
+              Your SMS platform—built for everyone
+            </h2>
 
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {[
-              { icon: <Send className="h-8 w-8 text-[#3B82F6]" />, title: "Bulk SMS", desc: "Send thousands of messages in seconds with our high-throughput platform. Perfect for campaigns." },
-              { icon: <Code2 className="h-8 w-8 text-[#3B82F6]" />, title: "SMS API", desc: "Robust REST API documentation with SDKs for Node.js, PHP, and Python. Build faster." },
-              { icon: <ShieldCheck className="h-8 w-8 text-[#3B82F6]" />, title: "OTP Messaging", desc: "Secure 2FA and one-time passwords delivered with ultra-low latency across all networks." },
-              { icon: <BarChart3 className="h-8 w-8 text-[#3B82F6]" />, title: "Delivery Reports", desc: "Real-time insights and granular data on every message's status. Know exactly when it's read." },
-              { icon: <Clock className="h-8 w-8 text-[#3B82F6]" />, title: "Campaign Scheduler", desc: "Plan your outreach in advance with automated time-zone aware scheduling. Set and forget." },
-              { icon: <Users className="h-8 w-8 text-[#3B82F6]" />, title: "Contact Management", desc: "Smart segmentation and audience organization. Import your leads with one click." },
-            ].map((feat, i) => (
-              <div key={i} className="group p-10 rounded-[40px] bg-gray-50 border border-transparent hover:border-blue-100 hover:bg-white hover:shadow-[0_20px_60px_-15px_rgba(30,58,138,0.1)] transition-all duration-500 text-left">
-                <div className="mb-8 inline-block rounded-2xl bg-white p-5 shadow-lg group-hover:scale-110 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300">
-                  <div className="group-hover:text-white transition-colors">{feat.icon}</div>
+            <div className="grid gap-12 lg:grid-cols-2">
+              {/* Feature 1 */}
+              <div>
+                <div className="mb-4 inline-block rounded-lg bg-[#5B6EF5]/10 p-3">
+                  <Send className="h-8 w-8 text-[#5B6EF5]" />
                 </div>
-                <h3 className="mb-4 text-2xl font-bold text-[#1E3A8A]">{feat.title}</h3>
-                <p className="text-gray-600 leading-relaxed mb-6">{feat.desc}</p>
-                <Link href="#" className="inline-flex items-center text-sm font-bold text-blue-600 group-hover:gap-2 transition-all">
-                  Explore Feature <ArrowRight className="h-4 w-4 ml-1" />
+                <h3 className="mb-3 text-2xl font-bold text-gray-900">Bulk SMS Sending</h3>
+                <p className="mb-4 text-gray-600">
+                  Send thousands of messages instantly. Upload contacts, write your message, and reach everyone in
+                  seconds—no API needed.
+                </p>
+                <Link
+                  href="#"
+                  className="inline-flex items-center text-sm font-semibold text-[#5B6EF5] hover:underline"
+                >
+                  Message Manager → <ArrowRight className="ml-1 h-4 w-4" />
                 </Link>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
-      {/* 3. Why Choose KasaNow (4 Columns) */}
-      <section className="bg-blue-gradient py-24 md:py-32 text-white overflow-hidden relative">
-        <div className="absolute top-0 right-0 w-1/2 h-full opacity-10 pointer-events-none">
-          <Database className="w-full h-full rotate-12 scale-150" />
-        </div>
-        <div className="container mx-auto max-w-7xl px-4 relative z-10">
-          <div className="text-center mb-20">
-            <h2 className="text-4xl font-extrabold md:text-5xl tracking-tight mb-6">Why businesses choose KasaNow</h2>
-            <p className="text-white/70 text-xl max-w-2xl mx-auto">Built for scale, stability, and speed. We handle the complexity so you can focus on your message.</p>
-          </div>
-          <div className="grid gap-12 lg:grid-cols-4 md:grid-cols-2 text-center">
-            {[
-              { icon: <Zap className="h-10 w-10" />, title: "99.9% Delivery", desc: "Proprietary routing logic ensures your messages hit their mark every time." },
-              { icon: <TrendingUp className="h-10 w-10" />, title: "Affordable Pricing", desc: "Best-in-market rates with transparent volume-based discounts for all sizes." },
-              { icon: <Smartphone className="h-10 w-10" />, title: "Instant Setup", desc: "Go from signup to first message in 2 minutes. No technical overhead required." },
-              { icon: <LifeBuoy className="h-10 w-10" />, title: "24/7 Support", desc: "Real humans based in Accra ready to assist you any time of day via chat." },
-            ].map((item, i) => (
-              <div key={i} className="group p-8 rounded-3xl hover:bg-white/5 transition-colors duration-300">
-                <div className="mx-auto h-20 w-20 rounded-[24px] bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20 mb-8 group-hover:scale-110 transition-transform bg-blue-400/20">
-                  <div className="text-blue-300">{item.icon}</div>
+              {/* Feature 2 */}
+              <div>
+                <div className="mb-4 inline-block rounded-lg bg-[#5B6EF5]/10 p-3">
+                  <BarChart3 className="h-8 w-8 text-[#5B6EF5]" />
                 </div>
-                <h3 className="text-2xl font-bold mb-4">{item.title}</h3>
-                <p className="text-white/60 leading-relaxed text-sm">{item.desc}</p>
+                <h3 className="mb-3 text-2xl font-bold text-gray-900">Real-Time Analytics</h3>
+                <p className="mb-4 text-gray-600">
+                  Track delivery rates, engagement metrics, and campaign ROI with comprehensive real-time dashboards.
+                </p>
+                <Link
+                  href="#"
+                  className="inline-flex items-center text-sm font-semibold text-[#5B6EF5] hover:underline"
+                >
+                  Analytics Dashboard → <ArrowRight className="ml-1 h-4 w-4" />
+                </Link>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
-      {/* 4. How It Works (Visual 3-step UI) */}
-      <section className="bg-white py-24 md:py-40">
-        <div className="container mx-auto max-w-7xl px-4">
-          <div className="flex flex-col lg:flex-row items-center gap-16">
-            <div className="lg:w-1/2">
-              <Badge className="mb-6 bg-[#F97316]/10 text-[#F97316] border-[#F97316]/20 px-4 py-1.5 text-xs font-bold uppercase tracking-wider">Simple Process</Badge>
-              <h2 className="text-4xl font-extrabold text-[#1E3A8A] md:text-6xl tracking-tight mb-8">Ready to send in <span className="text-blue-gradient italic">minutes</span></h2>
-              <p className="text-xl text-gray-600 mb-12 leading-relaxed">No complex integration required. KasaNow is designed for anyone to start messaging immediately.</p>
-
-              <div className="space-y-10">
-                {[
-                  { step: "01", title: "Create Your Account", desc: "Sign up in seconds. No credit card required to start." },
-                  { step: "02", title: "Upload Your Contacts", desc: "Import directly from Excel, CSV, or your phonebook." },
-                  { step: "03", title: "Send Your Message", desc: "Compose, preview, and hit send. Watch it deliver instantly." },
-                ].map((s, i) => (
-                  <div key={i} className="flex gap-6">
-                    <div className="text-4xl font-black text-blue-100 flex-shrink-0">{s.step}</div>
-                    <div>
-                      <h4 className="text-2xl font-bold text-[#1E3A8A] mb-2">{s.title}</h4>
-                      <p className="text-gray-600">{s.desc}</p>
-                    </div>
-                  </div>
-                ))}
+              {/* Feature 3 */}
+              <div>
+                <div className="mb-4 inline-block rounded-lg bg-[#5B6EF5]/10 p-3">
+                  <Users className="h-8 w-8 text-[#5B6EF5]" />
+                </div>
+                <h3 className="mb-3 text-2xl font-bold text-gray-900">Contact Management</h3>
+                <p className="mb-4 text-gray-600">
+                  Organize contacts into segments, import from CSV or CRM, and manage your audience with powerful
+                  filtering tools.
+                </p>
+                <Link
+                  href="#"
+                  className="inline-flex items-center text-sm font-semibold text-[#5B6EF5] hover:underline"
+                >
+                  Contact Manager → <ArrowRight className="ml-1 h-4 w-4" />
+                </Link>
               </div>
-              <Link href="/waitlist">
-                <Button className="mt-12 bg-emerald-gradient hover:opacity-90 text-white font-bold h-14 px-10 rounded-2xl shadow-xl shadow-emerald-500/20 border-none transition-transform hover:scale-105">Join Waitlist</Button>
+
+              {/* Feature 4 */}
+              <div>
+                <div className="mb-4 inline-block rounded-lg bg-[#5B6EF5]/10 p-3">
+                  <Clock className="h-8 w-8 text-[#5B6EF5]" />
+                </div>
+                <h3 className="mb-3 text-2xl font-bold text-gray-900">Campaign Scheduling</h3>
+                <p className="mb-4 text-gray-600">
+                  Plan campaigns in advance with smart scheduling. Set timezone-aware delivery for maximum impact.
+                </p>
+                <Link
+                  href="#"
+                  className="inline-flex items-center text-sm font-semibold text-[#5B6EF5] hover:underline"
+                >
+                  Campaign Scheduler → <ArrowRight className="ml-1 h-4 w-4" />
+                </Link>
+              </div>
+
+              {/* Feature 5 */}
+              <div>
+                <div className="mb-4 inline-block rounded-lg bg-[#5B6EF5]/10 p-3">
+                  <Smartphone className="h-8 w-8 text-[#5B6EF5]" />
+                </div>
+                <h3 className="mb-3 text-2xl font-bold text-gray-900">Mobile & Web Access</h3>
+                <p className="mb-4 text-gray-600">
+                  Send from anywhere with responsive web interface and dedicated mobile apps for iOS and Android.
+                </p>
+                <Link
+                  href="#"
+                  className="inline-flex items-center text-sm font-semibold text-[#5B6EF5] hover:underline"
+                >
+                  Mobile Apps → <ArrowRight className="ml-1 h-4 w-4" />
+                </Link>
+              </div>
+
+              {/* Feature 6 */}
+              <div>
+                <div className="mb-4 inline-block rounded-lg bg-[#5B6EF5]/10 p-3">
+                  <MessageSquare className="h-8 w-8 text-[#5B6EF5]" />
+                </div>
+                <h3 className="mb-3 text-2xl font-bold text-gray-900">Two-Way Messaging</h3>
+                <p className="mb-4 text-gray-600">
+                  Receive replies, manage conversations, and engage with customers through our unified inbox.
+                </p>
+                <Link
+                  href="#"
+                  className="inline-flex items-center text-sm font-semibold text-[#5B6EF5] hover:underline"
+                >
+                  Inbox Manager → <ArrowRight className="ml-1 h-4 w-4" />
+                </Link>
+              </div>
+            </div>
+
+            <div className="mt-12 text-center">
+              <Link
+                href="#"
+                className="inline-flex items-center text-base font-semibold text-[#5B6EF5] hover:underline"
+              >
+                Explore All Features → <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </div>
-            <div className="lg:w-1/2 relative bg-gray-50 rounded-[48px] p-12 overflow-hidden border border-gray-100">
-              <div className="relative z-10 bg-white rounded-3xl shadow-2xl p-8 border border-gray-100">
-                <div className="flex justify-between items-center mb-8 pb-4 border-b border-gray-50">
-                  <span className="font-bold text-[#1E3A8A]">New Campaign</span>
-                  <Badge variant="outline">Draft</Badge>
-                </div>
-                <div className="space-y-6">
-                  <div className="h-4 w-1/3 bg-gray-100 rounded-full" />
-                  <div className="space-y-2">
-                    <div className="h-12 w-full bg-gray-50 rounded-xl" />
-                    <div className="h-32 w-full bg-gray-50 rounded-xl flex items-center justify-center text-gray-400 text-sm">Type your message...</div>
-                  </div>
-                  <div className="flex justify-end pt-4">
-                    <div className="h-12 w-32 bg-[#F97316] rounded-xl flex items-center justify-center text-white font-bold text-sm">Send Now</div>
-                  </div>
-                </div>
-              </div>
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150%] h-[150%] bg-blue-100/30 rounded-full blur-[100px] pointer-events-none" />
+          </div>
+        </section>
+
+        {/* AI Section - Matching Ahrefs AI features */}
+
+        {/* Big Data Section - Matching Ahrefs */}
+        <section className="bg-gray-50 py-20 md:py-32">
+          <div className="container mx-auto max-w-7xl px-4">
+            <div className="mb-12">
+              <Badge className="mb-4 bg-[#5B6EF5] text-white hover:bg-[#5B6EF5]/90">KASANOW BIG DATA</Badge>
+              <h2 className="mb-6 text-4xl font-bold text-gray-900 md:text-5xl">
+                Lead with infrastructure built for scale
+              </h2>
+              <p className="max-w-3xl text-xl text-gray-600">
+                With our global carrier network and real-time delivery tracking, we ensure every message reaches its
+                destination—fast, reliably, and securely.
+              </p>
+            </div>
+
+            <div className="grid gap-8 md:grid-cols-3">
+              <Card className="border-2">
+                <CardContent className="p-8 text-center">
+                  <div className="mb-4 text-5xl font-bold text-[#5B6EF5]">#1</div>
+                  <div className="mb-2 text-lg font-bold text-gray-900">SMS Delivery Rate</div>
+                  <p className="text-sm text-gray-600">Industry-leading 99.8% delivery success</p>
+                </CardContent>
+              </Card>
+
+              <Card className="border-2">
+                <CardContent className="p-8 text-center">
+                  <div className="mb-4 text-5xl font-bold text-[#5B6EF5]">500M+</div>
+                  <div className="mb-2 text-lg font-bold text-gray-900">Messages Delivered</div>
+                  <p className="text-sm text-gray-600">Trusted by businesses worldwide</p>
+                </CardContent>
+              </Card>
+
+              <Card className="border-2">
+                <CardContent className="p-8 text-center">
+                  <div className="mb-4 text-5xl font-bold text-[#5B6EF5]">180+</div>
+                  <div className="mb-2 text-lg font-bold text-gray-900">Countries Covered</div>
+                  <p className="text-sm text-gray-600">Global reach with local reliability</p>
+                </CardContent>
+              </Card>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* 5. Pricing Preview */}
-      <section className="bg-gray-50 py-24 md:py-32">
-        <div className="container mx-auto max-w-7xl px-4 text-center">
-          <h2 className="text-4xl font-extrabold text-[#1E3A8A] md:text-5xl tracking-tight mb-6">Simple, pay-as-you-go pricing</h2>
-          <p className="text-gray-600 text-lg mb-16 mx-auto max-w-xl">No monthly fees. No hidden charges. Only pay for what you actually send.</p>
+        {/* Role-Based Use Cases - Matching Ahrefs */}
+        <section id="use-cases" className="bg-white py-20 md:py-32">
+          <div className="container mx-auto max-w-7xl px-4">
+            <h2 className="mb-16 text-4xl font-bold text-gray-900 md:text-5xl lg:text-6xl">
+              Whatever your role, KasaNow gives you an edge
+            </h2>
 
-          <div className="grid gap-8 md:grid-cols-3 max-w-5xl mx-auto">
-            {[
-              { title: "Starter", price: "₵ 0.024", per: "per SMS", features: ["1,000 Contacts", "Basic Analytics", "Standard Support", "No API Access"] },
-              { title: "Business", price: "₵ 0.018", per: "per SMS", features: ["Unlimited Contacts", "Advanced Analytics", "Priority Support", "Full API Access"], hot: true },
-              { title: "Enterprise", price: "Custom", per: "volume based", features: ["Dedicated IP", "Custom Integration", "SLA Guarantee", "Account Manager"] },
-            ].map((tier, i) => (
-              <div key={i} className={`relative p-10 rounded-[40px] border-2 transition-all duration-300 ${tier.hot ? "bg-white border-blue-600 shadow-2xl scale-105 z-10" : "bg-white border-gray-100 hover:border-blue-200"}`}>
-                {tier.hot && <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-blue-600 text-white text-[10px] font-black uppercase tracking-[0.2em] px-4 py-1.5 rounded-full">Most Popular</div>}
-                <h3 className="text-xl font-bold text-gray-900 mb-6">{tier.title}</h3>
-                <div className="mb-8">
-                  <span className="text-4xl font-extrabold text-[#1E3A8A] tracking-tighter">{tier.price}</span>
-                  <span className="text-gray-400 block mt-1 text-sm font-bold uppercase">{tier.per}</span>
-                </div>
-                <ul className="space-y-4 mb-10 text-left">
-                  {tier.features.map((f, j) => (
-                    <li key={j} className="flex items-center gap-3 text-sm text-gray-600 font-medium">
-                      <Check className="h-4 w-4 text-green-500" /> {f}
+            <div className="grid gap-8 lg:grid-cols-2">
+              {/* Marketing Teams */}
+              <Card className="border-2">
+                <CardContent className="p-8">
+                  <h3 className="mb-6 text-2xl font-bold">Marketing Teams</h3>
+                  <ul className="space-y-3">
+                    <li className="flex items-start">
+                      <Check className="mr-3 mt-0.5 h-5 w-5 flex-shrink-0 text-[#5B6EF5]" />
+                      <span className="text-gray-700">Launch promotional campaigns in minutes</span>
                     </li>
-                  ))}
-                </ul>
-                <Link href="/waitlist">
-                  <Button className={`w-full h-14 rounded-2xl font-bold text-lg border-none transition-all ${tier.hot ? "bg-emerald-gradient text-white shadow-xl shadow-emerald-500/20 hover:opacity-90" : "bg-gray-100 hover:bg-gray-200 text-[#1E3A8A]"}`}>Join Waitlist</Button>
-                </Link>
-              </div>
-            ))}
-          </div>
-          <div className="mt-12">
-            <Link href="/pricing" className="text-[#1E3A8A] font-bold py-4 px-8 border-b-2 border-transparent hover:border-blue-600 transition-all inline-flex items-center gap-2">View Full Pricing <ChevronRight className="h-5 w-5" /></Link>
-          </div>
-        </div>
-      </section>
+                    <li className="flex items-start">
+                      <Check className="mr-3 mt-0.5 h-5 w-5 flex-shrink-0 text-[#5B6EF5]" />
+                      <span className="text-gray-700">Track engagement and ROI with detailed analytics</span>
+                    </li>
+                    <li className="flex items-start">
+                      <Check className="mr-3 mt-0.5 h-5 w-5 flex-shrink-0 text-[#5B6EF5]" />
+                      <span className="text-gray-700">A/B test messages for maximum impact</span>
+                    </li>
+                    <li className="flex items-start">
+                      <Check className="mr-3 mt-0.5 h-5 w-5 flex-shrink-0 text-[#5B6EF5]" />
+                      <span className="text-gray-700">Segment audiences for personalized outreach</span>
+                    </li>
+                  </ul>
+                  <Link
+                    href="#"
+                    className="mt-6 inline-flex items-center text-sm font-semibold text-[#5B6EF5] hover:underline"
+                  >
+                    Learn more → <ArrowRight className="ml-1 h-4 w-4" />
+                  </Link>
+                </CardContent>
+              </Card>
 
-      {/* 6. Testimonials */}
-      <section id="customers" className="bg-white py-24 md:py-32">
-        <div className="container mx-auto max-w-7xl px-4 text-center">
-          <h2 className="mb-20 text-4xl font-extrabold text-[#1E3A8A] md:text-5xl tracking-tight">Loved by businesses of <span className="text-blue-gradient">all sizes</span></h2>
+              {/* E-commerce */}
+              <Card className="border-2">
+                <CardContent className="p-8">
+                  <h3 className="mb-6 text-2xl font-bold">E-commerce</h3>
+                  <ul className="space-y-3">
+                    <li className="flex items-start">
+                      <Check className="mr-3 mt-0.5 h-5 w-5 flex-shrink-0 text-[#5B6EF5]" />
+                      <span className="text-gray-700">Send order confirmations and shipping updates</span>
+                    </li>
+                    <li className="flex items-start">
+                      <Check className="mr-3 mt-0.5 h-5 w-5 flex-shrink-0 text-[#5B6EF5]" />
+                      <span className="text-gray-700">Recover abandoned carts with timely reminders</span>
+                    </li>
+                    <li className="flex items-start">
+                      <Check className="mr-3 mt-0.5 h-5 w-5 flex-shrink-0 text-[#5B6EF5]" />
+                      <span className="text-gray-700">Drive flash sales with instant notifications</span>
+                    </li>
+                    <li className="flex items-start">
+                      <Check className="mr-3 mt-0.5 h-5 w-5 flex-shrink-0 text-[#5B6EF5]" />
+                      <span className="text-gray-700">Build customer loyalty with exclusive offers</span>
+                    </li>
+                  </ul>
+                  <Link
+                    href="#"
+                    className="mt-6 inline-flex items-center text-sm font-semibold text-[#5B6EF5] hover:underline"
+                  >
+                    Learn more → <ArrowRight className="ml-1 h-4 w-4" />
+                  </Link>
+                </CardContent>
+              </Card>
 
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {[
-              { name: "Pastor Mensah", role: "Faith Chapel International", text: "KasaNow has been a blessing for our congregation. We send our Sunday reminders effortlessly and our attendance has improved greatly." },
-              { name: "Sarah K.", role: "Founder, Glow Up Shop", text: "The flash sales we run through KasaNow sell out in hours. The delivery is instant and the platform is so easy to use even for me!" },
-              { name: "Kofi Appiah", role: "CTO, PaySwift Ghana", text: "We integrated their SMS API for our OTPs. The reliability is unmatched in Ghana. Latency is minimal and the documentation is perfect." },
-            ].map((t, i) => (
-              <div key={i} className="p-10 rounded-[40px] bg-gray-50 text-left border border-gray-100 hover:shadow-xl transition-shadow duration-300">
-                <div className="flex gap-1 mb-6 text-[#F97316]">
-                  {[...Array(5)].map((_, j) => <Star key={j} className="h-5 w-5 fill-current" />)}
-                </div>
-                <p className="text-gray-700 text-lg leading-relaxed mb-8 italic">"{t.text}"</p>
-                <div>
-                  <div className="font-bold text-[#1E3A8A] text-lg">{t.name}</div>
-                  <div className="text-sm font-bold text-gray-400 uppercase tracking-wider">{t.role}</div>
-                </div>
-              </div>
-            ))}
+              {/* Healthcare */}
+              <Card className="border-2">
+                <CardContent className="p-8">
+                  <h3 className="mb-6 text-2xl font-bold">Healthcare</h3>
+                  <ul className="space-y-3">
+                    <li className="flex items-start">
+                      <Check className="mr-3 mt-0.5 h-5 w-5 flex-shrink-0 text-[#5B6EF5]" />
+                      <span className="text-gray-700">Send appointment reminders to reduce no-shows</span>
+                    </li>
+                    <li className="flex items-start">
+                      <Check className="mr-3 mt-0.5 h-5 w-5 flex-shrink-0 text-[#5B6EF5]" />
+                      <span className="text-gray-700">Deliver test results and health updates securely</span>
+                    </li>
+                    <li className="flex items-start">
+                      <Check className="mr-3 mt-0.5 h-5 w-5 flex-shrink-0 text-[#5B6EF5]" />
+                      <span className="text-gray-700">HIPAA-compliant messaging infrastructure</span>
+                    </li>
+                    <li className="flex items-start">
+                      <Check className="mr-3 mt-0.5 h-5 w-5 flex-shrink-0 text-[#5B6EF5]" />
+                      <span className="text-gray-700">Emergency alerts and health notifications</span>
+                    </li>
+                  </ul>
+                  <Link
+                    href="#"
+                    className="mt-6 inline-flex items-center text-sm font-semibold text-[#5B6EF5] hover:underline"
+                  >
+                    Learn more → <ArrowRight className="ml-1 h-4 w-4" />
+                  </Link>
+                </CardContent>
+              </Card>
+
+              {/* Small Business */}
+              <Card className="border-2">
+                <CardContent className="p-8">
+                  <h3 className="mb-6 text-2xl font-bold">Small Business</h3>
+                  <ul className="space-y-3">
+                    <li className="flex items-start">
+                      <Check className="mr-3 mt-0.5 h-5 w-5 flex-shrink-0 text-[#5B6EF5]" />
+                      <span className="text-gray-700">Affordable pricing with no hidden fees</span>
+                    </li>
+                    <li className="flex items-start">
+                      <Check className="mr-3 mt-0.5 h-5 w-5 flex-shrink-0 text-[#5B6EF5]" />
+                      <span className="text-gray-700">No technical skills required—start in 5 minutes</span>
+                    </li>
+                    <li className="flex items-start">
+                      <Check className="mr-3 mt-0.5 h-5 w-5 flex-shrink-0 text-[#5B6EF5]" />
+                      <span className="text-gray-700">Connect with local customers effectively</span>
+                    </li>
+                    <li className="flex items-start">
+                      <Check className="mr-3 mt-0.5 h-5 w-5 flex-shrink-0 text-[#5B6EF5]" />
+                      <span className="text-gray-700">Scale as your business grows</span>
+                    </li>
+                  </ul>
+                  <Link
+                    href="#"
+                    className="mt-6 inline-flex items-center text-sm font-semibold text-[#5B6EF5] hover:underline"
+                  >
+                    Learn more → <ArrowRight className="ml-1 h-4 w-4" />
+                  </Link>
+                </CardContent>
+              </Card>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* 7. Final CTA Banner */}
-      <section className="bg-white py-24 px-4 overflow-hidden">
-        <div className="container mx-auto max-w-6xl">
-          <div className="relative rounded-[56px] bg-blue-gradient p-12 md:p-24 overflow-hidden text-center text-white">
-            <div className="relative z-10">
-              <h2 className="text-4xl font-extrabold md:text-7xl mb-8 tracking-tighter">Ready to send SMS today?</h2>
-              <p className="text-white/70 text-xl md:text-2xl mb-12 max-w-2xl mx-auto">Join thousands of Ghanaian businesses growing with KasaNow.</p>
-              <div className="flex flex-col sm:flex-row gap-6 justify-center">
-                <Link href="/waitlist">
-                  <Button className="bg-emerald-gradient hover:opacity-90 text-white font-black h-16 px-12 rounded-2xl text-xl shadow-2xl shadow-emerald-500/30 hover:scale-105 transition-transform w-full sm:w-auto border-none">Join Waitlist</Button>
-                </Link>
-                <Link href="/waitlist">
-                  <Button variant="outline" className="border-white/30 bg-white/10 hover:bg-white/20 text-white font-bold h-16 px-12 rounded-2xl text-xl backdrop-blur-md w-full sm:w-auto">Talk to Sales</Button>
-                </Link>
+        {/* Enterprise Section - Matching Ahrefs Enterprise */}
+        <section className="bg-gray-900 py-20 text-white md:py-32">
+          <div className="container mx-auto max-w-7xl px-4">
+            <div className="mb-16">
+              <h2 className="mb-6 text-4xl font-bold md:text-5xl">KasaNow Enterprise—Scale with confidence</h2>
+              <p className="max-w-3xl text-xl text-white/80">
+                Advanced features, dedicated support, and enterprise-grade security for organizations that need more.
+              </p>
+            </div>
+
+            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+              <div>
+                <h3 className="mb-3 text-xl font-bold">API Access</h3>
+                <p className="text-white/70">
+                  Power custom integrations, internal tools, and automated workflows with our flexible REST API.
+                </p>
               </div>
-              <div className="mt-12 flex items-center justify-center gap-2 text-white/50 text-sm font-bold uppercase tracking-[0.2em]">
-                <div className="h-2 w-2 rounded-full bg-green-400" /> 21,332 users joined in the last 7 days
+
+              <div>
+                <h3 className="mb-3 text-xl font-bold">Dedicated Support</h3>
+                <p className="text-white/70">
+                  Get priority support with dedicated account managers and 24/7 technical assistance.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="mb-3 text-xl font-bold">Custom Reporting</h3>
+                <p className="text-white/70">
+                  Build custom dashboards and reports tailored to your business metrics and KPIs.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="mb-3 text-xl font-bold">Single Sign-On</h3>
+                <p className="text-white/70">
+                  Integrate with your existing identity provider for seamless access control.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="mb-3 text-xl font-bold">Compliance & Security</h3>
+                <p className="text-white/70">ISO27001 certified, GDPR compliant, with bank-level encryption.</p>
+              </div>
+
+              <div>
+                <h3 className="mb-3 text-xl font-bold">Volume Discounts</h3>
+                <p className="text-white/70">
+                  Enterprise pricing scales with your usage—the more you send, the less you pay.
+                </p>
               </div>
             </div>
-            <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-blue-400/20 to-transparent pointer-events-none" />
+
+            <div className="mt-12">
+              <Button size="lg" className="bg-[#FF8800] hover:bg-[#FF7700] text-white font-semibold">
+                Contact Sales
+              </Button>
+            </div>
           </div>
-        </div>
-      </section>
-    </div>
+        </section>
+
+        {/* Support Resources - Matching Ahrefs */}
+        <section className="bg-[#5B6EF5] py-20 text-white md:py-32">
+          <div className="container mx-auto max-w-7xl px-4">
+            <h2 className="mb-6 text-center text-4xl font-normal leading-tight md:text-5xl lg:text-6xl">
+              We'll support you all the way—whatever your question, there's a guide, video, or real human ready to help
+            </h2>
+
+            <div className="mt-16 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+              {/* Documentation */}
+              <div className="group">
+                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-white/10">
+                  <BookOpen className="h-6 w-6 text-white" />
+                </div>
+                <h3 className="mb-2 text-xl font-bold">Documentation</h3>
+                <p className="text-white/80">Comprehensive guides for developers and marketers.</p>
+              </div>
+
+              {/* API Reference */}
+              <div className="group">
+                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-white/10">
+                  <Code2 className="h-6 w-6 text-white" />
+                </div>
+                <h3 className="mb-2 text-xl font-bold">API Reference</h3>
+                <p className="text-white/80">Complete API endpoints and code examples.</p>
+              </div>
+
+              {/* Case Studies */}
+              <div className="group">
+                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-white/10">
+                  <FileText className="h-6 w-6 text-white" />
+                </div>
+                <h3 className="mb-2 text-xl font-bold">Case Studies</h3>
+                <p className="text-white/80">See how other businesses use KasaNow.</p>
+              </div>
+
+              {/* Help Center */}
+              <div className="group">
+                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-white/10">
+                  <HelpCircle className="h-6 w-6 text-white" />
+                </div>
+                <h3 className="mb-2 text-xl font-bold">Help Center</h3>
+                <p className="text-white/80">Find answers to common questions immediately.</p>
+              </div>
+
+              {/* Video Tutorials */}
+              <div className="group">
+                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-white/10">
+                  <Video className="h-6 w-6 text-white" />
+                </div>
+                <h3 className="mb-2 text-xl font-bold">Video Tutorials</h3>
+                <p className="text-white/80">Watch step-by-step guides on our channel.</p>
+              </div>
+
+              {/* System Status */}
+              <div className="group">
+                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-white/10">
+                  <Activity className="h-6 w-6 text-white" />
+                </div>
+                <h3 className="mb-2 text-xl font-bold">System Status</h3>
+                <p className="text-white/80">Check real-time uptime and performance.</p>
+              </div>
+            </div>
+
+
+            {/* Orange Stats Banner */}
+            <div className="mt-20 rounded-2xl bg-[#FF8800] p-12 md:p-16">
+              <div className="grid gap-8 lg:grid-cols-2">
+                <div className="flex items-center">
+                  <p className="text-2xl font-normal leading-relaxed md:text-3xl">
+                    Responsive, reliable, multilingual <span className="font-bold">world-class customer support</span>
+                    —available 5 days a week when you need it most.
+                  </p>
+                </div>
+                <div className="grid gap-8 sm:grid-cols-2">
+                  <div>
+                    <div className="mb-2 text-6xl font-bold md:text-7xl">90%</div>
+                    <div className="text-xl font-medium">Satisfaction rating</div>
+                  </div>
+                  <div>
+                    <div className="mb-2 text-6xl font-bold md:text-7xl">6:41m</div>
+                    <div className="text-xl font-medium">Median first response time</div>
+                  </div>
+                  <div className="sm:col-span-2">
+                    <div className="mb-2 text-6xl font-bold md:text-7xl">91,418</div>
+                    <div className="text-xl font-medium">Closed conversations</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Customer Testimonials - Matching Ahrefs */}
+        <section id="customers" className="bg-gray-50 py-20 md:py-32">
+          <div className="container mx-auto max-w-7xl px-4">
+            <h2 className="mb-16 text-center text-4xl font-bold text-gray-900 md:text-5xl">
+              KasaNow is how modern businesses communicate
+            </h2>
+
+            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+              <Card className="border-2">
+                <CardContent className="p-8">
+                  <div className="mb-4 flex items-center gap-1">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="h-5 w-5 fill-[#FF8800] text-[#FF8800]" />
+                    ))}
+                  </div>
+                  <p className="mb-6 text-gray-700">
+                    "KasaNow transformed how we reach customers. Setup took 5 minutes and we saw immediate results. The
+                    delivery rates are outstanding."
+                  </p>
+                  <div>
+                    <div className="font-bold text-gray-900">Sarah Johnson</div>
+                    <div className="text-sm text-gray-600">Marketing Director, TechStart Inc</div>
+                  </div>
+                  <div className="mt-4 text-sm font-semibold text-[#5B6EF5]">
+                    <span className="text-2xl font-bold text-gray-900">12K+</span> messages sent monthly
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="border-2">
+                <CardContent className="p-8">
+                  <div className="mb-4 flex items-center gap-1">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="h-5 w-5 fill-[#FF8800] text-[#FF8800]" />
+                    ))}
+                  </div>
+                  <p className="mb-6 text-gray-700">
+                    "We switched from a complex API solution to KasaNow. Our team loves the simplicity and the cost
+                    savings are significant."
+                  </p>
+                  <div>
+                    <div className="font-bold text-gray-900">Michael Chen</div>
+                    <div className="text-sm text-gray-600">CTO, RetailHub</div>
+                  </div>
+                  <div className="mt-4 text-sm font-semibold text-[#5B6EF5]">
+                    <span className="text-2xl font-bold text-gray-900">50%</span> cost reduction
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="border-2">
+                <CardContent className="p-8">
+                  <div className="mb-4 flex items-center gap-1">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="h-5 w-5 fill-[#FF8800] text-[#FF8800]" />
+                    ))}
+                  </div>
+                  <p className="mb-6 text-gray-700">
+                    "The analytics dashboard gives us insights we never had before. We can track every campaign and
+                    optimize in real-time."
+                  </p>
+                  <div>
+                    <div className="font-bold text-gray-900">Emily Rodriguez</div>
+                    <div className="text-sm text-gray-600">Growth Lead, FitnessPro</div>
+                  </div>
+                  <div className="mt-4 text-sm font-semibold text-[#5B6EF5]">
+                    <span className="text-2xl font-bold text-gray-900">3x</span> engagement increase
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            <div className="mt-16 flex flex-wrap items-center justify-center gap-8">
+              <div className="text-center">
+                <div className="mb-2 text-sm font-medium text-gray-600">Rated on Capterra</div>
+                <div className="flex items-center gap-2">
+                  <span className="text-2xl font-bold">4.8</span>
+                  <div className="flex">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="h-5 w-5 fill-[#FF8800] text-[#FF8800]" />
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              <div className="text-center">
+                <div className="mb-2 text-sm font-medium text-gray-600">Rated on G2</div>
+                <div className="flex items-center gap-2">
+                  <span className="text-2xl font-bold">4.7</span>
+                  <div className="flex">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="h-5 w-5 fill-[#FF8800] text-[#FF8800]" />
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              <div className="text-center">
+                <div className="mb-2 text-sm font-medium text-gray-600">Rated on Trustpilot</div>
+                <div className="flex items-center gap-2">
+                  <span className="text-2xl font-bold">4.9</span>
+                  <div className="flex">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="h-5 w-5 fill-[#FF8800] text-[#FF8800]" />
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section >
+
+        {/* Final CTA - Matching Ahrefs */}
+        < section className="bg-[#5B6EF5] py-20 text-white md:py-32" >
+          <div className="container mx-auto max-w-7xl px-4 text-center">
+            <h2 className="mb-6 text-4xl font-bold md:text-5xl">Stay connected—via SMS, instantly</h2>
+            <p className="mb-8 text-lg text-white/80">
+              <span className="font-semibold text-white">21,332</span> users joined KasaNow in the last 7 days
+            </p>
+            <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+              <Link href="/waitlist">
+                <Button size="lg" className="bg-[#FF8800] hover:bg-[#FF7700] text-white font-semibold h-14 px-8">
+                  Join Waitlist
+                </Button>
+              </Link>
+              <Link href="/waitlist">
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="border-2 border-white bg-transparent text-white hover:bg-white/10 h-14 px-8"
+                >
+                  Join Waitlist
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </section >
+      </main >
+
+
+    </div >
   )
 }

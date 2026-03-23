@@ -59,7 +59,7 @@ export default function RootLayout({
     <html lang="en" className="scroll-smooth">
       <body className={`${inter.variable} ${geistMono.variable} font-sans antialiased text-gray-900 border-gray-200`}>
         <Header />
-        <main className="min-h-screen pt-20">
+        <main className="min-h-screen">
           {children}
         </main>
         <Footer />

@@ -1,49 +1,52 @@
-"use client"
-
 import Link from "next/link"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
+import { ArrowRight } from "lucide-react"
 
 export default function Header() {
-    return (
-        <header className="fixed top-0 z-50 w-full bg-white/95 backdrop-blur-md shadow-sm border-b border-gray-100">
-            <div className="container mx-auto flex h-20 max-w-7xl items-center justify-between px-4">
-                <Link href="/" className="flex items-center">
-                    <Image
-                        src="/logo.jpg"
-                        alt="KasaNow"
-                        width={200}
-                        height={50}
-                        className="h-12 w-auto object-contain"
-                    />
-                </Link>
+  return (
+    <header className="sticky top-0 z-50 w-full border-b bg-white">
+      <div className="container mx-auto flex h-16 max-w-7xl items-center justify-between px-4">
+        <Link href="/" className="flex items-center space-x-2">
+          <Image
+            src="/logo.jpg"
+            alt="KasaNow Logo"
+            width={40}
+            height={40}
+            className="h-8 w-auto object-contain"
+          />
+          <span className="text-xl font-bold tracking-tight text-[#111827]">KasaNow</span>
+        </Link>
 
-                <nav className="hidden items-center space-x-10 lg:flex font-sans">
-                    <Link href="/#features" className="text-sm font-bold text-gray-500 transition-all hover:text-[#3A57FC]">
-                        Features
-                    </Link>
-                    <Link href="/products" className="text-sm font-bold text-gray-500 transition-all hover:text-[#3A57FC]">
-                        Products
-                    </Link>
-                    <Link href="/pricing" className="text-sm font-bold text-gray-500 transition-all hover:text-[#3A57FC]">
-                        Pricing
-                    </Link>
-                    <Link href="/docs" className="text-sm font-bold text-gray-500 transition-all hover:text-[#3A57FC]">
-                        Developers
-                    </Link>
-                </nav>
+        <nav className="hidden items-center space-x-8 md:flex">
+          <Link href="#features" className="text-sm font-medium text-gray-600 transition-colors hover:text-gray-900">
+            Features
+          </Link>
+          <Link href="/pricing" className="text-sm font-medium text-gray-600 transition-colors hover:text-gray-900">
+            Pricing
+          </Link>
+          <Link href="/faq" className="text-sm font-medium text-gray-600 transition-colors hover:text-gray-900">
+            FAQ
+          </Link>
+          <Link href="/docs" className="text-sm font-medium text-gray-600 transition-colors hover:text-gray-900">
+            Docs
+          </Link>
+          <Link href="/contact" className="text-sm font-medium text-gray-600 transition-colors hover:text-gray-900">
+            Contact
+          </Link>
+        </nav>
 
-                <div className="flex items-center space-x-6">
-                    <Link href="/login" className="hidden text-sm font-bold text-gray-900 md:block hover:text-[#3A57FC] transition-colors">
-                        Log in
-                    </Link>
-                    <Link href="/waitlist">
-                        <Button size="lg" className="bg-[#F97316] hover:bg-[#EA580C] text-white font-bold rounded-xl px-6 transition-transform hover:scale-105 active:scale-95 shadow-lg shadow-orange-500/20">
-                            Join Waitlist
-                        </Button>
-                    </Link>
-                </div>
-            </div>
-        </header>
-    )
+        <div className="flex items-center space-x-6">
+          <Link href="/login" className="text-sm font-medium text-gray-600 transition-colors hover:text-gray-900">
+            Sign in
+          </Link>
+          <Link href="/waitlist">
+            <Button size="sm" className="bg-[#F97316] hover:bg-[#EA580C] px-5 font-bold rounded-lg text-white shadow-sm transition-transform hover:scale-105 border-none">
+              Join Waitlist <ArrowRight className="ml-1.5 h-4 w-4" />
+            </Button>
+          </Link>
+        </div>
+      </div>
+    </header>
+  )
 }
