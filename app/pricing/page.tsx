@@ -1,136 +1,176 @@
 import { Metadata } from 'next'
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Check, Info, Zap, ShieldCheck, Globe, Star, TrendingUp, ChevronRight } from "lucide-react"
+import { Check, Info, ShieldCheck, Globe, Zap, ArrowRight } from "lucide-react"
 import Link from "next/link"
-import PricingCalculator from "@/components/PricingCalculator"
 
 export const metadata: Metadata = {
-    title: "Bulk SMS Pricing Ghana - KasaNow SMS Credit Rates",
-    description: "View KasaNow's affordable volume-based SMS rates for Ghana. Use our calculator to estimate your costs. No hidden fees, no monthly charges.",
+    title: "Pricing - KasaNow SMS",
+    description: "Simple, transparent pricing for KasaNow's SMS platform. No hidden fees, no monthly charges.",
     keywords: "Bulk SMS price Ghana, SMS rates Accra, KasaNow pricing",
 }
 
 export default function PricingPage() {
     return (
-        <div className="flex flex-col bg-white">
+        <div className="min-h-screen bg-[#F8FAFC] flex flex-col relative overflow-hidden">
+
+            {/* Aurora Background Effect */}
+            <div className="absolute top-0 left-0 right-0 h-[600px] bg-gradient-to-b from-blue-50 to-transparent z-0 overflow-hidden pointer-events-none">
+                <div className="absolute -top-[20%] -left-[10%] w-[50%] h-[50%] rounded-full bg-[#3A57FC]/10 blur-[120px]"></div>
+                <div className="absolute -top-[10%] right-[0%] w-[40%] h-[40%] rounded-full bg-[#FF8800]/10 blur-[120px]"></div>
+            </div>
+
             {/* Hero */}
-            <section className="bg-blue-gradient py-24 md:py-32 text-white text-center">
-                <div className="container mx-auto max-w-7xl px-4">
-                    <Badge className="mb-6 bg-white/10 text-white border-white/20 px-4 py-1.5 text-xs font-bold uppercase tracking-wider">Transparent Pricing</Badge>
-                    <h1 className="text-5xl font-extrabold md:text-7xl tracking-tighter mb-8 italic">Simple. Scalable. Transparent.</h1>
-                    <p className="text-white/70 text-xl max-w-2xl mx-auto leading-relaxed">No monthly fees. No hidden charges. Only pay for the messages you actually send to your customers.</p>
+            <section className="relative pt-24 pb-16 md:pt-32 md:pb-24 text-center z-10">
+                <div className="container mx-auto max-w-4xl px-4">
+                    <Badge className="mb-6 bg-[#3A57FC]/10 text-[#3A57FC] hover:bg-[#3A57FC]/20 border-none px-4 py-1.5 text-sm font-semibold tracking-wide">
+                        Transparent Pricing
+                    </Badge>
+                    <h1 className="text-5xl font-extrabold md:text-7xl tracking-tight mb-8 text-slate-900">
+                        Pay for what you send.<br/>
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#3A57FC] to-[#0EA5E9]">Nothing else.</span>
+                    </h1>
+                    <p className="text-slate-600 text-xl max-w-2xl mx-auto leading-relaxed">
+                        No monthly fees. No hidden charges. No complex volume calculators. Just simple, scalable pricing designed to grow with your business.
+                    </p>
                 </div>
             </section>
 
-            {/* Pricing Calculator (Client Component) */}
-            <section className="py-24 md:py-32">
-                <div className="container mx-auto max-w-5xl px-4">
-                    <PricingCalculator />
-                </div>
-            </section>
-
-            {/* Main Tiers */}
-            <section className="bg-gray-50 py-24 md:py-32">
-                <div className="container mx-auto max-w-7xl px-4">
-                    <div className="grid gap-8 md:grid-cols-3">
-                        {[
-                            { title: "Starter", subtitle: "For individuals & small teams", price: "₵ 0.024", features: ["Up to 5,000 SMS month", "Web SMS platform", "Standard support", "No API access"] },
-                            { title: "Business", subtitle: "For growing companies", price: "₵ 0.018", features: ["Unlimited volume", "Full Developer API", "Priority support", "Sender ID registration"], hot: true },
-                            { title: "Enterprise", subtitle: "For high-volume needs", price: "Custom", features: ["Dedicated IP addresses", "Multi-user accounts", "SLA & 24/7 technical lead", "Custom billing terms"] },
-                        ].map((tier, i) => (
-                            <div key={i} className={`p-12 rounded-[48px] border-2 transition-all duration-500 ${tier.hot ? "bg-white border-blue-600 scale-105 shadow-2xl z-10" : "bg-white border-gray-100 hover:border-blue-200"}`}>
-                                <h3 className="text-2xl font-black text-[#1E3A8A] mb-2 tracking-tight">{tier.title}</h3>
-                                <p className="text-gray-400 font-bold text-sm mb-8 uppercase tracking-widest">{tier.subtitle}</p>
-
-                                <div className="mb-10 lg:min-h-[80px]">
-                                    <span className="text-5xl font-black text-[#1E3A8A] tracking-tighter">{tier.price}</span>
-                                    {tier.price !== "Custom" && <span className="text-gray-400 font-bold block mt-1">per SMS</span>}
-                                </div>
-
-                                <ul className="space-y-5 mb-12">
-                                    {tier.features.map((f, j) => (
-                                        <li key={j} className="flex items-start gap-3 text-gray-600 font-medium">
-                                            <Check className="h-5 w-5 text-green-500 mt-0.5" /> {f}
-                                        </li>
-                                    ))}
-                                </ul>
-
-                                <Link href="/waitlist">
-                                    <Button className={`w-full h-16 rounded-2xl font-black text-lg ${tier.hot ? "bg-blue-600 hover:bg-blue-700 shadow-xl shadow-blue-500/20" : "bg-gray-100 hover:bg-gray-200 text-[#1E3A8A]"}`}>Join Waitlist</Button>
-                                </Link>
+            {/* Pricing Cards */}
+            <section className="relative pb-24 z-10">
+                <div className="container mx-auto max-w-6xl px-4">
+                    <div className="grid gap-8 md:grid-cols-3 items-center">
+                        {/* Starter */}
+                        <div className="bg-white rounded-[32px] p-8 md:p-10 border border-slate-100 shadow-xl shadow-slate-200/50 hover:shadow-2xl transition-all duration-300">
+                            <h3 className="text-2xl font-bold text-slate-900 mb-2">Starter</h3>
+                            <p className="text-slate-500 text-sm mb-6">For individuals & small teams exploring SMS.</p>
+                            <div className="mb-8">
+                                <span className="text-5xl font-black text-slate-900">₵0.024</span>
+                                <span className="text-slate-500 font-medium ml-2">/ SMS</span>
                             </div>
-                        ))}
+                            <ul className="space-y-4 mb-10">
+                                {["Pay As You Go", "Up to 5,000 SMS / month", "Full Web Platform Access", "Standard Support", "No API Access"].map((feature, idx) => (
+                                    <li key={idx} className="flex items-start gap-3 text-slate-700 font-medium">
+                                        <div className="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                            <Check className="h-3 w-3 text-green-600 stroke-[3]" />
+                                        </div>
+                                        {feature}
+                                    </li>
+                                ))}
+                            </ul>
+                            <Link href="/sign-up">
+                                <Button className="w-full h-14 rounded-xl font-bold text-[15px] bg-slate-100 hover:bg-slate-200 text-slate-900">
+                                    Get Started
+                                </Button>
+                            </Link>
+                        </div>
+
+                        {/* Business (Popular) */}
+                        <div className="bg-white rounded-[32px] p-8 md:p-10 border-2 border-[#3A57FC] shadow-2xl shadow-[#3A57FC]/20 md:scale-105 relative">
+                            <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#FF8800] to-[#F97316] text-white text-xs font-black uppercase tracking-wider px-4 py-1.5 rounded-full shadow-md">
+                                Most Popular
+                            </div>
+                            <h3 className="text-2xl font-bold text-slate-900 mb-2">Business</h3>
+                            <p className="text-slate-500 text-sm mb-6">For growing companies requiring API access.</p>
+                            <div className="mb-8">
+                                <span className="text-5xl font-black text-slate-900">₵0.018</span>
+                                <span className="text-slate-500 font-medium ml-2">/ SMS</span>
+                            </div>
+                            <ul className="space-y-4 mb-10">
+                                {["Unlimited Volume", "Full Developer API Access", "Priority Customer Support", "Custom Sender ID Registration", "Advanced Analytics Dashboard"].map((feature, idx) => (
+                                    <li key={idx} className="flex items-start gap-3 text-slate-700 font-medium">
+                                        <div className="w-5 h-5 rounded-full bg-[#3A57FC]/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                            <Check className="h-3 w-3 text-[#3A57FC] stroke-[3]" />
+                                        </div>
+                                        {feature}
+                                    </li>
+                                ))}
+                            </ul>
+                            <Link href="/sign-up">
+                                <Button className="w-full h-14 rounded-xl font-bold text-[15px] bg-[#3A57FC] hover:bg-[#2546e5] text-white shadow-[0_8px_20px_-8px_rgba(58,87,252,0.6)] hover:shadow-[0_8px_25px_-8px_rgba(58,87,252,0.8)] transition-all">
+                                    Start Sending Now
+                                </Button>
+                            </Link>
+                        </div>
+
+                        {/* Enterprise */}
+                        <div className="bg-white rounded-[32px] p-8 md:p-10 border border-slate-100 shadow-xl shadow-slate-200/50 hover:shadow-2xl transition-all duration-300">
+                            <h3 className="text-2xl font-bold text-slate-900 mb-2">Enterprise</h3>
+                            <p className="text-slate-500 text-sm mb-6">For high-volume, mission-critical needs.</p>
+                            <div className="mb-8">
+                                <span className="text-5xl font-black text-slate-900">Custom</span>
+                                <span className="text-slate-500 font-medium ml-2">Scale</span>
+                            </div>
+                            <ul className="space-y-4 mb-10">
+                                {["Volume-based Discounts", "Dedicated IP Addresses", "Multi-User Account Handles", "24/7 Technical Phone Support", "Custom Billing Agreements"].map((feature, idx) => (
+                                    <li key={idx} className="flex items-start gap-3 text-slate-700 font-medium">
+                                        <div className="w-5 h-5 rounded-full bg-orange-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                            <Check className="h-3 w-3 text-orange-600 stroke-[3]" />
+                                        </div>
+                                        {feature}
+                                    </li>
+                                ))}
+                            </ul>
+                            <Link href="/waitlist">
+                                <Button className="w-full h-14 rounded-xl font-bold text-[15px] bg-slate-900 hover:bg-slate-800 text-white">
+                                    Contact Sales
+                                </Button>
+                            </Link>
+                        </div>
                     </div>
                 </div>
             </section>
 
-            {/* Comparison Table */}
-            <section className="py-24 md:py-32">
-                <div className="container mx-auto max-w-4xl px-4 overflow-x-auto">
-                    <table className="w-full text-left border-collapse">
-                        <thead>
-                            <tr className="border-b-2 border-[#1E3A8A]">
-                                <th className="py-6 px-4 text-xl font-black text-[#1E3A8A]">Features</th>
-                                <th className="py-6 px-4 text-lg font-bold text-gray-400">Starter</th>
-                                <th className="py-6 px-4 text-lg font-bold text-blue-600">Business</th>
-                                <th className="py-6 px-4 text-lg font-bold text-gray-400">Enterprise</th>
-                            </tr>
-                        </thead>
-                        <tbody className="divide-y divide-gray-100">
-                            {[
-                                { name: "Bulk SMS Web App", s: true, b: true, e: true },
-                                { name: "REST API Access", s: false, b: true, e: true },
-                                { name: "OTP Pipeline", s: false, b: true, e: true },
-                                { name: "Contact Hub", s: "Basic", b: "Full", e: "Full" },
-                                { name: "Delivery Reports", s: "24h", b: "Lifetime", e: "Lifetime" },
-                                { name: "Custom Sender ID", s: false, b: true, e: true },
-                                { name: "Dedicated IP", s: false, b: false, e: true },
-                            ].map((row, i) => (
-                                <tr key={i} className="hover:bg-gray-50 transition-colors">
-                                    <td className="py-6 px-4 font-bold text-gray-700">{row.name}</td>
-                                    <td className="py-6 px-4">{typeof row.s === 'boolean' ? (row.s ? <Check className="text-green-500" /> : "-") : row.s}</td>
-                                    <td className="py-6 px-4">{typeof row.b === 'boolean' ? (row.b ? <Check className="text-blue-500 font-bold" /> : "-") : <span className="text-blue-600 font-bold">{row.b}</span>}</td>
-                                    <td className="py-6 px-4">{typeof row.e === 'boolean' ? (row.e ? <Check className="text-green-500" /> : "-") : row.e}</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
-            </section>
-
-            {/* FAQ Preview */}
-            <section className="bg-gray-50 py-24">
-                <div className="container mx-auto max-w-3xl px-4 text-center">
-                    <h2 className="text-4xl font-black text-[#1E3A8A] mb-12 italic">Common Questions</h2>
-                    <div className="space-y-8 text-left">
-                        {[
-                            { q: "Is there a minimum purchase?", a: "Yes, the minimum credit purchase is ₵ 50.00." },
-                            { q: "Do the credits expire?", a: "No, credits purchased on KasaNow never expire as long as your account is active." },
-                            { q: "Can I upgrade my plan later?", a: "Absolutely. You can switch plans or move to Enterprise billing at any time." },
-                        ].map((faq, i) => (
-                            <div key={i} className="p-8 bg-white rounded-3xl border border-gray-100">
-                                <h4 className="font-black text-[#1E3A8A] mb-4 text-lg">{faq.q}</h4>
-                                <p className="text-gray-600">{faq.a}</p>
+            {/* Value Props / Info */}
+            <section className="bg-white py-24 border-t border-slate-100">
+                <div className="container mx-auto max-w-6xl px-4">
+                    <div className="text-center mb-16">
+                        <h2 className="text-3xl font-bold text-slate-900 mb-4">Everything you need, included.</h2>
+                        <p className="text-slate-600 max-w-2xl mx-auto">No matter which tier you fall into, KasaNow delivers premium infrastructure as standard.</p>
+                    </div>
+                    <div className="grid md:grid-cols-3 gap-8">
+                         <div className="bg-slate-50 rounded-2xl p-8 border border-slate-100">
+                            <div className="w-12 h-12 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center mb-6">
+                                <Globe className="w-6 h-6" />
                             </div>
-                        ))}
+                            <h4 className="text-lg font-bold text-slate-900 mb-3">Global Coverage</h4>
+                            <p className="text-slate-600 leading-relaxed">Reach customers seamlessly across hundreds of local and international carrier networks instantly.</p>
+                         </div>
+                         <div className="bg-slate-50 rounded-2xl p-8 border border-slate-100">
+                            <div className="w-12 h-12 rounded-xl bg-orange-100 text-orange-600 flex items-center justify-center mb-6">
+                                <Zap className="w-6 h-6" />
+                            </div>
+                            <h4 className="text-lg font-bold text-slate-900 mb-3">Lightning Fast</h4>
+                            <p className="text-slate-600 leading-relaxed">Direct tier-1 routes ensure your time-sensitive OTPs and critical alerts are delivered in absolute milliseconds.</p>
+                         </div>
+                         <div className="bg-slate-50 rounded-2xl p-8 border border-slate-100">
+                            <div className="w-12 h-12 rounded-xl bg-green-100 text-green-600 flex items-center justify-center mb-6">
+                                <ShieldCheck className="w-6 h-6" />
+                            </div>
+                            <h4 className="text-lg font-bold text-slate-900 mb-3">Enterprise Security</h4>
+                            <p className="text-slate-600 leading-relaxed">Bank-grade encryption, rigorous data protection, and full compliance with regional privacy laws.</p>
+                         </div>
                     </div>
                 </div>
             </section>
 
             {/* Final CTA */}
-            <section className="bg-white py-24">
-                <div className="container mx-auto max-w-4xl px-4 text-center">
-                    <div className="bg-blue-gradient p-12 md:p-20 rounded-[48px] text-white shadow-2xl">
-                        <h2 className="text-4xl font-black mb-8 tracking-tighter italic">Join 2,000+ happy businesses</h2>
-                        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                            <Link href="/waitlist">
-                                <Button className="bg-[#F97316] hover:bg-orange-700 text-white font-black h-14 px-10 rounded-2xl shadow-xl w-full sm:w-auto">Join Waitlist</Button>
-                            </Link>
-                            <Link href="/waitlist">
-                                <Button variant="outline" className="border-white/20 bg-white/10 text-white font-bold h-14 px-10 rounded-2xl backdrop-blur-md w-full sm:w-auto">Talk to Sales</Button>
-                            </Link>
-                        </div>
+            <section className="py-24 bg-slate-900 relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-r from-[#3A57FC]/20 to-transparent"></div>
+                <div className="container mx-auto max-w-4xl px-4 text-center relative z-10">
+                    <h2 className="text-4xl font-bold text-white mb-6">Ready to upgrade your messaging?</h2>
+                    <p className="text-xl text-slate-300 mb-10 max-w-2xl mx-auto">Join over 2,000 businesses already using KasaNow to communicate with their audience securely and reliably.</p>
+                    <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                        <Link href="/sign-up">
+                            <Button className="bg-[#F97316] hover:bg-[#EA580C] text-white font-bold h-14 px-10 rounded-xl shadow-[0_8px_20px_-8px_rgba(249,115,22,0.6)] text-lg w-full sm:w-auto">
+                                Get Started Free
+                            </Button>
+                        </Link>
+                        <Link href="/waitlist">
+                            <Button variant="outline" className="border-slate-700 bg-slate-800/50 hover:bg-slate-800 text-white font-bold h-14 px-10 rounded-xl w-full sm:w-auto text-lg">
+                                Contact Sales
+                            </Button>
+                        </Link>
                     </div>
                 </div>
             </section>

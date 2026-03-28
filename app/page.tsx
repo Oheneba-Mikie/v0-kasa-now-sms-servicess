@@ -23,6 +23,7 @@ import {
   Video,
   Activity,
 } from "lucide-react"
+import FAQSection from "@/components/FAQSection"
 
 export default function HomePage() {
   return (
@@ -869,6 +870,8 @@ export default function HomePage() {
             </div>
           </div>
         </section >
+
+        <FAQSection />
 
         {/* Final CTA - Matching Ahrefs */}
         < section className="bg-[#5B6EF5] py-20 text-white md:py-32" >

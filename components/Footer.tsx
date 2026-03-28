@@ -65,6 +65,11 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/#faq" className="hover:text-gray-900">
+                  FAQ
+                </Link>
+              </li>
+              <li>
                 <Link href="#" className="hover:text-gray-900">
                   Support
                 </Link>
