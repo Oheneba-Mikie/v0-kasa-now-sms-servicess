@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { motion } from "framer-motion"
+import Link from "next/link"
 import {
     MessageSquare,
     Phone,
@@ -181,9 +182,9 @@ export default function ContactPage() {
                                     <p className="text-slate-400 font-medium text-sm leading-relaxed">
                                         Our technical guides are designed to get you sending in milliseconds. 
                                         <br /> 
-                                        <span className="text-[#60A5FA] font-black hover:underline inline-flex items-center gap-1 cursor-pointer mt-2 text-base">
+                                        <Link href="/docs" className="text-[#60A5FA] font-black hover:underline inline-flex items-center gap-1 cursor-pointer mt-2 text-base">
                                             Explore API Docs <ChevronRight className="h-4 w-4" />
-                                        </span>
+                                        </Link>
                                     </p>
                                 </div>
                             </motion.div>
@@ -300,6 +301,32 @@ export default function ContactPage() {
                                 </motion.div>
                             )}
                         </motion.div>
+                    </div>
+                </div>
+            </section>
+            {/* Trust / Stats Section */}
+            <section className="py-24 bg-white border-t border-slate-100">
+                <div className="container mx-auto max-w-7xl px-4">
+                    <div className="grid md:grid-cols-4 gap-12 text-center">
+                        {[
+                            { label: "Delivery Rate", value: "99.99%", sub: "Industry leading" },
+                            { label: "Daily Messages", value: "2M+", sub: "Scalable infra" },
+                            { label: "API Uptime", value: "100%", sub: "Zero downtime" },
+                            { label: "Response Time", value: "< 200ms", sub: "Ultra low latency" },
+                        ].map((stat, i) => (
+                            <motion.div 
+                                key={i}
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: i * 0.1 }}
+                                className="space-y-2"
+                            >
+                                <div className="text-4xl font-black text-slate-900 tracking-tight">{stat.value}</div>
+                                <div className="text-[10px] font-black text-[#3A57FC] uppercase tracking-[0.2em]">{stat.label}</div>
+                                <div className="text-xs text-slate-400 font-medium">{stat.sub}</div>
+                            </motion.div>
+                        ))}
                     </div>
                 </div>
             </section>

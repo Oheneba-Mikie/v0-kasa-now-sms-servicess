@@ -24,7 +24,8 @@ import {
   FileText,
   MessageSquare,
   Key,
-  ExternalLink
+  ExternalLink,
+  Activity
 } from "lucide-react"
 import { useState, useEffect, useRef } from "react"
 
@@ -195,9 +196,88 @@ export default function DocsPage() {
                 </div>
             </section>
 
+            {/* Postman Collection Section */}
+            <section id="postman" className="scroll-mt-32 space-y-10">
+                <div className="flex items-center gap-3 px-4 py-2 rounded-full bg-orange-50 border border-orange-100 text-orange-600 text-[10px] font-black uppercase tracking-widest w-fit">
+                    <MessageSquare className="h-3.5 w-3.5" /> Postman Collection
+                </div>
+                <h2 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tight leading-tight">
+                    API Sandbox & Collection
+                </h2>
+                <p className="text-slate-500 text-lg leading-relaxed max-w-3xl font-medium">
+                    Test our API endpoints instantly without writing a single line of code. Our official Postman collection contains pre-configured requests for all available services.
+                </p>
+
+                <div className="relative group p-10 md:p-14 rounded-[48px] bg-slate-50 border border-slate-200/60 overflow-hidden">
+                    <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-orange-500/5 rounded-full blur-[80px] -mr-32 -mt-32" />
+                    
+                    <div className="relative z-10 flex flex-col md:flex-row items-center gap-10">
+                        <div className="flex-1 space-y-6">
+                            <div className="inline-flex items-center gap-2 text-orange-600 font-bold bg-orange-500/10 px-3 py-1 rounded-lg text-sm">
+                                <ExternalLink className="h-4 w-4" /> v2.1.0 Ready
+                            </div>
+                            <h3 className="text-2xl font-black text-slate-900">Download the collection</h3>
+                            <p className="text-slate-500 text-sm font-medium leading-relaxed">
+                                Import the JSON collection into your Postman workspace, set your `API_KEY` environment variable, and you're ready to test.
+                            </p>
+                            <Button className="bg-[#3A57FC] hover:bg-[#2D46C7] text-white font-bold h-14 px-8 rounded-2xl shadow-lg shadow-[#3A57FC]/20 transition-all">
+                                Import to Postman
+                            </Button>
+                        </div>
+                        <div className="w-full md:w-80 bg-white rounded-3xl p-6 shadow-xl shadow-slate-200/50 border border-slate-100 transform -rotate-2 group-hover:rotate-0 transition-transform duration-500">
+                             <div className="space-y-4">
+                                <div className="flex items-center gap-3 border-b border-slate-50 pb-3">
+                                    <div className="w-8 h-8 rounded-lg bg-orange-500 text-white flex items-center justify-center font-bold text-xs">P</div>
+                                    <span className="text-xs font-black text-slate-400 uppercase tracking-wider">WORKSPACE</span>
+                                </div>
+                                <div className="space-y-2">
+                                    {["Send SMS", "Bulk Send", "Verify (OTP)", "Check Status"].map((req, i) => (
+                                        <div key={i} className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-slate-50 transition-colors cursor-default">
+                                            <Badge className={`h-2 w-2 rounded-full p-0 border-none ${i === 0 ? 'bg-green-500' : 'bg-slate-200'}`} />
+                                            <span className="text-xs font-bold text-slate-700">{req}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                             </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Official SDKs Section */}
+            <section id="sdks" className="scroll-mt-32 space-y-10">
+                <div className="flex items-center gap-3 px-4 py-2 rounded-full bg-slate-100 border border-slate-200 text-slate-600 text-[10px] font-black uppercase tracking-widest w-fit">
+                    <Code2 className="h-3.5 w-3.5" /> Official SDKs
+                </div>
+                <h2 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tight leading-tight">
+                    Build with your language
+                </h2>
+                <p className="text-slate-500 text-lg leading-relaxed max-w-3xl font-medium">
+                    Our language-specific SDKs abstract the API complexity, allowing you to integrate SMS capabilities with just a few lines of code.
+                </p>
+
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    {[
+                        { name: "Node.js", icon: "🟢", link: "#", package: "npm i kasanow-sdk" },
+                        { name: "Python", icon: "🐍", link: "#", package: "pip install kasanow" },
+                        { name: "PHP", icon: "🐘", link: "#", package: "composer req kasanow" },
+                        { name: "Go", icon: "🐹", link: "#", package: "go get kasanow" },
+                    ].map((sdk, i) => (
+                        <div key={i} className="p-6 rounded-[32px] bg-white border border-slate-100 hover:border-[#3A57FC]/20 hover:shadow-xl hover:shadow-slate-200/50 transition-all group">
+                            <div className="text-3xl mb-4 grayscale group-hover:grayscale-0 transition-all">{sdk.icon}</div>
+                            <h4 className="font-black text-slate-900 mb-1">{sdk.name}</h4>
+                            <code className="text-[10px] text-slate-400 font-mono mb-6 block overflow-hidden text-ellipsis whitespace-nowrap">{sdk.package}</code>
+                            <a href={sdk.link} className="text-[#3A57FC] text-xs font-black uppercase tracking-widest flex items-center gap-1 group-hover:gap-2 transition-all">
+                                View GitHub <ArrowRight className="h-3 w-3" />
+                            </a>
+                        </div>
+                    ))}
+                </div>
+            </section>
+
             {/* Authentication Section */}
             <section id="auth" className="scroll-mt-32 space-y-10">
-              <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-slate-100 border border-slate-200 text-slate-600 text-xs font-black uppercase tracking-widest">
+              <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-slate-100 border border-slate-200 text-slate-600 text-[10px] font-black uppercase tracking-widest">
                 <Lock className="h-3.5 w-3.5" /> Authentication
               </div>
               <h2 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tight leading-tight">
@@ -237,6 +317,61 @@ export default function DocsPage() {
                     </div>
                 </div>
               </div>
+            </section>
+
+            {/* Rate Limiting Section */}
+            <section id="ratelimit" className="scroll-mt-32 space-y-10">
+                <div className="flex items-center gap-3 px-4 py-2 rounded-full bg-slate-100 border border-slate-200 text-slate-600 text-[10px] font-black uppercase tracking-widest w-fit">
+                    <Zap className="h-3.5 w-3.5" /> Rate Limiting
+                </div>
+                <h2 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tight leading-tight">
+                    Performance Tiers
+                </h2>
+                <p className="text-slate-500 text-lg leading-relaxed max-w-3xl font-medium">
+                    To ensure service stability, we implement rate limits based on your subscription tier. Requests exceeding these limits will receive a <code className="text-red-500 font-mono">429 Too Many Requests</code> response.
+                </p>
+
+                <div className="grid md:grid-cols-3 gap-6">
+                    {[
+                        { tier: "Developer", limit: "10 rps", desc: "Sandbox environment" },
+                        { tier: "Scale", limit: "100 rps", desc: "Production traffic" },
+                        { tier: "Enterprise", limit: "Unlimited*", desc: "Custom configuration" },
+                    ].map((tier, i) => (
+                        <div key={i} className="p-8 rounded-[36px] bg-slate-50 border border-slate-100 flex flex-col items-center text-center">
+                            <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">{tier.tier}</div>
+                            <div className="text-3xl font-black text-slate-900 mb-2">{tier.limit}</div>
+                            <p className="text-slate-500 text-xs font-semibold">{tier.desc}</p>
+                        </div>
+                    ))}
+                </div>
+            </section>
+
+            {/* Error Codes Section */}
+            <section id="errors" className="scroll-mt-32 space-y-10">
+                <div className="flex items-center gap-3 px-4 py-2 rounded-full bg-red-50 border border-red-100 text-red-600 text-[10px] font-black uppercase tracking-widest w-fit">
+                    <Activity className="h-3.5 w-3.5" /> Error Codes
+                </div>
+                <h2 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tight leading-tight">
+                    Standard Responses
+                </h2>
+                
+                <div className="bg-white rounded-[40px] border border-slate-100 shadow-sm overflow-hidden">
+                    <div className="divide-y divide-slate-50">
+                        {[
+                            { code: "400", msg: "Bad Request", desc: "Missing required parameters or malformed JSON." },
+                            { code: "401", msg: "Unauthorized", desc: "Invalid API key or expired token." },
+                            { code: "402", msg: "Payment Required", desc: "Insufficient balance for the request." },
+                            { code: "429", msg: "Too Many Requests", desc: "Rate limit exceeded for your tier." },
+                            { code: "500", msg: "Server Error", desc: "An internal error occurred on our side." },
+                        ].map((err, i) => (
+                            <div key={i} className="flex flex-col md:flex-row md:items-center px-10 py-6 hover:bg-slate-50/50 transition-colors gap-4">
+                                <div className="md:w-32 font-mono font-black text-lg text-slate-900">{err.code}</div>
+                                <div className="md:w-48 font-bold text-[#3A57FC] text-sm">{err.msg}</div>
+                                <div className="flex-1 text-slate-500 text-sm font-medium">{err.desc}</div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
             </section>
 
             {/* Send SMS Section */}
@@ -342,7 +477,7 @@ export default function DocsPage() {
                         <p className="text-white pl-4"><span className="text-[#A5F3FC]">"https://api.kasanow.com/v1/sms/send"</span>,</p>
                         <p className="text-white pl-4">json={"{"}<span className="text-[#A5F3FC]">"to"</span>: <span className="text-[#A5F3FC]">"+233240000000"</span>, <span className="text-[#A5F3FC]">"message"</span>: <span className="text-[#A5F3FC]">"Hi!"</span>{"}"},</p>
                         <p className="text-white pl-4">headers={"{"}<span className="text-[#A5F3FC]">"Authorization"</span>: <span className="text-[#A5F3FC]">"Bearer YOUR_KEY"</span>{"}"}</p>
-                        <p className="text-white">)</p>
+                        <p className="text-white pl-4">)</p>
                         <p className="text-white">print(response.json())</p>
                      </div>
                   )}
@@ -356,30 +491,154 @@ export default function DocsPage() {
                   )}
                 </div>
               </div>
+            </section>
 
-              {/* Next/Prev Navigation */}
-              <div className="flex items-center justify-between pt-12 border-t border-slate-100">
-                <a href="#auth" className="flex items-center gap-4 group">
-                    <div className="h-10 w-10 rounded-full border border-slate-100 flex items-center justify-center text-slate-400 group-hover:bg-slate-50 transition-all">
-                        <ChevronRight className="h-4 w-4 rotate-180" />
-                    </div>
-                    <div className="text-left">
-                        <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Previous</div>
-                        <div className="font-bold text-slate-900 group-hover:text-[#3A57FC] transition-colors">Authentication</div>
-                    </div>
-                </a>
-                <a href="#bulk" className="flex items-center gap-4 group text-right">
-                    <div className="text-right">
-                        <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Next</div>
-                        <div className="font-bold text-slate-900 group-hover:text-[#3A57FC] transition-colors">Bulk Messaging</div>
-                    </div>
-                    <div className="h-10 w-10 rounded-full border border-slate-100 flex items-center justify-center text-slate-400 group-hover:bg-slate-50 transition-all">
-                        <ChevronRight className="h-4 w-4" />
-                    </div>
-                </a>
+            {/* Bulk Messaging Section */}
+            <section id="bulk" className="scroll-mt-32 space-y-10">
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 border-b border-slate-100 pb-8">
+                <div className="space-y-3">
+                  <div className="flex items-center gap-4">
+                    <Badge className="bg-[#10B981] text-white font-black h-8 px-4 rounded-xl border-none">POST</Badge>
+                    <code className="text-lg font-bold font-mono text-slate-800 bg-slate-50 px-3 py-1 rounded-xl">/v1/sms/bulk</code>
+                  </div>
+                  <h3 className="text-3xl font-black text-slate-900 tracking-tight">Bulk Messaging</h3>
+                </div>
+              </div>
+              <p className="text-slate-500 text-lg leading-relaxed font-medium">
+                Send thousands of messages in a single API call by providing an array of recipients.
+              </p>
+              <div className="bg-[#0F172A] rounded-[48px] p-10 font-mono text-sm leading-relaxed border border-white/5">
+                  <p className="text-blue-400">{"{"}</p>
+                  <p className="text-white pl-4">"messages": [</p>
+                  <p className="text-white pl-8">{"{"} "to": "+233241234567", "message": "Hi Kwame!" {"}"},</p>
+                  <p className="text-white pl-8">{"{"} "to": "+233207654321", "message": "Hi Abena!" {"}"}</p>
+                  <p className="text-white pl-4">]</p>
+                  <p className="text-blue-400">{"}"}</p>
               </div>
             </section>
 
+            {/* Verification Section */}
+            <section id="otp" className="scroll-mt-32 space-y-10">
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 border-b border-slate-100 pb-8">
+                <div className="space-y-3">
+                  <div className="flex items-center gap-4">
+                    <Badge className="bg-[#10B981] text-white font-black h-8 px-4 rounded-xl border-none">POST</Badge>
+                    <code className="text-lg font-bold font-mono text-slate-800 bg-slate-50 px-3 py-1 rounded-xl">/v1/otp/send</code>
+                  </div>
+                  <h3 className="text-3xl font-black text-slate-900 tracking-tight">2FA & Verification</h3>
+                </div>
+              </div>
+              <p className="text-slate-500 text-lg leading-relaxed font-medium">
+                Secure your user accounts with automated OTP delivery and verification. Our system handles code generation, expiry, and retry logic.
+              </p>
+              <div className="grid md:grid-cols-2 gap-6">
+                  <div className="bg-slate-50 p-8 rounded-[32px] border border-slate-100">
+                      <h4 className="font-bold text-slate-900 mb-4 flex items-center gap-2">
+                        <div className="w-1.5 h-6 bg-[#3A57FC] rounded-full" /> 1. Request Code
+                      </h4>
+                      <p className="text-slate-500 text-sm mb-6">Send an OTP to a mobile number with custom length and expiry.</p>
+                      <code className="text-[10px] bg-white p-3 rounded-lg border border-slate-200 block text-slate-600">POST /v1/otp/send</code>
+                  </div>
+                  <div className="bg-slate-50 p-8 rounded-[32px] border border-slate-100">
+                      <h4 className="font-bold text-slate-900 mb-4 flex items-center gap-2">
+                        <div className="w-1.5 h-6 bg-emerald-500 rounded-full" /> 2. Verify Code
+                      </h4>
+                      <p className="text-slate-500 text-sm mb-6">Verify the user-provided code against our secure backend.</p>
+                      <code className="text-[10px] bg-white p-3 rounded-lg border border-slate-200 block text-slate-600">POST /v1/otp/verify</code>
+                  </div>
+              </div>
+            </section>
+
+            {/* Webhooks Section */}
+            <section id="webhooks" className="scroll-mt-32 space-y-10">
+                <div className="flex items-center gap-3 px-4 py-2 rounded-full bg-slate-100 border border-slate-200 text-slate-600 text-[10px] font-black uppercase tracking-widest w-fit">
+                    <Globe className="h-3.5 w-3.5" /> Webhooks
+                </div>
+                <h2 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tight leading-tight">
+                    Real-time Event Hooks
+                </h2>
+                <p className="text-slate-500 text-lg leading-relaxed max-w-3xl font-medium">
+                    Don't poll our API. We'll push real-time delivery reports and message status updates to your server the second they happen.
+                </p>
+
+                <div className="p-10 rounded-[48px] bg-slate-900 text-white relative overflow-hidden border border-white/10 group">
+                    <div className="absolute inset-0 bg-gradient-to-tr from-emerald-500/10 to-transparent pointer-events-none" />
+                    <div className="relative z-10 flex flex-col md:flex-row gap-8 items-center">
+                        <div className="space-y-4 max-w-xs">
+                            <h4 className="text-xl font-bold flex items-center gap-2">
+                                <span className="relative flex h-3 w-3">
+                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                    <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+                                </span>
+                                Incoming Event
+                            </h4>
+                            <p className="text-slate-400 text-xs leading-relaxed font-medium">
+                                Configure your endpoint URL in the dashboard to receive signed JSON payloads.
+                            </p>
+                        </div>
+                        <div className="flex-1 bg-white/5 rounded-3xl p-6 border border-white/10 font-mono text-[11px] leading-6 group-hover:border-white/20 transition-all">
+                            <p className="text-emerald-400">{"{"}</p>
+                            <p className="text-white pl-4">"id": <span className="text-[#A5F3FC]">"evt_80221"</span>,</p>
+                            <p className="text-white pl-4">"type": <span className="text-[#A5F3FC]">"message.delivered"</span>,</p>
+                            <p className="text-white pl-4">"to": <span className="text-[#A5F3FC]">"+233240000000"</span>,</p>
+                            <p className="text-white pl-4">"timestamp": <span className="text-amber-400">1625097600</span></p>
+                            <p className="text-emerald-400">{"}"}</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Reports Section */}
+            <section id="reports" className="scroll-mt-32 space-y-10">
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 border-b border-slate-100 pb-8">
+                <div className="space-y-3">
+                  <div className="flex items-center gap-4">
+                    <Badge className="bg-slate-900 text-white font-black h-8 px-4 rounded-xl border-none">GET</Badge>
+                    <code className="text-lg font-bold font-mono text-slate-800 bg-slate-50 px-3 py-1 rounded-xl">/v1/reports/{"{id}"}</code>
+                  </div>
+                  <h3 className="text-3xl font-black text-slate-900 tracking-tight">Delivery Reports</h3>
+                </div>
+              </div>
+              <p className="text-slate-500 text-lg leading-relaxed font-medium">
+                Retrieve the detailed delivery status and metadata for any message or campaign using its unique ID.
+              </p>
+              
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  {[
+                    { label: "Status", value: "Delivered", color: "text-emerald-500" },
+                    { label: "Latency", value: "84ms", color: "text-[#3A57FC]" },
+                    { label: "Carrier", value: "MTN Ghana", color: "text-amber-500" },
+                    { label: "Cost", value: "0.02 GHS", color: "text-slate-900" },
+                  ].map((stat, i) => (
+                    <div key={i} className="p-6 rounded-3xl bg-slate-50 border border-slate-100">
+                        <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">{stat.label}</div>
+                        <div className={`text-xl font-black ${stat.color}`}>{stat.value}</div>
+                    </div>
+                  ))}
+              </div>
+            </section>
+
+            {/* Next/Prev Navigation */}
+            <div className="flex items-center justify-between pt-12 border-t border-slate-100">
+              <a href="#auth" className="flex items-center gap-4 group">
+                  <div className="h-10 w-10 rounded-full border border-slate-100 flex items-center justify-center text-slate-400 group-hover:bg-slate-50 transition-all">
+                      <ChevronRight className="h-4 w-4 rotate-180" />
+                  </div>
+                  <div className="text-left">
+                      <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Previous</div>
+                      <div className="font-bold text-slate-900 group-hover:text-[#3A57FC] transition-colors">Authentication</div>
+                  </div>
+              </a>
+              <a href="#bulk" className="flex items-center gap-4 group text-right">
+                  <div className="text-right">
+                      <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Next</div>
+                      <div className="font-bold text-slate-900 group-hover:text-[#3A57FC] transition-colors">Bulk Messaging</div>
+                  </div>
+                  <div className="h-10 w-10 rounded-full border border-slate-100 flex items-center justify-center text-slate-400 group-hover:bg-slate-50 transition-all">
+                      <ChevronRight className="h-4 w-4" />
+                  </div>
+              </a>
+            </div>
           </main>
         </div>
       </div>
