@@ -4,6 +4,7 @@
 @custom-variant dark (&:is(.dark *));
 
 /* Updated to match Ahrefs' exact color #3A57FC */
+/* Premium Deep Blue SaaS Design System */
 :root {
   --background: oklch(1 0 0);
   --foreground: oklch(0.2 0 0);
@@ -11,11 +12,20 @@
   --card-foreground: oklch(0.2 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.2 0 0);
-  /* Ahrefs exact blue #3A57FC */
-  --primary: oklch(0.52 0.22 265);
+
+  /* Primary Deep Blue Palette */
+  --deep-blue: #1E3A8A;
+  --royal-blue: #2563EB;
+  --bright-blue: #3B82F6;
+  --primary: oklch(0.55 0.25 260);
+  /* Royal Blue base */
   --primary-foreground: oklch(1 0 0);
-  /* Ahrefs orange accent */
-  --accent-orange: oklch(0.7 0.19 55);
+
+  /* Accent Colors */
+  --success-green: #22C55E;
+  --cta-orange: #F97316;
+  --accent-orange: oklch(0.7 0.22 55);
+
   --secondary: oklch(0.96 0 0);
   --secondary-foreground: oklch(0.2 0 0);
   --muted: oklch(0.96 0 0);
@@ -26,21 +36,8 @@
   --destructive-foreground: oklch(0.98 0 0);
   --border: oklch(0.9 0 0);
   --input: oklch(0.9 0 0);
-  --ring: oklch(0.52 0.22 265);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --radius: 0.5rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.2 0 0);
-  --sidebar-primary: oklch(0.52 0.22 265);
-  --sidebar-primary-foreground: oklch(1 0 0);
-  --sidebar-accent: oklch(0.96 0 0);
-  --sidebar-accent-foreground: oklch(0.2 0 0);
-  --sidebar-border: oklch(0.9 0 0);
-  --sidebar-ring: oklch(0.52 0.22 265);
+  --ring: oklch(0.55 0.25 260);
+  --radius: 1rem;
 }
 
 .dark {
@@ -125,6 +122,7 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   /* Added Ahrefs-style font smoothing and base text size */
   body {
     @apply bg-background text-foreground;
@@ -151,6 +149,84 @@
     h1 {
       font-size: 48px;
       line-height: 44px;
+    }
+  }
+
+  /* Modern heading adjustments */
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply tracking-tight font-bold;
+  }
+}
+
+/* Premium Gradient Utilities */
+@layer utilities {
+  .bg-blue-gradient {
+    background: linear-gradient(135deg, #3A57FC 0%, #2546E5 100%);
+  }
+
+  /* For white backgrounds */
+  .text-blue-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, #3A57FC 0%, #60A5FA 100%);
+  }
+
+  /* For dark blue backgrounds (Hero) */
+  .text-highlight-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, #FFFFFF 0%, #60A5FA 100%);
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+  }
+
+  /* Premium Metallic Shine for Hero Titles */
+  .text-shine {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, #FFFFFF 0%, #cbd5e1 50%, #FFFFFF 100%);
+    background-size: 200% auto;
+    animation: shine 8s linear infinite;
+  }
+
+  /* Multi-stop vibrant highlight (Harpoon-style) */
+  .text-highlight-vibrant {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, #10B981 0%, #06B6D4 100%);
+    filter: drop-shadow(0 2px 10px rgba(16, 185, 129, 0.2));
+  }
+
+  /* Matching background gradient for buttons */
+  .bg-emerald-gradient {
+    background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+  }
+
+  @keyframes shine {
+    to {
+      background-position: 200% center;
+    }
+  }
+
+  .glass-morphism {
+    @apply bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl;
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-bounce-slow {
+    animation: bounce 3s infinite;
+  }
+
+  @keyframes float {
+
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+
+    50% {
+      transform: translateY(-20px);
     }
   }
 }

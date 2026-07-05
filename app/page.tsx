@@ -22,50 +22,11 @@ import {
   Video,
   Activity,
 } from "lucide-react"
+import FAQSection from "@/components/FAQSection"
 
 export default function HomePage() {
   return (
-    <div className="flex min-h-screen flex-col">
-      {/* Header */}
-      <header className="sticky top-0 z-50 w-full border-b bg-white">
-        <div className="container mx-auto flex h-16 max-w-7xl items-center justify-between px-4">
-          <Link href="/" className="flex items-center space-x-2">
-            <Image
-              src="/logo.jpg"
-              alt="KasaNow"
-              width={160}
-              height={40}
-              className="h-10 w-auto object-contain"
-            />
-          </Link>
-
-          <nav className="hidden items-center space-x-8 md:flex">
-            <Link href="#features" className="text-sm font-medium text-gray-700 transition-colors hover:text-gray-900">
-              Features
-            </Link>
-            <Link href="/pricing" className="text-sm font-medium text-gray-700 transition-colors hover:text-gray-900">
-              Pricing
-            </Link>
-            <Link href="#use-cases" className="text-sm font-medium text-gray-700 transition-colors hover:text-gray-900">
-              Use Cases
-            </Link>
-            <Link href="#customers" className="text-sm font-medium text-gray-700 transition-colors hover:text-gray-900">
-              Customers
-            </Link>
-          </nav>
-
-          <div className="flex items-center space-x-4">
-
-            <Link href="/waitlist">
-              <Button size="sm" className="bg-[#FF8800] hover:bg-[#FF7700] font-medium">
-                Join Waitlist
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </header>
-
-      <main className="flex-1">
+    <>
         {/* Hero Section - Ahrefs style with blue background */}
         <section className="bg-[#3A57FC] px-4 py-20 md:py-32">
           <div className="container mx-auto max-w-7xl">
@@ -515,9 +476,11 @@ export default function HomePage() {
             </div>
 
             <div className="mt-12">
-              <Button size="lg" className="bg-[#FF8800] hover:bg-[#FF7700] text-white font-semibold">
-                Contact Sales
-              </Button>
+              <Link href="/enterprise">
+                <Button size="lg" className="bg-[#FF8800] hover:bg-[#FF7700] text-white font-semibold">
+                  Contact Sales
+                </Button>
+              </Link>
             </div>
           </div>
         </section>
@@ -726,6 +689,8 @@ export default function HomePage() {
           </div>
         </section >
 
+        <FAQSection />
+
         {/* Final CTA - Matching Ahrefs */}
         < section className="bg-[#5B6EF5] py-20 text-white md:py-32" >
           <div className="container mx-auto max-w-7xl px-4 text-center">
@@ -751,109 +716,6 @@ export default function HomePage() {
             </div>
           </div>
         </section >
-      </main >
-
-      {/* Footer */}
-      < footer className="border-t bg-white py-12" >
-        <div className="container mx-auto max-w-7xl px-4">
-          <div className="grid gap-8 md:grid-cols-4">
-            <div>
-              <div className="mb-4 flex items-center space-x-2">
-                <Image
-                  src="/logo.jpg"
-                  alt="KasaNow"
-                  width={160}
-                  height={40}
-                  className="h-10 w-auto object-contain"
-                />
-              </div>
-              <p className="text-sm text-gray-600">SMS platform built for everyone</p>
-            </div>
-
-            <div>
-              <h3 className="mb-4 font-semibold">Product</h3>
-              <ul className="space-y-2 text-sm text-gray-600">
-                <li>
-                  <Link href="#" className="hover:text-gray-900">
-                    Features
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="hover:text-gray-900">
-                    Pricing
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="hover:text-gray-900">
-                    Enterprise
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="hover:text-gray-900">
-                    API
-                  </Link>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="mb-4 font-semibold">Resources</h3>
-              <ul className="space-y-2 text-sm text-gray-600">
-                <li>
-                  <Link href="#" className="hover:text-gray-900">
-                    Documentation
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="hover:text-gray-900">
-                    Blog
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="hover:text-gray-900">
-                    Support
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="hover:text-gray-900">
-                    Community
-                  </Link>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="mb-4 font-semibold">Company</h3>
-              <ul className="space-y-2 text-sm text-gray-600">
-                <li>
-                  <Link href="#" className="hover:text-gray-900">
-                    About
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="hover:text-gray-900">
-                    Careers
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="hover:text-gray-900">
-                    Privacy
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="hover:text-gray-900">
-                    Terms
-                  </Link>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <div className="mt-12 border-t pt-8 text-center text-sm text-gray-600">
-            © 2025 KasaNow. All rights reserved.
-          </div>
-        </div>
-      </footer >
-    </div >
+    </>
   )
 }
