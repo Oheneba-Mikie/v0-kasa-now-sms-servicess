@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
+import Link from "next/link"
 import {
     Users,
     Heart,
@@ -103,7 +104,9 @@ export default function AboutPage() {
                         <p className="text-white/60 text-lg mb-10 max-w-md mx-auto">Start your journey today and see why 2,000+ businesses trust us with their communication.</p>
                         <div className="flex flex-col sm:flex-row gap-4 justify-center">
                             <Button className="bg-[#F97316] hover:bg-orange-700 text-white font-black h-16 px-12 rounded-2xl shadow-xl shadow-orange-500/20 text-lg">Create Free Account</Button>
-                            <Button variant="outline" className="border-white/20 bg-white/10 text-white font-bold h-16 px-12 rounded-2xl text-lg backdrop-blur-md">Contact Us</Button>
+                            <Link href="/contact">
+                                <Button variant="outline" className="border-white/20 bg-white/10 text-white font-bold h-16 px-12 rounded-2xl text-lg backdrop-blur-md">Contact Us</Button>
+                            </Link>
                         </div>
                     </div>
                 </div>

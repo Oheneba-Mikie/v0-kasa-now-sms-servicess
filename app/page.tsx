@@ -423,67 +423,6 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Enterprise Section - Matching Ahrefs Enterprise */}
-        <section className="bg-gray-900 py-20 text-white md:py-32">
-          <div className="container mx-auto max-w-7xl px-4">
-            <div className="mb-16">
-              <h2 className="mb-6 text-4xl font-bold md:text-5xl">KasaNow Enterprise—Scale with confidence</h2>
-              <p className="max-w-3xl text-xl text-white/80">
-                Advanced features, dedicated support, and enterprise-grade security for organizations that need more.
-              </p>
-            </div>
-
-            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-              <div>
-                <h3 className="mb-3 text-xl font-bold">API Access</h3>
-                <p className="text-white/70">
-                  Power custom integrations, internal tools, and automated workflows with our flexible REST API.
-                </p>
-              </div>
-
-              <div>
-                <h3 className="mb-3 text-xl font-bold">Dedicated Support</h3>
-                <p className="text-white/70">
-                  Get priority support with dedicated account managers and 24/7 technical assistance.
-                </p>
-              </div>
-
-              <div>
-                <h3 className="mb-3 text-xl font-bold">Custom Reporting</h3>
-                <p className="text-white/70">
-                  Build custom dashboards and reports tailored to your business metrics and KPIs.
-                </p>
-              </div>
-
-              <div>
-                <h3 className="mb-3 text-xl font-bold">Single Sign-On</h3>
-                <p className="text-white/70">
-                  Integrate with your existing identity provider for seamless access control.
-                </p>
-              </div>
-
-              <div>
-                <h3 className="mb-3 text-xl font-bold">Compliance & Security</h3>
-                <p className="text-white/70">ISO27001 certified, GDPR compliant, with bank-level encryption.</p>
-              </div>
-
-              <div>
-                <h3 className="mb-3 text-xl font-bold">Volume Discounts</h3>
-                <p className="text-white/70">
-                  Enterprise pricing scales with your usage—the more you send, the less you pay.
-                </p>
-              </div>
-            </div>
-
-            <div className="mt-12">
-              <Link href="/enterprise">
-                <Button size="lg" className="bg-[#FF8800] hover:bg-[#FF7700] text-white font-semibold">
-                  Contact Sales
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </section>
 
         {/* Support Resources - Matching Ahrefs */}
         <section className="bg-[#5B6EF5] py-20 text-white md:py-32">

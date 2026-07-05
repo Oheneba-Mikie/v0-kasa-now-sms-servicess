@@ -71,16 +71,12 @@ export default function Header() {
             About
           </Link>
           <Link
-            href="/#use-cases"
-            className="text-sm font-medium text-gray-700 transition-colors hover:text-gray-900"
+            href="/contact"
+            className={`text-sm font-medium transition-colors hover:text-gray-900 ${
+              pathname === "/contact" ? "text-gray-900 font-bold" : "text-gray-700"
+            }`}
           >
-            Use Cases
-          </Link>
-          <Link
-            href="/#customers"
-            className="text-sm font-medium text-gray-700 transition-colors hover:text-gray-900"
-          >
-            Customers
+            Contact
           </Link>
         </nav>
 
