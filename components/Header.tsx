@@ -3,6 +3,7 @@
 import Link from "next/link"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
+import { ArrowRight } from "lucide-react"
 import { usePathname } from "next/navigation"
 
 export default function Header() {
@@ -80,10 +81,13 @@ export default function Header() {
           </Link>
         </nav>
 
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-6">
+          <Link href="/sign-up" className="text-sm font-medium text-gray-600 transition-colors hover:text-gray-900">
+            Sign up
+          </Link>
           <Link href="/waitlist">
-            <Button size="sm" className="bg-[#FF8800] hover:bg-[#FF7700] font-medium">
-              Join Waitlist
+            <Button size="sm" className="bg-[#F97316] hover:bg-[#EA580C] px-5 font-bold rounded-lg text-white shadow-sm border-none transition-transform hover:scale-105">
+              Join Waitlist <ArrowRight className="ml-1.5 h-4 w-4" />
             </Button>
           </Link>
         </div>

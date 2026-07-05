@@ -10,7 +10,7 @@ function SuccessContent() {
   const email = searchParams.get("email") || ""
 
   return (
-    <div className="min-h-screen bg-[#5B6EF5] flex items-center justify-center px-4">
+    <div className="min-h-screen bg-[#3A57FC] flex items-center justify-center px-4">
       <div className="max-w-2xl mx-auto text-center">
         {/* Envelope Icon */}
         <div className="mb-12 flex justify-center">
@@ -23,13 +23,13 @@ function SuccessContent() {
             className="animate-bounce"
           >
             {/* Envelope body */}
-            <rect x="20" y="40" width="80" height="50" rx="4" fill="white" stroke="#FF8800" strokeWidth="2" />
+            <rect x="20" y="40" width="80" height="50" rx="4" fill="white" stroke="#F97316" strokeWidth="2" />
             {/* Envelope flap */}
-            <path d="M20 40 L60 65 L100 40" stroke="#FF8800" strokeWidth="2" fill="none" />
+            <path d="M20 40 L60 65 L100 40" stroke="#F97316" strokeWidth="2" fill="none" />
             {/* Happy face */}
-            <circle cx="45" cy="60" r="2" fill="#5B6EF5" />
-            <circle cx="75" cy="60" r="2" fill="#5B6EF5" />
-            <path d="M50 70 Q60 75 70 70" stroke="#5B6EF5" strokeWidth="2" fill="none" strokeLinecap="round" />
+            <circle cx="45" cy="60" r="2" fill="#3A57FC" />
+            <circle cx="75" cy="60" r="2" fill="#3A57FC" />
+            <path d="M50 70 Q60 75 70 70" stroke="#3A57FC" strokeWidth="2" fill="none" strokeLinecap="round" />
           </svg>
         </div>
 
@@ -48,7 +48,7 @@ function SuccessContent() {
         <Link href="/">
           <Button
             size="lg"
-            className="bg-[#FF8800] hover:bg-[#FF9900] text-white font-semibold text-lg px-12 py-6 h-auto rounded-md"
+            className="bg-[#F97316] hover:bg-[#EA580C] text-white font-bold text-lg px-12 py-6 h-auto rounded-xl shadow-lg border-none"
           >
             Got it
           </Button>
@@ -60,7 +60,7 @@ function SuccessContent() {
 
 export default function WaitlistSuccess() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-[#5B6EF5]" />}>
+    <Suspense fallback={<div className="min-h-screen bg-[#3A57FC]" />}>
       <SuccessContent />
     </Suspense>
   )
