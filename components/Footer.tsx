@@ -35,7 +35,7 @@ export default function Footer() {
             {/* Social Media Links */}
             <div className="mt-6 flex items-center space-x-4">
               <a
-                href="https://facebook.com/kasanow.app"
+                href="https://www.facebook.com/share/1F9T65Z3Bs/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray-400 hover:text-[#3A57FC] transition-colors"
@@ -81,7 +81,7 @@ export default function Footer() {
                 </svg>
               </a>
               <a
-                href="https://linkedin.com/company/kasanow-app"
+                href="https://www.linkedin.com/in/kasanow-app-8073773a3"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray-400 hover:text-[#3A57FC] transition-colors"
