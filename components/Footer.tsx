@@ -130,21 +130,13 @@ export default function Footer() {
                   Documentation
                 </Link>
               </li>
-              <li>
-                <Link href="#" className="hover:text-gray-900">
-                  Blog
-                </Link>
-              </li>
+
               <li>
                 <Link href="/#faq" className="hover:text-gray-900">
                   FAQ
                 </Link>
               </li>
-              <li>
-                <Link href="#" className="hover:text-gray-900">
-                  Community
-                </Link>
-              </li>
+
             </ul>
           </div>
 
