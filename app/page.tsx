@@ -288,12 +288,7 @@ export default function HomePage() {
                       <span className="text-gray-700">Segment audiences for personalized outreach</span>
                     </li>
                   </ul>
-                  <Link
-                    href="#"
-                    className="mt-6 inline-flex items-center text-sm font-semibold text-[#5B6EF5] hover:underline"
-                  >
-                    Learn more → <ArrowRight className="ml-1 h-4 w-4" />
-                  </Link>
+
                 </CardContent>
               </Card>
 
@@ -319,12 +314,7 @@ export default function HomePage() {
                       <span className="text-gray-700">Build customer loyalty with exclusive offers</span>
                     </li>
                   </ul>
-                  <Link
-                    href="#"
-                    className="mt-6 inline-flex items-center text-sm font-semibold text-[#5B6EF5] hover:underline"
-                  >
-                    Learn more → <ArrowRight className="ml-1 h-4 w-4" />
-                  </Link>
+
                 </CardContent>
               </Card>
 
@@ -350,12 +340,7 @@ export default function HomePage() {
                       <span className="text-gray-700">Emergency alerts and health notifications</span>
                     </li>
                   </ul>
-                  <Link
-                    href="#"
-                    className="mt-6 inline-flex items-center text-sm font-semibold text-[#5B6EF5] hover:underline"
-                  >
-                    Learn more → <ArrowRight className="ml-1 h-4 w-4" />
-                  </Link>
+
                 </CardContent>
               </Card>
 
@@ -381,12 +366,7 @@ export default function HomePage() {
                       <span className="text-gray-700">Scale as your business grows</span>
                     </li>
                   </ul>
-                  <Link
-                    href="#"
-                    className="mt-6 inline-flex items-center text-sm font-semibold text-[#5B6EF5] hover:underline"
-                  >
-                    Learn more → <ArrowRight className="ml-1 h-4 w-4" />
-                  </Link>
+
                 </CardContent>
               </Card>
             </div>

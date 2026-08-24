@@ -20,36 +20,12 @@ import { useState } from "react"
 
 const contactMethods = [
   { 
-    title: "Whatsapp Support", 
-    value: "+233 24 000 0000", 
-    icon: <MessageSquare className="h-6 w-6" />, 
-    sub: "Instant chat support",
-    color: "bg-emerald-500/10 text-emerald-500",
-    hoverColor: "group-hover:bg-emerald-500/20"
-  },
-  { 
-    title: "Technical Phone", 
-    value: "+233 20 000 0000", 
-    icon: <Phone className="h-6 w-6" />, 
-    sub: "Direct line to our engineers",
-    color: "bg-blue-500/10 text-blue-500",
-    hoverColor: "group-hover:bg-blue-500/20"
-  },
-  { 
     title: "Global Email", 
     value: "support@kasanow.com", 
     icon: <Mail className="h-6 w-6" />, 
     sub: "For general inquiries",
     color: "bg-purple-500/10 text-purple-500",
     hoverColor: "group-hover:bg-purple-500/20"
-  },
-  { 
-    title: "Accra Headquarters", 
-    value: "Spintex Rd, Accra", 
-    icon: <MapPin className="h-6 w-6" />, 
-    sub: "Visit us in person",
-    color: "bg-amber-500/10 text-amber-500",
-    hoverColor: "group-hover:bg-amber-500/20"
   },
 ]
 
@@ -142,7 +118,7 @@ export default function ContactPage() {
                                 initial="hidden"
                                 whileInView="visible"
                                 viewport={{ once: true }}
-                                className="grid sm:grid-cols-2 gap-6"
+                                className="grid gap-6"
                             >
                                 {contactMethods.map((method, i) => (
                                     <motion.div
