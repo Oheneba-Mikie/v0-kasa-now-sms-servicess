@@ -66,7 +66,6 @@ const sidebarLinks = [
     group: "API Fundamentals",
     links: [
       { name: "Authentication", id: "auth" },
-      { name: "Rate Limiting", id: "ratelimit" },
       { name: "Error Codes", id: "errors" },
       { name: "Webhooks", id: "webhooks" },
     ]
@@ -76,7 +75,6 @@ const sidebarLinks = [
     links: [
       { name: "Send Single SMS", id: "send-sms" },
       { name: "Bulk Messaging", id: "bulk" },
-      { name: "Verification (OTP)", id: "otp" },
       { name: "Delivery Reports", id: "reports" },
     ]
   }
@@ -310,7 +308,7 @@ export default function DocsPage() {
   )
 
   return (
-    <div className="min-h-screen bg-white text-slate-900 font-sans selection:bg-[#3A57FC]/10 selection:text-[#3A57FC] relative">
+    <div className="min-h-screen bg-white text-slate-900 font-sans antialiased selection:bg-[#3A57FC]/10 selection:text-[#3A57FC] relative">
       
       {/* Light Mode Top Header Navbar */}
       <header className="sticky top-0 z-40 bg-white/90 backdrop-blur-xl border-b border-slate-200/80 h-14 flex items-center px-4 md:px-8 justify-between">
@@ -354,16 +352,16 @@ export default function DocsPage() {
             </div>
           </button>
 
-          <Link href="/login">
+          <a href="https://ksndash.netlify.app/auth" target="_blank" rel="noopener noreferrer">
             <Button variant="ghost" className="h-8 px-3 text-xs text-slate-600 hover:text-slate-900 hover:bg-slate-100">
               Sign In
             </Button>
-          </Link>
-          <Link href="/signup">
+          </a>
+          <a href="https://ksndash.netlify.app/auth" target="_blank" rel="noopener noreferrer">
             <Button className="h-8 px-3 text-xs bg-[#3A57FC] hover:bg-[#2F4AD8] text-white font-semibold rounded-md shadow-sm">
               Get Started
             </Button>
-          </Link>
+          </a>
         </div>
       </header>
 
@@ -445,7 +443,7 @@ export default function DocsPage() {
           </aside>
 
           {/* Center Main Content */}
-          <main className="flex-1 min-w-0 max-w-3xl space-y-20 pb-28">
+          <main className="flex-1 min-w-0 max-w-4xl space-y-20 pb-28">
 
             {/* Introduction Section */}
             <section id="introduction" className="scroll-mt-24 space-y-6 border-b border-slate-200/80 pb-12">
@@ -466,7 +464,7 @@ export default function DocsPage() {
                     <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-white text-[10px] font-bold text-slate-700 border border-slate-300 shadow-xs">1</span>
                     <span>
                       <strong className="text-slate-900">A KasaNow account:</strong>{" "}
-                      <Link href="/signup" className="text-[#3A57FC] underline font-medium hover:text-[#2F4AD8]">Sign up or Sign in</Link> to access your developer portal.
+                      <a href="https://ksndash.netlify.app/auth" target="_blank" rel="noopener noreferrer" className="text-[#3A57FC] underline font-medium hover:text-[#2F4AD8]">Sign up or Sign in</a> to access your developer portal.
                     </span>
                   </li>
                   <li className="flex items-start gap-2.5">
@@ -489,24 +487,24 @@ export default function DocsPage() {
             <section id="sign-in-req" className="scroll-mt-24 space-y-6 border-b border-slate-200/80 pb-12">
               <div className="space-y-2">
                 <Badge className="bg-blue-50 text-blue-700 border-blue-200 text-[10px] uppercase font-mono px-2 py-0.5">
-                  Authentication Requirement
+                  Authentication & Approval Requirement
                 </Badge>
-                <h2 className="text-2xl font-bold tracking-tight text-slate-900">Account & Dashboard Access</h2>
+                <h2 className="text-2xl font-bold tracking-tight text-slate-900">Account & Approval Access</h2>
                 <p className="text-slate-600 text-sm leading-relaxed">
-                  Before you can issue API keys or execute outbound messages, developers must be logged into their verified KasaNow account. API keys are generated securely inside your account dashboard.
+                  Developers must log into a verified KasaNow account. Your account must be approved before you can generate API keys or execute outbound messages.
                 </p>
               </div>
 
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="p-5 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
                   <UserCheck className="h-5 w-5 text-[#3A57FC]" />
-                  <h4 className="text-sm font-semibold text-slate-900">1. Login First</h4>
-                  <p className="text-xs text-slate-600">Log in to view your current SMS unit balance, transactions, and registered Sender IDs.</p>
+                  <h4 className="text-sm font-semibold text-slate-900">1. Sign In & Verify</h4>
+                  <p className="text-xs text-slate-600">Sign up and log in to view your profile, SMS credit balance, and Sender IDs.</p>
                 </div>
                 <div className="p-5 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
                   <Key className="h-5 w-5 text-emerald-600" />
-                  <h4 className="text-sm font-semibold text-slate-900">2. Secret Credentials</h4>
-                  <p className="text-xs text-slate-600">Keys are hidden until your user profile is authenticated and wallet funded.</p>
+                  <h4 className="text-sm font-semibold text-slate-900">2. Account Approval</h4>
+                  <p className="text-xs text-slate-600">Your account must be approved before API key creation is unlocked.</p>
                 </div>
               </div>
             </section>
@@ -519,7 +517,7 @@ export default function DocsPage() {
                 </Badge>
                 <h2 className="text-2xl font-bold tracking-tight text-slate-900">SMS Pricing & Top Up</h2>
                 <p className="text-slate-600 text-sm leading-relaxed">
-                  Users must pay first before API keys are shown. KasaNow operates on a prepaid credit balance. Complete payment via Paystack to unlock API key creation.
+                  Your account must be approved before you can access API key creation. KasaNow operates on a prepaid credit balance for outbound SMS messages.
                 </p>
               </div>
 
@@ -551,7 +549,7 @@ export default function DocsPage() {
                 </Badge>
                 <h2 className="text-2xl font-bold tracking-tight text-slate-900">Create your Live API Key</h2>
                 <p className="text-slate-600 text-sm leading-relaxed">
-                  Go to <strong className="text-slate-900">API Keys</strong> in your dashboard sidebar. Once wallet payment reference is verified, click <span className="text-[#3A57FC] font-semibold">+ Create</span> to issue your live secret API key.
+                  Go to <strong className="text-slate-900">API Keys</strong> in your dashboard sidebar. Once your account is approved by admin, click <span className="text-[#3A57FC] font-semibold">+ Create</span> to issue your live secret API key.
                 </p>
               </div>
 
@@ -788,30 +786,6 @@ export default function DocsPage() {
               </div>
             </section>
 
-            {/* Rate Limiting */}
-            <section id="ratelimit" className="scroll-mt-24 space-y-6 border-b border-slate-200/80 pb-12">
-              <div className="space-y-2">
-                <h2 className="text-2xl font-bold tracking-tight text-slate-900">Rate Limiting</h2>
-                <p className="text-slate-600 text-sm leading-relaxed">
-                  Requests are limited per minute to protect network throughput and prevent spamming.
-                </p>
-              </div>
-              <div className="grid grid-cols-3 gap-3 text-center text-xs">
-                <div className="p-4 rounded-xl bg-slate-50 border border-slate-200">
-                  <div className="text-slate-500 mb-1 font-mono">Standard</div>
-                  <div className="text-lg font-bold text-slate-900">60 rps</div>
-                </div>
-                <div className="p-4 rounded-xl bg-slate-50 border border-slate-200">
-                  <div className="text-slate-500 mb-1 font-mono">Reseller</div>
-                  <div className="text-lg font-bold text-slate-900">300 rps</div>
-                </div>
-                <div className="p-4 rounded-xl bg-slate-50 border border-slate-200">
-                  <div className="text-slate-500 mb-1 font-mono">Enterprise</div>
-                  <div className="text-lg font-bold text-[#3A57FC]">Custom</div>
-                </div>
-              </div>
-            </section>
-
             {/* Error Codes */}
             <section id="errors" className="scroll-mt-24 space-y-6 border-b border-slate-200/80 pb-12">
               <div className="space-y-2">
@@ -948,29 +922,6 @@ export default function DocsPage() {
               </div>
             </section>
 
-            {/* OTP Verification */}
-            <section id="otp" className="scroll-mt-24 space-y-6 border-b border-slate-200/80 pb-12">
-              <div className="space-y-3">
-                <div className="flex items-center gap-3">
-                  <Badge className="bg-emerald-100 text-emerald-800 border-emerald-300 font-mono text-xs px-2.5 py-0.5">POST</Badge>
-                  <code className="text-sm md:text-base font-mono text-slate-900">/functions/v1/sms-send</code>
-                </div>
-                <h2 className="text-2xl font-bold tracking-tight text-slate-900">Verification & OTP</h2>
-                <p className="text-slate-600 text-sm leading-relaxed">
-                  Automated high-speed priority dispatch for time-critical 2-factor authentication passcodes.
-                </p>
-              </div>
-
-              <div className="bg-[#0d1117] p-4 rounded-xl border border-slate-800 font-mono text-xs text-zinc-300 space-y-2 shadow-md">
-                <div className="text-zinc-400 border-b border-zinc-800 pb-2">OTP Dispatch Request</div>
-                <pre>{`{
-  "sender": "KASANOW",
-  "to": "233241234567",
-  "message": "Your KasaNow verification code is: 849201. Valid for 5 minutes."
-}`}</pre>
-              </div>
-            </section>
-
             {/* Delivery Reports */}
             <section id="reports" className="scroll-mt-24 space-y-6 pb-12">
               <div className="space-y-3">
@@ -996,29 +947,6 @@ export default function DocsPage() {
             </section>
 
           </main>
-
-          {/* Right Sidebar ("On this page" TOC) */}
-          <aside className="w-48 shrink-0 hidden xl:block sticky top-20 h-[calc(100vh-100px)] overflow-y-auto pl-2 custom-scrollbar">
-            <div className="space-y-3 text-xs">
-              <div className="font-semibold text-slate-400 tracking-wide text-[11px]">
-                On this page
-              </div>
-              <ul className="space-y-2 text-slate-500 text-[11px] border-l border-slate-200 pl-3">
-                {sidebarLinks.flatMap(g => g.links).map((item, idx) => (
-                  <li key={idx}>
-                    <a
-                      href={`#${item.id}`}
-                      className={`block transition-colors hover:text-slate-900 ${
-                        activeSection === item.id ? "text-[#3A57FC] font-semibold text-xs" : ""
-                      }`}
-                    >
-                      {item.name}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </aside>
 
         </div>
       </div>
