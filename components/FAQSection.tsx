@@ -95,25 +95,6 @@ export default function FAQSection() {
             ))}
           </Accordion>
         </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-          className="mt-20 text-center"
-        >
-          <div className="inline-flex flex-col sm:flex-row items-center gap-8 p-10 bg-slate-900 rounded-[40px] border border-white/10 shadow-2xl relative overflow-hidden group">
-            <div className="absolute inset-0 bg-gradient-to-tr from-[#3A57FC]/20 to-transparent pointer-events-none" />
-            <div className="relative z-10">
-                <p className="text-white font-bold text-xl mb-2 sm:mb-0">Still have more questions?</p>
-                <p className="text-slate-400 text-sm font-medium">Our support team responds in less than 10 minutes.</p>
-            </div>
-            <button className="relative z-10 bg-[#3A57FC] hover:bg-[#2D46C7] text-white px-10 py-5 rounded-2xl font-black shadow-xl shadow-[#3A57FC]/30 hover:shadow-[#3A57FC]/50 hover:scale-105 transition-all flex items-center gap-3 active:scale-95 group">
-              Contact Support <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
-            </button>
-          </div>
-        </motion.div>
       </div>
     </section>
   )

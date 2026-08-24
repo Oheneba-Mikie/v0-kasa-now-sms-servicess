@@ -464,7 +464,9 @@ export default function DocsPage() {
                     <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-white text-[10px] font-bold text-slate-700 border border-slate-300 shadow-xs">1</span>
                     <span>
                       <strong className="text-slate-900">A KasaNow account:</strong>{" "}
-                      <a href="https://ksndash.netlify.app/auth" target="_blank" rel="noopener noreferrer" className="text-[#3A57FC] underline font-medium hover:text-[#2F4AD8]">Sign up or Sign in</a> to access your developer portal.
+                      <a href="https://ksndash.netlify.app/auth" target="_blank" rel="noopener noreferrer" className="font-bold text-[#3A57FC] hover:text-[#2F4AD8] bg-[#3A57FC]/10 hover:bg-[#3A57FC]/20 px-2 py-0.5 rounded border border-[#3A57FC]/30 transition-colors inline-flex items-center gap-1 mx-1">
+                        Sign up or Sign in <ExternalLink className="h-3 w-3" />
+                      </a> to access your developer portal.
                     </span>
                   </li>
                   <li className="flex items-start gap-2.5">

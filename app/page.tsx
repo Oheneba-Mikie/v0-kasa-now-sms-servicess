@@ -643,15 +643,6 @@ export default function HomePage() {
                   Join Waitlist
                 </Button>
               </Link>
-              <Link href="/waitlist">
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="border-2 border-white bg-transparent text-white hover:bg-white/10 h-14 px-8"
-                >
-                  Join Waitlist
-                </Button>
-              </Link>
             </div>
           </div>
         </section >

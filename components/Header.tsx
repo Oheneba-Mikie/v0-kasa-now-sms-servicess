@@ -83,9 +83,6 @@ export default function Header() {
         </nav>
 
         <div className="flex items-center space-x-6">
-          <Link href="/sign-up" className="text-sm font-medium text-gray-600 transition-colors hover:text-gray-900">
-            Sign up
-          </Link>
           <Link href="/waitlist">
             <Button size="sm" className="bg-[#F97316] hover:bg-[#EA580C] px-5 font-bold rounded-lg text-white shadow-sm border-none transition-transform hover:scale-105">
               Join Waitlist <ArrowRight className="ml-1.5 h-4 w-4" />
