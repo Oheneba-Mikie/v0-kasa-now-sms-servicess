@@ -9,12 +9,13 @@ import { usePathname } from "next/navigation"
 export default function Header() {
   const pathname = usePathname()
   
-  // Hide header on auth and waitlist success routes if necessary
+  // Hide header on auth, docs, and waitlist success routes
   if (
     pathname === "/login" ||
     pathname === "/sign-up" ||
     pathname === "/signup" ||
-    pathname === "/waitlist/success"
+    pathname === "/waitlist/success" ||
+    pathname?.startsWith("/docs")
   ) {
     return null
   }

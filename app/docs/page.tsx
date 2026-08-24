@@ -2,7 +2,6 @@
 
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { motion, AnimatePresence } from "framer-motion"
 import {
   Code2,
   Terminal,
@@ -25,17 +24,42 @@ import {
   MessageSquare,
   Key,
   ExternalLink,
-  Activity
+  Activity,
+  CreditCard,
+  UserCheck,
+  Send,
+  Sparkles,
+  HelpCircle,
+  Hash,
+  Check,
+  X,
+  Smartphone,
+  Tag,
+  Download,
+  FileCode
 } from "lucide-react"
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect } from "react"
+import Link from "next/link"
+import Image from "next/image"
+
+const navHeaderTabs = [
+  { name: "Documentation", href: "/docs", active: true },
+  { name: "Guides", href: "#quickstart", active: false },
+  { name: "API Reference", href: "#send-sms", active: false },
+]
 
 const sidebarLinks = [
   {
-    group: "Introduction",
+    group: "Get Started",
     links: [
-      { name: "Quick Start Guide", id: "quickstart" },
+      { name: "Introduction", id: "introduction" },
+      { name: "Account & Sign In", id: "sign-in-req" },
+      { name: "Buy Credits & Pricing", id: "pricing-credits" },
+      { name: "Create API Key", id: "create-api-key" },
+      { name: "Sender ID Rules", id: "sender-id-guide" },
+      { name: "Phone Formatting", id: "phone-format" },
+      { name: "Quickstart", id: "quickstart" },
       { name: "Postman Collection", id: "postman" },
-      { name: "Official SDKs", id: "sdks" },
     ]
   },
   {
@@ -50,7 +74,7 @@ const sidebarLinks = [
   {
     group: "Endpoints",
     links: [
-      { name: "Send SMS", id: "send-sms" },
+      { name: "Send Single SMS", id: "send-sms" },
       { name: "Bulk Messaging", id: "bulk" },
       { name: "Verification (OTP)", id: "otp" },
       { name: "Delivery Reports", id: "reports" },
@@ -58,13 +82,173 @@ const sidebarLinks = [
   }
 ]
 
-export default function DocsPage() {
-  const [activeTab, setActiveTab] = useState("nodejs")
-  const [copiedId, setCopiedId] = useState<string | null>(null)
-  const [activeSection, setActiveSection] = useState("quickstart")
-  const [searchQuery, setSearchQuery] = useState("")
+const codeExamples = {
+  curl: `curl -X POST https://lgjfiquiaynelpxrybowl.supabase.co/functions/v1/sms-send \\
+  -H "Content-Type: application/json" \\
+  -H "apikey: YOUR_SUPABASE_ANON_KEY" \\
+  -H "x-api-key: YOUR_SECRET_KASANOW_API_KEY" \\
+  -d '{
+    "sender": "KASANOW",
+    "to": "233XXXXXXXXX, 233YYYYYYYYY",
+    "message": "Hello from Kasanow SMS reseller API"
+  }'`,
 
-  const sectionRefs = useRef<{ [key: string]: HTMLElement | null }>({})
+  nodejs: `const axios = require('axios');
+
+const response = await axios.post(
+  'https://lgjfiquiaynelpxrybowl.supabase.co/functions/v1/sms-send',
+  {
+    sender: 'KASANOW',
+    to: '233XXXXXXXXX, 233YYYYYYYYY',
+    message: 'Hello from Kasanow SMS reseller API'
+  },
+  {
+    headers: {
+      'Content-Type': 'application/json',
+      'apikey': process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+      'x-api-key': process.env.KASANOW_API_KEY
+    }
+  }
+);
+
+console.log(response.data);`,
+
+  nextjs: `// app/api/send-sms/route.ts (Next.js App Router Server Route)
+import { NextResponse } from 'next/server';
+
+export async function POST(req: Request) {
+  const { to, message, sender } = await req.json();
+
+  const res = await fetch('https://lgjfiquiaynelpxrybowl.supabase.co/functions/v1/sms-send', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'apikey': process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+      'x-api-key': process.env.KASANOW_API_KEY!,
+    },
+    body: JSON.stringify({
+      sender: sender || 'KASANOW',
+      to,
+      message
+    }),
+  });
+
+  const data = await res.json();
+  return NextResponse.json(data);
+}`,
+
+  python: `import requests
+import os
+
+url = "https://lgjfiquiaynelpxrybowl.supabase.co/functions/v1/sms-send"
+
+headers = {
+    "Content-Type": "application/json",
+    "apikey": os.environ.get("SUPABASE_ANON_KEY"),
+    "x-api-key": os.environ.get("KASANOW_API_KEY")
+}
+
+payload = {
+    "sender": "KASANOW",
+    "to": "233XXXXXXXXX, 233YYYYYYYYY",
+    "message": "Hello from Kasanow SMS reseller API"
+}
+
+response = requests.post(url, json=payload, headers=headers)
+print(response.json())`,
+
+  php: `<?php
+$ch = curl_init('https://lgjfiquiaynelpxrybowl.supabase.co/functions/v1/sms-send');
+
+$payload = json_encode([
+    'sender' => 'KASANOW',
+    'to' => '233XXXXXXXXX, 233YYYYYYYYY',
+    'message' => 'Hello from Kasanow SMS reseller API'
+]);
+
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_POST, true);
+curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+curl_setopt($ch, CURLOPT_HTTPHEADER, [
+    'Content-Type: application/json',
+    'apikey: ' . getenv('SUPABASE_ANON_KEY'),
+    'x-api-key: ' . getenv('KASANOW_API_KEY')
+]);
+
+$response = curl_exec($ch);
+curl_close($ch);
+echo $response;
+?>`,
+
+  go: `package main
+
+import (
+	"bytes"
+	"encoding/json"
+	"fmt"
+	"net/http"
+	"os"
+)
+
+func main() {
+	url := "https://lgjfiquiaynelpxrybowl.supabase.co/functions/v1/sms-send"
+
+	payload := map[string]string{
+		"sender":  "KASANOW",
+		"to":      "233XXXXXXXXX, 233YYYYYYYYY",
+		"message": "Hello from Kasanow SMS reseller API",
+	}
+	jsonVal, _ := json.Marshal(payload)
+
+	req, _ := http.NewRequest("POST", url, bytes.NewBuffer(jsonVal))
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("apikey", os.Getenv("SUPABASE_ANON_KEY"))
+	req.Header.Set("x-api-key", os.Getenv("KASANOW_API_KEY"))
+
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		panic(err)
+	}
+	defer resp.Body.Close()
+
+	fmt.Println("Status:", resp.Status)
+}`
+}
+
+const postmanJsonSample = `{
+  "info": {
+    "name": "KasaNow SMS API Collection",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Send SMS",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "apikey", "value": "{{SUPABASE_ANON_KEY}}" },
+          { "key": "x-api-key", "value": "{{KASANOW_API_KEY}}" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\\n  \\"sender\\": \\"KASANOW\\",\\n  \\"to\\": \\"233241234567\\",\\n  \\"message\\": \\"Hello from KasaNow Postman collection!\\"\\n}"
+        },
+        "url": {
+          "raw": "https://lgjfiquiaynelpxrybowl.supabase.co/functions/v1/sms-send"
+        }
+      }
+    }
+  ]
+}`
+
+export default function DocsPage() {
+  const [activeTab, setActiveTab] = useState<keyof typeof codeExamples>("curl")
+  const [copiedId, setCopiedId] = useState<string | null>(null)
+  const [activeSection, setActiveSection] = useState("introduction")
+  const [searchQuery, setSearchQuery] = useState("")
+  const [isSearchOpen, setIsSearchOpen] = useState(false)
 
   const copyToClipboard = (text: string, id: string) => {
     navigator.clipboard.writeText(text)
@@ -72,10 +256,34 @@ export default function DocsPage() {
     setTimeout(() => setCopiedId(null), 2000)
   }
 
+  const downloadPostmanCollection = () => {
+    const blob = new Blob([postmanJsonSample], { type: "application/json" })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement("a")
+    a.href = url
+    a.download = "kasanow-sms-api.postman_collection.json"
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+    URL.revokeObjectURL(url)
+  }
+
+  // Keyboard shortcut listener for Ctrl+K
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === "k") {
+        e.preventDefault()
+        setIsSearchOpen(prev => !prev)
+      }
+    }
+    window.addEventListener("keydown", handleKeyDown)
+    return () => window.removeEventListener("keydown", handleKeyDown)
+  }, [])
+
   useEffect(() => {
     const observerOptions = {
       root: null,
-      rootMargin: "-20% 0px -70% 0px",
+      rootMargin: "-15% 0px -70% 0px",
       threshold: 0
     }
 
@@ -88,7 +296,6 @@ export default function DocsPage() {
     }
 
     const observer = new IntersectionObserver(observerCallback, observerOptions)
-
     const sections = document.querySelectorAll("section[id]")
     sections.forEach((section) => observer.observe(section))
 
@@ -97,594 +304,738 @@ export default function DocsPage() {
     }
   }, [])
 
-  return (
-    <div className="flex flex-col min-h-screen bg-white">
-      {/* Search Header (Mockup) */}
-      <div className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-100 h-16 flex items-center">
-        <div className="container mx-auto max-w-7xl px-4 flex items-center justify-between">
-            <div className="flex items-center gap-8">
-                <div className="hidden md:flex items-center gap-2 text-slate-400 font-medium text-sm">
-                    <BookOpen className="h-4 w-4" />
-                    <span>Docs</span>
-                    <ChevronRight className="h-3 w-3" />
-                    <span className="text-slate-900 font-bold capitalize">{activeSection.replace("-", " ")}</span>
-                </div>
-            </div>
-            <div className="relative group w-full max-w-sm">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400 group-focus-within:text-[#3A57FC] transition-colors" />
-                <input 
-                    type="text" 
-                    placeholder="Search documentation..." 
-                    className="w-full h-10 bg-slate-100 rounded-xl pl-10 pr-12 text-sm font-medium focus:bg-white focus:ring-2 focus:ring-[#3A57FC]/10 focus:border-[#3A57FC]/30 transition-all outline-none border border-transparent"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                />
-                <div className="absolute right-3 top-1/2 -translate-y-1/2 px-1.5 py-0.5 bg-white border border-slate-200 rounded text-[10px] font-bold text-slate-400 flex items-center gap-1 shadow-sm">
-                    <Command className="h-2.5 w-2.5" /> K
-                </div>
-            </div>
-        </div>
-      </div>
+  const allLinks = sidebarLinks.flatMap(g => g.links)
+  const searchResults = allLinks.filter(l => 
+    l.name.toLowerCase().includes(searchQuery.toLowerCase())
+  )
 
-      <div className="container mx-auto max-w-7xl px-4 py-12">
-        <div className="flex flex-col lg:flex-row gap-12">
+  return (
+    <div className="min-h-screen bg-white text-slate-900 font-sans selection:bg-[#3A57FC]/10 selection:text-[#3A57FC] relative">
+      
+      {/* Light Mode Top Header Navbar */}
+      <header className="sticky top-0 z-40 bg-white/90 backdrop-blur-xl border-b border-slate-200/80 h-14 flex items-center px-4 md:px-8 justify-between">
+        <div className="flex items-center gap-6">
+          <Link href="/" className="flex items-center group">
+            <Image
+              src="/logo.jpg"
+              alt="KasaNow"
+              width={140}
+              height={36}
+              className="h-8 w-auto object-contain"
+            />
+          </Link>
+
+          {/* Nav Links */}
+          <nav className="hidden md:flex items-center gap-1 text-xs font-medium text-slate-600">
+            {navHeaderTabs.map((tab, idx) => (
+              <a
+                key={idx}
+                href={tab.href}
+                className={`px-3 py-1.5 rounded-md transition-colors ${
+                  tab.active ? "text-slate-900 bg-slate-100 font-semibold" : "hover:text-slate-900 hover:bg-slate-50"
+                }`}
+              >
+                {tab.name}
+              </a>
+            ))}
+          </nav>
+        </div>
+
+        <div className="flex items-center gap-3">
+          {/* Search Trigger Bar */}
+          <button
+            onClick={() => setIsSearchOpen(true)}
+            className="relative hidden sm:flex items-center w-56 md:w-64 h-8 bg-slate-100/80 rounded-md pl-8 pr-12 text-xs font-medium text-slate-500 border border-slate-200 hover:border-slate-300 transition-colors text-left"
+          >
+            <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
+            <span>Search docs...</span>
+            <div className="absolute right-2 top-1/2 -translate-y-1/2 px-1.5 py-0.5 bg-white border border-slate-200 rounded text-[9px] font-mono text-slate-500 shadow-xs">
+              Ctrl K
+            </div>
+          </button>
+
+          <Link href="/login">
+            <Button variant="ghost" className="h-8 px-3 text-xs text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+              Sign In
+            </Button>
+          </Link>
+          <Link href="/signup">
+            <Button className="h-8 px-3 text-xs bg-[#3A57FC] hover:bg-[#2F4AD8] text-white font-semibold rounded-md shadow-sm">
+              Get Started
+            </Button>
+          </Link>
+        </div>
+      </header>
+
+      {/* Ctrl+K Search Modal Dialog */}
+      {isSearchOpen && (
+        <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-xs flex items-start justify-center pt-20 px-4">
+          <div className="bg-white border border-slate-200 rounded-xl w-full max-w-xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+            <div className="flex items-center px-4 border-b border-slate-200 h-12">
+              <Search className="h-4 w-4 text-slate-400 mr-2 shrink-0" />
+              <input
+                type="text"
+                placeholder="Search documentation..."
+                className="w-full bg-transparent text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                autoFocus
+              />
+              <button onClick={() => setIsSearchOpen(false)} className="p-1 text-slate-400 hover:text-slate-700">
+                <X className="h-4 w-4" />
+              </button>
+            </div>
+            <div className="max-h-80 overflow-y-auto p-2 space-y-1 text-xs">
+              {searchResults.length > 0 ? (
+                searchResults.map((item, i) => (
+                  <a
+                    key={i}
+                    href={`#${item.id}`}
+                    onClick={() => setIsSearchOpen(false)}
+                    className="flex items-center justify-between p-2.5 rounded-lg text-slate-700 hover:text-slate-900 hover:bg-slate-100 transition-colors"
+                  >
+                    <span className="font-medium">{item.name}</span>
+                    <span className="text-[10px] text-slate-400 font-mono">#{item.id}</span>
+                  </a>
+                ))
+              ) : (
+                <div className="p-6 text-center text-slate-500">
+                  No matching documentation sections found.
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      <div className="max-w-7xl mx-auto px-4 md:px-8 py-8">
+        <div className="flex gap-10">
           
-          {/* Sidebar Navigation */}
-          <aside className="lg:w-64 hidden lg:block sticky top-28 h-[calc(100vh-120px)] overflow-y-auto pr-4 custom-scrollbar">
-            <nav className="space-y-10">
+          {/* Left Navigation Sidebar */}
+          <aside className="w-56 shrink-0 hidden lg:block sticky top-20 h-[calc(100vh-100px)] overflow-y-auto pr-3 custom-scrollbar">
+            <nav className="space-y-6 text-xs">
               {sidebarLinks.map((group, idx) => (
-                <div key={idx} className="space-y-3">
-                  <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-4 ml-4">
+                <div key={idx} className="space-y-2">
+                  <h3 className="font-semibold text-slate-400 px-2 tracking-wide text-[11px]">
                     {group.group}
                   </h3>
-                  <ul className="space-y-1">
-                    {group.links.map((link, lIdx) => (
-                      <li key={lIdx}>
-                        <a 
-                          href={`#${link.id}`}
-                          className={`flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-bold transition-all group ${
-                            activeSection === link.id 
-                            ? "bg-[#3A57FC]/5 text-[#3A57FC] shadow-sm shadow-[#3A57FC]/5" 
-                            : "text-slate-500 hover:text-slate-900 hover:bg-slate-50"
-                          }`}
-                        >
-                          <div className={`w-1.5 h-1.5 rounded-full transition-all ${
-                            activeSection === link.id ? "bg-[#3A57FC] scale-125" : "bg-transparent group-hover:bg-slate-300"
-                          }`} />
-                          {link.name}
-                        </a>
-                      </li>
-                    ))}
+                  <ul className="space-y-0.5">
+                    {group.links.map((link, lIdx) => {
+                      const isActive = activeSection === link.id
+                      return (
+                        <li key={lIdx}>
+                          <a
+                            href={`#${link.id}`}
+                            className={`flex items-center justify-between px-2.5 py-1.5 rounded-md font-medium transition-all ${
+                              isActive
+                                ? "bg-[#3A57FC]/10 text-[#3A57FC] font-semibold"
+                                : "text-slate-600 hover:text-slate-900 hover:bg-slate-100/70"
+                            }`}
+                          >
+                            <span>{link.name}</span>
+                            {isActive && <div className="h-1.5 w-1.5 rounded-full bg-[#3A57FC]" />}
+                          </a>
+                        </li>
+                      )
+                    })}
                   </ul>
                 </div>
               ))}
             </nav>
           </aside>
 
-          {/* Content Area */}
-          <main className="flex-1 space-y-32">
-            
-            {/* Quick Start Section */}
-            <section id="quickstart" className="scroll-mt-32 space-y-10">
-                <div className="space-y-6">
-                    <Badge className="bg-[#3A57FC]/10 text-[#3A57FC] border-none px-4 py-1.5 text-xs font-bold uppercase tracking-wider">
-                        Introduction
-                    </Badge>
-                    <h1 className="text-5xl md:text-6xl font-bold text-slate-900 tracking-tight leading-tight">
-                        Quick Start Guide
-                    </h1>
-                    <p className="text-slate-500 text-xl leading-relaxed max-w-3xl font-medium">
-                        Welcome to the KasaNow API. This guide will help you send your first SMS in less than 5 minutes using our global developer infrastructure.
-                    </p>
-                </div>
+          {/* Center Main Content */}
+          <main className="flex-1 min-w-0 max-w-3xl space-y-20 pb-28">
 
-                <div className="grid md:grid-cols-2 gap-6">
-                    <div className="p-8 rounded-[32px] bg-slate-50 border border-slate-100 hover:border-[#3A57FC]/20 transition-all group">
-                        <div className="h-12 w-12 rounded-2xl bg-white shadow-sm flex items-center justify-center text-[#3A57FC] mb-6 group-hover:scale-110 transition-transform">
-                            <Key className="h-6 w-6" />
-                        </div>
-                        <h4 className="text-xl font-bold text-slate-900 mb-3">1. Get API Key</h4>
-                        <p className="text-slate-500 text-sm leading-relaxed">Sign up for a developer account and generate your secret API key from the dashboard.</p>
-                    </div>
-                    <div className="p-8 rounded-[32px] bg-slate-50 border border-slate-100 hover:border-[#3A57FC]/20 transition-all group">
-                        <div className="h-12 w-12 rounded-2xl bg-white shadow-sm flex items-center justify-center text-[#3A57FC] mb-6 group-hover:scale-110 transition-transform">
-                            <Terminal className="h-6 w-6" />
-                        </div>
-                        <h4 className="text-xl font-bold text-slate-900 mb-3">2. Send Request</h4>
-                        <p className="text-slate-500 text-sm leading-relaxed">Use our SDKs or direct HTTP endpoints to send your first message to any number in Ghana.</p>
-                    </div>
-                </div>
-            </section>
-
-            {/* Postman Collection Section */}
-            <section id="postman" className="scroll-mt-32 space-y-10">
-                <div className="flex items-center gap-3 px-4 py-2 rounded-full bg-orange-50 border border-orange-100 text-orange-600 text-[10px] font-bold uppercase tracking-widest w-fit">
-                    <MessageSquare className="h-3.5 w-3.5" /> Postman Collection
-                </div>
-                <h2 className="text-4xl md:text-5xl font-bold text-slate-900 tracking-tight leading-tight">
-                    API Sandbox & Collection
-                </h2>
-                <p className="text-slate-500 text-lg leading-relaxed max-w-3xl font-medium">
-                    Test our API endpoints instantly without writing a single line of code. Our official Postman collection contains pre-configured requests for all available services.
+            {/* Introduction Section */}
+            <section id="introduction" className="scroll-mt-24 space-y-6 border-b border-slate-200/80 pb-12">
+              <div className="space-y-3">
+                <div className="text-xs font-mono text-slate-500 uppercase tracking-wider">Get Started</div>
+                <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-900">
+                  Introduction
+                </h1>
+                <p className="text-slate-600 text-base md:text-lg leading-relaxed">
+                  KasaNow is the premier programmable SMS API for developers and businesses in Ghana and across Africa.
                 </p>
-
-                <div className="relative group p-10 md:p-14 rounded-[48px] bg-slate-50 border border-slate-200/60 overflow-hidden">
-                    <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-orange-500/5 rounded-full blur-[80px] -mr-32 -mt-32" />
-                    
-                    <div className="relative z-10 flex flex-col md:flex-row items-center gap-10">
-                        <div className="flex-1 space-y-6">
-                            <div className="inline-flex items-center gap-2 text-orange-600 font-bold bg-orange-500/10 px-3 py-1 rounded-lg text-sm">
-                                <ExternalLink className="h-4 w-4" /> v2.1.0 Ready
-                            </div>
-                            <h3 className="text-2xl font-bold text-slate-900">Download the collection</h3>
-                            <p className="text-slate-500 text-sm font-medium leading-relaxed">
-                                Import the JSON collection into your Postman workspace, set your `API_KEY` environment variable, and you're ready to test.
-                            </p>
-                            <Button className="bg-[#3A57FC] hover:bg-[#2D46C7] text-white font-bold h-14 px-8 rounded-2xl shadow-lg shadow-[#3A57FC]/20 transition-all">
-                                Import to Postman
-                            </Button>
-                        </div>
-                        <div className="w-full md:w-80 bg-white rounded-3xl p-6 shadow-xl shadow-slate-200/50 border border-slate-100 transform -rotate-2 group-hover:rotate-0 transition-transform duration-500">
-                             <div className="space-y-4">
-                                <div className="flex items-center gap-3 border-b border-slate-50 pb-3">
-                                    <div className="w-8 h-8 rounded-lg bg-orange-500 text-white flex items-center justify-center font-bold text-xs">P</div>
-                                    <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">WORKSPACE</span>
-                                </div>
-                                <div className="space-y-2">
-                                    {["Send SMS", "Bulk Send", "Verify (OTP)", "Check Status"].map((req, i) => (
-                                        <div key={i} className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-slate-50 transition-colors cursor-default">
-                                            <Badge className={`h-2 w-2 rounded-full p-0 border-none ${i === 0 ? 'bg-green-500' : 'bg-slate-200'}`} />
-                                            <span className="text-xs font-bold text-slate-700">{req}</span>
-                                        </div>
-                                    ))}
-                                </div>
-                             </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* Official SDKs Section */}
-            <section id="sdks" className="scroll-mt-32 space-y-10">
-                <div className="flex items-center gap-3 px-4 py-2 rounded-full bg-slate-100 border border-slate-200 text-slate-600 text-[10px] font-bold uppercase tracking-widest w-fit">
-                    <Code2 className="h-3.5 w-3.5" /> Official SDKs
-                </div>
-                <h2 className="text-4xl md:text-5xl font-bold text-slate-900 tracking-tight leading-tight">
-                    Build with your language
-                </h2>
-                <p className="text-slate-500 text-lg leading-relaxed max-w-3xl font-medium">
-                    Our language-specific SDKs abstract the API complexity, allowing you to integrate SMS capabilities with just a few lines of code.
-                </p>
-
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    {[
-                        { name: "Node.js", icon: "🟢", link: "#", package: "npm i kasanow-sdk" },
-                        { name: "Python", icon: "🐍", link: "#", package: "pip install kasanow" },
-                        { name: "PHP", icon: "🐘", link: "#", package: "composer req kasanow" },
-                        { name: "Go", icon: "🐹", link: "#", package: "go get kasanow" },
-                    ].map((sdk, i) => (
-                        <div key={i} className="p-6 rounded-[32px] bg-white border border-slate-100 hover:border-[#3A57FC]/20 hover:shadow-xl hover:shadow-slate-200/50 transition-all group">
-                            <div className="text-3xl mb-4 grayscale group-hover:grayscale-0 transition-all">{sdk.icon}</div>
-                            <h4 className="font-bold text-slate-900 mb-1">{sdk.name}</h4>
-                            <code className="text-[10px] text-slate-400 font-mono mb-6 block overflow-hidden text-ellipsis whitespace-nowrap">{sdk.package}</code>
-                            <a href={sdk.link} className="text-[#3A57FC] text-xs font-bold uppercase tracking-widest flex items-center gap-1 group-hover:gap-2 transition-all">
-                                View GitHub <ArrowRight className="h-3 w-3" />
-                            </a>
-                        </div>
-                    ))}
-                </div>
-            </section>
-
-            {/* Authentication Section */}
-            <section id="auth" className="scroll-mt-32 space-y-10">
-              <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-slate-100 border border-slate-200 text-slate-600 text-[10px] font-bold uppercase tracking-widest">
-                <Lock className="h-3.5 w-3.5" /> Authentication
               </div>
-              <h2 className="text-4xl md:text-5xl font-bold text-slate-900 tracking-tight leading-tight">
-                Secure API Access
-              </h2>
-              <p className="text-slate-500 text-lg leading-relaxed max-w-3xl font-medium">
-                The KasaNow API uses secret keys to authenticate requests. You can view and manage your API keys in the developer dashboard. Never expose these keys in client-side code.
-              </p>
 
-              <div className="relative group bg-[#0F172A] rounded-[40px] p-8 md:p-12 shadow-2xl overflow-hidden border border-white/5">
-                <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-[#3A57FC]/10 rounded-full blur-[100px] -mr-48 -mt-48" />
-                
-                <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-8">
-                    <div className="space-y-4 max-w-md">
-                        <h4 className="text-white font-bold text-xl flex items-center gap-3">
-                            <div className="h-8 w-8 rounded-xl bg-white/10 flex items-center justify-center text-[#3A57FC]">
-                                <ShieldCheck className="h-5 w-5" />
-                            </div>
-                            How to authenticate
-                        </h4>
-                        <p className="text-slate-400 text-sm leading-relaxed">
-                            Pass your API key in the standard <code className="text-blue-400 bg-blue-500/10 px-1.5 py-0.5 rounded font-mono">Authorization</code> header for every request.
-                        </p>
-                    </div>
+              <div className="bg-slate-50 border border-slate-200 rounded-xl p-6 space-y-4">
+                <h3 className="text-sm font-semibold text-slate-900">To get started with KasaNow, you&apos;ll need:</h3>
+                <ol className="space-y-3 text-xs text-slate-700">
+                  <li className="flex items-start gap-2.5">
+                    <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-white text-[10px] font-bold text-slate-700 border border-slate-300 shadow-xs">1</span>
+                    <span>
+                      <strong className="text-slate-900">A KasaNow account:</strong>{" "}
+                      <Link href="/signup" className="text-[#3A57FC] underline font-medium hover:text-[#2F4AD8]">Sign up or Sign in</Link> to access your developer portal.
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-2.5">
+                    <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-white text-[10px] font-bold text-slate-700 border border-slate-300 shadow-xs">2</span>
+                    <span>
+                      <strong className="text-slate-900">SMS Wallet Credits:</strong> Top up your balance to unlock API key generation.
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-2.5">
+                    <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-white text-[10px] font-bold text-slate-700 border border-slate-300 shadow-xs">3</span>
+                    <span>
+                      <strong className="text-slate-900">A KasaNow Live API Key:</strong> Include your key in the <code className="text-emerald-700 bg-emerald-50 border border-emerald-200 px-1 py-0.5 rounded font-mono">x-api-key</code> request header.
+                    </span>
+                  </li>
+                </ol>
+              </div>
+            </section>
 
-                    <div className="flex-1 bg-white/5 rounded-3xl p-6 border border-white/10 font-mono text-sm group/code">
-                        <div className="flex items-center justify-between mb-4">
-                            <span className="text-slate-500 text-[10px] font-bold uppercase tracking-widest">Header Example</span>
-                            <button 
-                                onClick={() => copyToClipboard("Authorization: Bearer YOUR_API_KEY", "auth-code")}
-                                className="text-slate-400 hover:text-white transition-colors p-2 bg-white/5 rounded-xl"
-                            >
-                                {copiedId === "auth-code" ? <CheckCircle2 className="h-4 w-4 text-green-400" /> : <Copy className="h-4 w-4" />}
-                            </button>
-                        </div>
-                        <div className="text-blue-400">Authorization: <span className="text-white">Bearer <span className="text-emerald-400">YOUR_API_KEY</span></span></div>
-                    </div>
+            {/* Account & Sign In Requirement */}
+            <section id="sign-in-req" className="scroll-mt-24 space-y-6 border-b border-slate-200/80 pb-12">
+              <div className="space-y-2">
+                <Badge className="bg-blue-50 text-blue-700 border-blue-200 text-[10px] uppercase font-mono px-2 py-0.5">
+                  Authentication Requirement
+                </Badge>
+                <h2 className="text-2xl font-bold tracking-tight text-slate-900">Account & Dashboard Access</h2>
+                <p className="text-slate-600 text-sm leading-relaxed">
+                  Before you can issue API keys or execute outbound messages, developers must be logged into their verified KasaNow account. API keys are generated securely inside your account dashboard.
+                </p>
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-4">
+                <div className="p-5 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+                  <UserCheck className="h-5 w-5 text-[#3A57FC]" />
+                  <h4 className="text-sm font-semibold text-slate-900">1. Login First</h4>
+                  <p className="text-xs text-slate-600">Log in to view your current SMS unit balance, transactions, and registered Sender IDs.</p>
+                </div>
+                <div className="p-5 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+                  <Key className="h-5 w-5 text-emerald-600" />
+                  <h4 className="text-sm font-semibold text-slate-900">2. Secret Credentials</h4>
+                  <p className="text-xs text-slate-600">Keys are hidden until your user profile is authenticated and wallet funded.</p>
                 </div>
               </div>
             </section>
 
-            {/* Rate Limiting Section */}
-            <section id="ratelimit" className="scroll-mt-32 space-y-10">
-                <div className="flex items-center gap-3 px-4 py-2 rounded-full bg-slate-100 border border-slate-200 text-slate-600 text-[10px] font-bold uppercase tracking-widest w-fit">
-                    <Zap className="h-3.5 w-3.5" /> Rate Limiting
-                </div>
-                <h2 className="text-4xl md:text-5xl font-bold text-slate-900 tracking-tight leading-tight">
-                    Performance Tiers
-                </h2>
-                <p className="text-slate-500 text-lg leading-relaxed max-w-3xl font-medium">
-                    To ensure service stability, we implement rate limits based on your subscription tier. Requests exceeding these limits will receive a <code className="text-red-500 font-mono">429 Too Many Requests</code> response.
+            {/* Buy Credits & Pricing */}
+            <section id="pricing-credits" className="scroll-mt-24 space-y-6 border-b border-slate-200/80 pb-12">
+              <div className="space-y-2">
+                <Badge className="bg-amber-50 text-amber-700 border-amber-200 text-[10px] uppercase font-mono px-2 py-0.5">
+                  SMS Bundles & Top Up
+                </Badge>
+                <h2 className="text-2xl font-bold tracking-tight text-slate-900">SMS Pricing & Top Up</h2>
+                <p className="text-slate-600 text-sm leading-relaxed">
+                  Users must pay first before API keys are shown. KasaNow operates on a prepaid credit balance. Complete payment via Paystack to unlock API key creation.
                 </p>
+              </div>
 
-                <div className="grid md:grid-cols-3 gap-6">
-                    {[
-                        { tier: "Developer", limit: "10 rps", desc: "Sandbox environment" },
-                        { tier: "Scale", limit: "100 rps", desc: "Production traffic" },
-                        { tier: "Enterprise", limit: "Unlimited*", desc: "Custom configuration" },
-                    ].map((tier, i) => (
-                        <div key={i} className="p-8 rounded-[36px] bg-slate-50 border border-slate-100 flex flex-col items-center text-center">
-                            <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">{tier.tier}</div>
-                            <div className="text-3xl font-bold text-slate-900 mb-2">{tier.limit}</div>
-                            <p className="text-slate-500 text-xs font-semibold">{tier.desc}</p>
-                        </div>
-                    ))}
+              {/* Pricing Tier Cards */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="p-5 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5 text-left">
+                  <div className="text-sm font-bold text-slate-900">0 - 100 SMS</div>
+                  <div className="text-base font-semibold text-slate-700">0.070 <span className="text-xs font-normal text-slate-500">/ SMS</span></div>
+                  <p className="text-[11px] text-slate-500">Starter Developer Tier</p>
                 </div>
+                <div className="p-5 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5 text-left">
+                  <div className="text-sm font-bold text-slate-900">0 - 500 SMS</div>
+                  <div className="text-base font-semibold text-slate-700">0.080 <span className="text-xs font-normal text-slate-500">/ SMS</span></div>
+                  <p className="text-[11px] text-slate-500">Growth Tier</p>
+                </div>
+                <div className="p-5 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5 text-left">
+                  <div className="text-sm font-bold text-slate-900">1000+ SMS</div>
+                  <div className="text-base font-semibold text-[#3A57FC]">0.050 <span className="text-xs font-normal text-slate-500">/ SMS</span></div>
+                  <p className="text-[11px] text-slate-500">Reseller & High Volume Tier</p>
+                </div>
+              </div>
             </section>
 
-            {/* Error Codes Section */}
-            <section id="errors" className="scroll-mt-32 space-y-10">
-                <div className="flex items-center gap-3 px-4 py-2 rounded-full bg-red-50 border border-red-100 text-red-600 text-[10px] font-bold uppercase tracking-widest w-fit">
-                    <Activity className="h-3.5 w-3.5" /> Error Codes
+            {/* Create API Key Section */}
+            <section id="create-api-key" className="scroll-mt-24 space-y-6 border-b border-slate-200/80 pb-12">
+              <div className="space-y-2">
+                <Badge className="bg-emerald-50 text-emerald-700 border-emerald-200 text-[10px] uppercase font-mono px-2 py-0.5">
+                  Dashboard
+                </Badge>
+                <h2 className="text-2xl font-bold tracking-tight text-slate-900">Create your Live API Key</h2>
+                <p className="text-slate-600 text-sm leading-relaxed">
+                  Go to <strong className="text-slate-900">API Keys</strong> in your dashboard sidebar. Once wallet payment reference is verified, click <span className="text-[#3A57FC] font-semibold">+ Create</span> to issue your live secret API key.
+                </p>
+              </div>
+
+              <div className="bg-slate-50 border border-slate-200 rounded-xl p-5 font-mono text-xs text-slate-700 space-y-3">
+                <div className="flex items-center justify-between text-slate-400 border-b border-slate-200 pb-2">
+                  <span>Required Headers</span>
+                  <span>Header Key</span>
                 </div>
-                <h2 className="text-4xl md:text-5xl font-bold text-slate-900 tracking-tight leading-tight">
-                    Standard Responses
-                </h2>
-                
-                <div className="bg-white rounded-[40px] border border-slate-100 shadow-sm overflow-hidden">
-                    <div className="divide-y divide-slate-50">
-                        {[
-                            { code: "400", msg: "Bad Request", desc: "Missing required parameters or malformed JSON." },
-                            { code: "401", msg: "Unauthorized", desc: "Invalid API key or expired token." },
-                            { code: "402", msg: "Payment Required", desc: "Insufficient balance for the request." },
-                            { code: "429", msg: "Too Many Requests", desc: "Rate limit exceeded for your tier." },
-                            { code: "500", msg: "Server Error", desc: "An internal error occurred on our side." },
-                        ].map((err, i) => (
-                            <div key={i} className="flex flex-col md:flex-row md:items-center px-10 py-6 hover:bg-slate-50/50 transition-colors gap-4">
-                                <div className="md:w-32 font-mono font-bold text-lg text-slate-900">{err.code}</div>
-                                <div className="md:w-48 font-bold text-[#3A57FC] text-sm">{err.msg}</div>
-                                <div className="flex-1 text-slate-500 text-sm font-medium">{err.desc}</div>
-                            </div>
-                        ))}
-                    </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-slate-800">Public Supabase Gateway Key</span>
+                  <code className="text-amber-700 font-bold">apikey</code>
                 </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-slate-800">Secret KasaNow API Key</span>
+                  <code className="text-emerald-700 font-bold">x-api-key</code>
+                </div>
+              </div>
             </section>
 
-            {/* Send SMS Section */}
-            <section id="send-sms" className="scroll-mt-32 space-y-10">
-              <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 border-b border-slate-100 pb-8">
-                <div className="space-y-3">
-                  <div className="flex items-center gap-4">
-                    <Badge className="bg-[#10B981] text-white font-bold h-8 px-4 rounded-xl border-none">POST</Badge>
-                    <code className="text-lg font-bold font-mono text-slate-800 bg-slate-50 px-3 py-1 rounded-xl">/v1/sms/send</code>
+            {/* NEW: Sender ID Registration Rules */}
+            <section id="sender-id-guide" className="scroll-mt-24 space-y-6 border-b border-slate-200/80 pb-12">
+              <div className="space-y-2">
+                <Badge className="bg-indigo-50 text-indigo-700 border-indigo-200 text-[10px] uppercase font-mono px-2 py-0.5">
+                  Branding & Compliance
+                </Badge>
+                <h2 className="text-2xl font-bold tracking-tight text-slate-900">Sender ID Registration Guide</h2>
+                <p className="text-slate-600 text-sm leading-relaxed">
+                  The <code className="text-[#3A57FC] font-mono">sender</code> parameter represents the custom name displayed on recipient mobile devices (e.g., <code className="text-slate-900 font-mono">&quot;KASANOW&quot;</code> or your registered brand).
+                </p>
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-4 text-xs">
+                <div className="p-5 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+                  <div className="flex items-center gap-2 font-semibold text-slate-900">
+                    <Tag className="h-4 w-4 text-[#3A57FC]" /> Max 11 Characters
                   </div>
-                  <h3 className="text-3xl font-bold text-slate-900 tracking-tight">Send Single Message</h3>
+                  <p className="text-slate-600">Alphanumeric names must be 1 to 11 characters long (A-Z, a-z, 0-9). Spaces are permitted.</p>
                 </div>
-                <div className="flex items-center gap-3">
-                    <Button variant="outline" className="rounded-xl border-slate-200 font-bold text-slate-600 hover:bg-slate-50">
-                        <ExternalLink className="mr-2 h-4 w-4" /> Try with Postman
-                    </Button>
+                <div className="p-5 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+                  <div className="flex items-center gap-2 font-semibold text-slate-900">
+                    <ShieldCheck className="h-4 w-4 text-emerald-600" /> Telecom & NCA Approval
+                  </div>
+                  <p className="text-slate-600">In Ghana, custom company Sender IDs are verified against registered business names to prevent spoofing.</p>
                 </div>
               </div>
 
-              <p className="text-slate-500 text-lg leading-relaxed font-medium">
-                Deliver time-sensitive updates, transactional alerts, or personalized messages to any phone number globally.
-              </p>
-
-              {/* Params Table */}
-              <div className="bg-white rounded-[40px] border border-slate-100 shadow-sm overflow-hidden">
-                <div className="px-10 py-6 border-b border-slate-50 bg-slate-50/50 flex items-center justify-between">
-                   <h4 className="font-bold text-slate-400 uppercase text-[10px] tracking-[0.2em]">Request Parameters</h4>
-                   <Badge variant="outline" className="text-slate-400 border-slate-200">JSON Body</Badge>
+              <div className="bg-amber-50/70 border border-amber-200 rounded-xl p-4 text-xs text-amber-900 space-y-1">
+                <div className="font-semibold flex items-center gap-2">
+                  <HelpCircle className="h-4 w-4 text-amber-700" /> Default Testing Sender ID
                 </div>
-                <div className="divide-y divide-slate-100">
-                  {[
-                    { name: "to", type: "string", required: true, desc: "Phone number in international E.164 format (e.g., +233241234567)." },
-                    { name: "message", type: "string", required: true, desc: "Text content. For long messages, multi-part charges apply." },
-                    { name: "sender_id", type: "string", required: false, desc: "Alphanumeric ID. Must be pre-approved in dashboard." },
-                  ].map((param, i) => (
-                    <div key={i} className="flex flex-col md:flex-row gap-4 md:gap-16 px-10 py-8 hover:bg-slate-50/30 transition-colors">
-                      <div className="md:w-1/3 flex items-start gap-4">
-                        <div className="font-bold text-[#3A57FC] font-mono text-base">{param.name}</div>
-                        {param.required && <Badge className="bg-amber-100 text-amber-700 text-[9px] px-1.5 py-0 border-none font-bold uppercase">Required</Badge>}
-                      </div>
-                      <div className="flex-1 text-slate-600 leading-relaxed font-semibold text-sm">
-                        {param.desc}
-                      </div>
+                <p className="text-amber-800">
+                  During sandbox testing or before your custom Sender ID is approved, use the default pre-approved ID: <code className="font-mono font-bold bg-white px-1.5 py-0.5 rounded border border-amber-300">&quot;KASANOW&quot;</code>.
+                </p>
+              </div>
+            </section>
+
+            {/* NEW: Phone Number Format Helper */}
+            <section id="phone-format" className="scroll-mt-24 space-y-6 border-b border-slate-200/80 pb-12">
+              <div className="space-y-2">
+                <Badge className="bg-[#3A57FC]/10 text-[#3A57FC] border-[#3A57FC]/20 text-[10px] uppercase font-mono px-2 py-0.5">
+                  Format Helper
+                </Badge>
+                <h2 className="text-2xl font-bold tracking-tight text-slate-900">Phone Number Formatting</h2>
+                <p className="text-slate-600 text-sm leading-relaxed">
+                  KasaNow automatically formats phone numbers to international standard E.164. However, adhering to recommended formats ensures maximum delivery speed across MTN, Telecel, and AT Ghana networks.
+                </p>
+              </div>
+
+              <div className="border border-slate-200 rounded-xl overflow-hidden text-xs">
+                <div className="divide-y divide-slate-200">
+                  <div className="p-4 flex items-center justify-between bg-slate-50/60">
+                    <div>
+                      <div className="font-semibold text-slate-900">International E.164 (Recommended)</div>
+                      <div className="text-slate-500 font-mono text-[11px]">233XXXXXXXXX or +233XXXXXXXXX</div>
                     </div>
-                  ))}
+                    <Badge className="bg-emerald-100 text-emerald-800 border-emerald-300 font-mono">Preferred</Badge>
+                  </div>
+                  <div className="p-4 flex items-center justify-between bg-slate-50/20">
+                    <div>
+                      <div className="font-semibold text-slate-900">Local Ghana Format</div>
+                      <div className="text-slate-500 font-mono text-[11px]">0241234567 / 0501234567</div>
+                    </div>
+                    <span className="text-slate-500 text-[11px]">Auto-converted to 233</span>
+                  </div>
+                  <div className="p-4 flex items-center justify-between bg-slate-50/60">
+                    <div>
+                      <div className="font-semibold text-slate-900">Multiple Numbers / Bulk</div>
+                      <div className="text-slate-500 font-mono text-[11px]">233240000000, 233500000000</div>
+                    </div>
+                    <span className="text-slate-500 text-[11px]">Comma-separated string</span>
+                  </div>
                 </div>
               </div>
+            </section>
 
-              {/* Advanced Code Blocks */}
-              <div className="space-y-6">
-                <div className="flex items-center gap-2 p-1.5 bg-slate-100 rounded-2xl w-fit">
-                  {["nodejs", "python", "curl"].map((tab) => (
+            {/* Quickstart Section */}
+            <section id="quickstart" className="scroll-mt-24 space-y-6 border-b border-slate-200/80 pb-12">
+              <div className="space-y-2">
+                <h2 className="text-2xl font-bold tracking-tight text-slate-900">Quickstart</h2>
+                <p className="text-slate-600 text-sm leading-relaxed">
+                  Learn how to make your first HTTP request to send SMS using cURL or your framework of choice.
+                </p>
+              </div>
+
+              {/* Framework Selector Tabs */}
+              <div className="space-y-3">
+                <div className="flex flex-wrap items-center gap-1.5 border-b border-slate-200 pb-2">
+                  {(Object.keys(codeExamples) as Array<keyof typeof codeExamples>).map((lang) => (
                     <button
-                      key={tab}
-                      onClick={() => setActiveTab(tab)}
-                      className={`px-6 py-2 rounded-xl font-bold text-xs uppercase tracking-widest transition-all ${
-                        activeTab === tab ? "bg-white text-[#3A57FC] shadow-sm" : "text-slate-400 hover:text-slate-600"
+                      key={lang}
+                      onClick={() => setActiveTab(lang)}
+                      className={`px-3 py-1.5 rounded-md text-xs font-mono font-medium transition-all ${
+                        activeTab === lang
+                          ? "bg-slate-900 text-white font-bold shadow-xs"
+                          : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
                       }`}
                     >
-                      {tab}
+                      {lang === "nodejs" ? "Node.js (Axios)" : lang === "nextjs" ? "Next.js Route" : lang.toUpperCase()}
                     </button>
                   ))}
                 </div>
 
-                <div className="bg-[#0F172A] rounded-[48px] p-10 font-mono text-sm leading-relaxed shadow-2xl relative border border-white/5 group">
-                  <div className="absolute top-8 right-10 z-20">
-                    <button 
-                        onClick={() => copyToClipboard("CODE_SNIPPET", "sms-code")}
-                        className="p-3 bg-white/5 hover:bg-white/10 rounded-2xl text-slate-400 hover:text-white transition-all border border-white/5"
+                {/* Code Block Container (Sleek Dark Box inside Light Page) */}
+                <div className="relative bg-[#0d1117] rounded-xl border border-slate-800/90 overflow-hidden font-mono text-xs shadow-md">
+                  <div className="flex items-center justify-between px-4 py-2.5 bg-[#161b22] border-b border-zinc-800/80 text-zinc-400">
+                    <span className="text-[11px]">POST /functions/v1/sms-send</span>
+                    <button
+                      onClick={() => copyToClipboard(codeExamples[activeTab], "quickstart-code")}
+                      className="flex items-center gap-1.5 text-[11px] text-zinc-400 hover:text-white transition-colors bg-zinc-800/60 hover:bg-zinc-800 px-2 py-1 rounded border border-zinc-700/50"
                     >
-                        {copiedId === "sms-code" ? <CheckCircle2 className="h-5 w-5 text-green-400" /> : <Copy className="h-5 w-5" />}
+                      {copiedId === "quickstart-code" ? (
+                        <>
+                          <Check className="h-3.5 w-3.5 text-emerald-400" />
+                          <span className="text-emerald-400">Copied!</span>
+                        </>
+                      ) : (
+                        <>
+                          <Copy className="h-3.5 w-3.5" />
+                          <span>Copy</span>
+                        </>
+                      )}
                     </button>
                   </div>
-                  
-                  <div className="flex items-center gap-2 mb-8 opacity-40">
-                    <div className="h-3 w-3 rounded-full bg-red-500" />
-                    <div className="h-3 w-3 rounded-full bg-amber-500" />
-                    <div className="h-3 w-3 rounded-full bg-green-500" />
-                  </div>
 
-                  {activeTab === "nodejs" && (
-                    <div className="animate-in fade-in duration-500">
-                      <p className="text-slate-500 mb-4">// npm install axios</p>
-                      <p className="text-[#60A5FA]">const <span className="text-white">axios = require(<span className="text-[#A5F3FC]">'axios'</span>);</span></p>
-                      <br />
-                      <p className="text-[#60A5FA]">const <span className="text-white">options = {"{"}</span></p>
-                      <p className="text-white pl-4 text-slate-300">method: <span className="text-[#A5F3FC]">'POST'</span>,</p>
-                      <p className="text-white pl-4 text-slate-300">url: <span className="text-[#A5F3FC]">'https://api.kasanow.com/v1/sms/send'</span>,</p>
-                      <p className="text-white pl-4 text-slate-300">headers: {"{"}</p>
-                      <p className="text-white pl-8 text-slate-300">Authorization: <span className="text-[#A5F3FC]">'Bearer YOUR_KEY'</span>,</p>
-                      <p className="text-white pl-8 text-slate-300">Content-Type: <span className="text-[#A5F3FC]">'application/json'</span></p>
-                      <p className="text-white pl-4">{"}"},</p>
-                      <p className="text-white pl-4 text-slate-300">data: {"{"} to: <span className="text-[#A5F3FC]">'+233240000000'</span>, message: <span className="text-[#A5F3FC]">'Hello!'</span> {"}"}</p>
-                      <p className="text-white">{"};"}</p>
-                    </div>
-                  )}
-                  {activeTab === "python" && (
-                     <div className="animate-in fade-in duration-500">
-                        <p className="text-slate-500 mb-4"># pip install requests</p>
-                        <p className="text-blue-400">import <span className="text-white">requests</span></p>
-                        <br />
-                        <p className="text-white">response = requests.post(</p>
-                        <p className="text-white pl-4"><span className="text-[#A5F3FC]">"https://api.kasanow.com/v1/sms/send"</span>,</p>
-                        <p className="text-white pl-4">json={"{"}<span className="text-[#A5F3FC]">"to"</span>: <span className="text-[#A5F3FC]">"+233240000000"</span>, <span className="text-[#A5F3FC]">"message"</span>: <span className="text-[#A5F3FC]">"Hi!"</span>{"}"},</p>
-                        <p className="text-white pl-4">headers={"{"}<span className="text-[#A5F3FC]">"Authorization"</span>: <span className="text-[#A5F3FC]">"Bearer YOUR_KEY"</span>{"}"}</p>
-                        <p className="text-white pl-4">)</p>
-                        <p className="text-white">print(response.json())</p>
-                     </div>
-                  )}
-                  {activeTab === "curl" && (
-                     <div className="animate-in fade-in duration-500">
-                        <p className="text-white"><span className="text-[#10B981]">curl</span> -X POST https://api.kasanow.com/v1/sms/send \</p>
-                        <p className="text-white pl-4">-H <span className="text-[#A5F3FC]">"Authorization: Bearer YOUR_KEY"</span> \</p>
-                        <p className="text-white pl-4">-H <span className="text-[#A5F3FC]">"Content-Type: application/json"</span> \</p>
-                        <p className="text-white pl-4">-d <span className="text-[#A5F3FC]">{`'{"to": "+23324", "message": "Verify me!"}'`}</span></p>
-                     </div>
-                  )}
+                  <pre className="p-4 overflow-x-auto text-zinc-200 leading-relaxed custom-scrollbar">
+                    <code>{codeExamples[activeTab]}</code>
+                  </pre>
                 </div>
               </div>
             </section>
 
-            {/* Bulk Messaging Section */}
-            <section id="bulk" className="scroll-mt-32 space-y-10">
-              <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 border-b border-slate-100 pb-8">
-                <div className="space-y-3">
-                  <div className="flex items-center gap-4">
-                    <Badge className="bg-[#10B981] text-white font-bold h-8 px-4 rounded-xl border-none">POST</Badge>
-                    <code className="text-lg font-bold font-mono text-slate-800 bg-slate-50 px-3 py-1 rounded-xl">/v1/sms/bulk</code>
-                  </div>
-                  <h3 className="text-3xl font-bold text-slate-900 tracking-tight">Bulk Messaging</h3>
-                </div>
-              </div>
-              <p className="text-slate-500 text-lg leading-relaxed font-medium">
-                Send thousands of messages in a single API call by providing an array of recipients.
-              </p>
-              <div className="bg-[#0F172A] rounded-[48px] p-10 font-mono text-sm leading-relaxed border border-white/5">
-                  <p className="text-blue-400">{"{"}</p>
-                  <p className="text-white pl-4">"messages": [</p>
-                  <p className="text-white pl-8">{"{"} "to": "+233241234567", "message": "Hi Kwame!" {"}"},</p>
-                  <p className="text-white pl-8">{"{"} "to": "+233207654321", "message": "Hi Abena!" {"}"}</p>
-                  <p className="text-white pl-4">]</p>
-                  <p className="text-blue-400">{"}"}</p>
-              </div>
-            </section>
-
-            {/* Verification Section */}
-            <section id="otp" className="scroll-mt-32 space-y-10">
-              <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 border-b border-slate-100 pb-8">
-                <div className="space-y-3">
-                  <div className="flex items-center gap-4">
-                    <Badge className="bg-[#10B981] text-white font-bold h-8 px-4 rounded-xl border-none">POST</Badge>
-                    <code className="text-lg font-bold font-mono text-slate-800 bg-slate-50 px-3 py-1 rounded-xl">/v1/otp/send</code>
-                  </div>
-                  <h3 className="text-3xl font-bold text-slate-900 tracking-tight">2FA & Verification</h3>
-                </div>
-              </div>
-              <p className="text-slate-500 text-lg leading-relaxed font-medium">
-                Secure your user accounts with automated OTP delivery and verification. Our system handles code generation, expiry, and retry logic.
-              </p>
-              <div className="grid md:grid-cols-2 gap-6">
-                  <div className="bg-slate-50 p-8 rounded-[32px] border border-slate-100">
-                      <h4 className="font-bold text-slate-900 mb-4 flex items-center gap-2">
-                        <div className="w-1.5 h-6 bg-[#3A57FC] rounded-full" /> 1. Request Code
-                      </h4>
-                      <p className="text-slate-500 text-sm mb-6">Send an OTP to a mobile number with custom length and expiry.</p>
-                      <code className="text-[10px] bg-white p-3 rounded-lg border border-slate-200 block text-slate-600">POST /v1/otp/send</code>
-                  </div>
-                  <div className="bg-slate-50 p-8 rounded-[32px] border border-slate-100">
-                      <h4 className="font-bold text-slate-900 mb-4 flex items-center gap-2">
-                        <div className="w-1.5 h-6 bg-emerald-500 rounded-full" /> 2. Verify Code
-                      </h4>
-                      <p className="text-slate-500 text-sm mb-6">Verify the user-provided code against our secure backend.</p>
-                      <code className="text-[10px] bg-white p-3 rounded-lg border border-slate-200 block text-slate-600">POST /v1/otp/verify</code>
-                  </div>
-              </div>
-            </section>
-
-            {/* Webhooks Section */}
-            <section id="webhooks" className="scroll-mt-32 space-y-10">
-                <div className="flex items-center gap-3 px-4 py-2 rounded-full bg-slate-100 border border-slate-200 text-slate-600 text-[10px] font-bold uppercase tracking-widest w-fit">
-                    <Globe className="h-3.5 w-3.5" /> Webhooks
-                </div>
-                <h2 className="text-4xl md:text-5xl font-bold text-slate-900 tracking-tight leading-tight">
-                    Real-time Event Hooks
-                </h2>
-                <p className="text-slate-500 text-lg leading-relaxed max-w-3xl font-medium">
-                    Don't poll our API. We'll push real-time delivery reports and message status updates to your server the second they happen.
+            {/* NEW: Postman Collection Import / Download Section */}
+            <section id="postman" className="scroll-mt-24 space-y-6 border-b border-slate-200/80 pb-12">
+              <div className="space-y-2">
+                <Badge className="bg-orange-50 text-orange-700 border-orange-200 text-[10px] uppercase font-mono px-2 py-0.5">
+                  Sandbox & Collection
+                </Badge>
+                <h2 className="text-2xl font-bold tracking-tight text-slate-900">Postman Collection</h2>
+                <p className="text-slate-600 text-sm leading-relaxed">
+                  Test the KasaNow SMS API in your Postman workspace without writing code. Import pre-configured requests for sending single SMS, bulk messaging, and checking delivery logs.
                 </p>
+              </div>
 
-                <div className="p-10 rounded-[48px] bg-slate-900 text-white relative overflow-hidden border border-white/10 group">
-                    <div className="absolute inset-0 bg-gradient-to-tr from-emerald-500/10 to-transparent pointer-events-none" />
-                    <div className="relative z-10 flex flex-col md:flex-row gap-8 items-center">
-                        <div className="space-y-4 max-w-xs">
-                            <h4 className="text-xl font-bold flex items-center gap-2">
-                                <span className="relative flex h-3 w-3">
-                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                                    <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
-                                </span>
-                                Incoming Event
-                            </h4>
-                            <p className="text-slate-400 text-xs leading-relaxed font-medium">
-                                Configure your endpoint URL in the dashboard to receive signed JSON payloads.
-                            </p>
-                        </div>
-                        <div className="flex-1 bg-white/5 rounded-3xl p-6 border border-white/10 font-mono text-[11px] leading-6 group-hover:border-white/20 transition-all">
-                            <p className="text-emerald-400">{"{"}</p>
-                            <p className="text-white pl-4">"id": <span className="text-[#A5F3FC]">"evt_80221"</span>,</p>
-                            <p className="text-white pl-4">"type": <span className="text-[#A5F3FC]">"message.delivered"</span>,</p>
-                            <p className="text-white pl-4">"to": <span className="text-[#A5F3FC]">"+233240000000"</span>,</p>
-                            <p className="text-white pl-4">"timestamp": <span className="text-amber-400">1625097600</span></p>
-                            <p className="text-emerald-400">{"}"}</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* Reports Section */}
-            <section id="reports" className="scroll-mt-32 space-y-10">
-              <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 border-b border-slate-100 pb-8">
-                <div className="space-y-3">
-                  <div className="flex items-center gap-4">
-                    <Badge className="bg-slate-900 text-white font-bold h-8 px-4 rounded-xl border-none">GET</Badge>
-                    <code className="text-lg font-bold font-mono text-slate-800 bg-slate-50 px-3 py-1 rounded-xl">/v1/reports/{"{id}"}</code>
+              <div className="bg-slate-50 border border-slate-200 rounded-xl p-6 space-y-4">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                  <div>
+                    <h4 className="text-sm font-bold text-slate-900 flex items-center gap-2">
+                      <FileCode className="h-4 w-4 text-orange-600" /> Official Postman Collection v2.1
+                    </h4>
+                    <p className="text-xs text-slate-500 mt-1">Includes pre-set headers for <code className="font-mono font-semibold">apikey</code> and <code className="font-mono font-semibold">x-api-key</code>.</p>
                   </div>
-                  <h3 className="text-3xl font-bold text-slate-900 tracking-tight">Delivery Reports</h3>
+
+                  <div className="flex items-center gap-2">
+                    <Button
+                      onClick={downloadPostmanCollection}
+                      className="bg-[#3A57FC] hover:bg-[#2F4AD8] text-white text-xs font-semibold h-9 px-4 rounded-lg shadow-sm"
+                    >
+                      <Download className="mr-1.5 h-3.5 w-3.5" /> Download JSON
+                    </Button>
+                    <Button
+                      onClick={() => copyToClipboard(postmanJsonSample, "postman-json")}
+                      variant="outline"
+                      className="text-xs font-semibold h-9 px-3 border-slate-300"
+                    >
+                      {copiedId === "postman-json" ? (
+                        <>
+                          <Check className="mr-1 h-3.5 w-3.5 text-emerald-600" /> Copied
+                        </>
+                      ) : (
+                        <>
+                          <Copy className="mr-1 h-3.5 w-3.5" /> Copy JSON
+                        </>
+                      )}
+                    </Button>
+                  </div>
+                </div>
+
+                <div className="bg-[#0d1117] p-4 rounded-xl border border-slate-800 font-mono text-[11px] text-zinc-300 overflow-x-auto custom-scrollbar">
+                  <pre><code>{postmanJsonSample}</code></pre>
                 </div>
               </div>
-              <p className="text-slate-500 text-lg leading-relaxed font-medium">
-                Retrieve the detailed delivery status and metadata for any message or campaign using its unique ID.
-              </p>
-              
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            </section>
+
+            {/* Authentication Deep-Dive */}
+            <section id="auth" className="scroll-mt-24 space-y-6 border-b border-slate-200/80 pb-12">
+              <div className="space-y-2">
+                <div className="text-xs font-mono text-slate-500 uppercase tracking-wider">API Fundamentals</div>
+                <h2 className="text-2xl font-bold tracking-tight text-slate-900">Authentication</h2>
+                <p className="text-slate-600 text-sm leading-relaxed">
+                  The KasaNow Edge API authenticates requests using two HTTP headers.
+                </p>
+              </div>
+
+              <div className="space-y-4">
+                <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5">
+                  <div className="flex items-center justify-between">
+                    <code className="text-amber-700 font-mono text-xs font-semibold">apikey</code>
+                    <span className="text-[10px] text-slate-500 uppercase font-mono">Public Header</span>
+                  </div>
+                  <p className="text-xs text-slate-700">
+                    The public Supabase gateway key. Required to route the request through the edge infrastructure safely.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5">
+                  <div className="flex items-center justify-between">
+                    <code className="text-emerald-700 font-mono text-xs font-semibold">x-api-key</code>
+                    <span className="text-[10px] text-slate-500 uppercase font-mono">Secret Header</span>
+                  </div>
+                  <p className="text-xs text-slate-700">
+                    Your secret KasaNow reseller key generated in the dashboard. Authenticates your account and bills your credit balance.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            {/* Rate Limiting */}
+            <section id="ratelimit" className="scroll-mt-24 space-y-6 border-b border-slate-200/80 pb-12">
+              <div className="space-y-2">
+                <h2 className="text-2xl font-bold tracking-tight text-slate-900">Rate Limiting</h2>
+                <p className="text-slate-600 text-sm leading-relaxed">
+                  Requests are limited per minute to protect network throughput and prevent spamming.
+                </p>
+              </div>
+              <div className="grid grid-cols-3 gap-3 text-center text-xs">
+                <div className="p-4 rounded-xl bg-slate-50 border border-slate-200">
+                  <div className="text-slate-500 mb-1 font-mono">Standard</div>
+                  <div className="text-lg font-bold text-slate-900">60 rps</div>
+                </div>
+                <div className="p-4 rounded-xl bg-slate-50 border border-slate-200">
+                  <div className="text-slate-500 mb-1 font-mono">Reseller</div>
+                  <div className="text-lg font-bold text-slate-900">300 rps</div>
+                </div>
+                <div className="p-4 rounded-xl bg-slate-50 border border-slate-200">
+                  <div className="text-slate-500 mb-1 font-mono">Enterprise</div>
+                  <div className="text-lg font-bold text-[#3A57FC]">Custom</div>
+                </div>
+              </div>
+            </section>
+
+            {/* Error Codes */}
+            <section id="errors" className="scroll-mt-24 space-y-6 border-b border-slate-200/80 pb-12">
+              <div className="space-y-2">
+                <h2 className="text-2xl font-bold tracking-tight text-slate-900">Error Codes</h2>
+                <p className="text-slate-600 text-sm leading-relaxed">
+                  KasaNow uses standard HTTP response codes to indicate success or failure.
+                </p>
+              </div>
+
+              <div className="border border-slate-200 rounded-xl overflow-hidden text-xs">
+                <div className="divide-y divide-slate-200">
                   {[
-                    { label: "Status", value: "Delivered", color: "text-emerald-500" },
-                    { label: "Latency", value: "84ms", color: "text-[#3A57FC]" },
-                    { label: "Carrier", value: "MTN Ghana", color: "text-amber-500" },
-                    { label: "Cost", value: "0.02 GHS", color: "text-slate-900" },
-                  ].map((stat, i) => (
-                    <div key={i} className="p-6 rounded-3xl bg-slate-50 border border-slate-100">
-                        <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">{stat.label}</div>
-                        <div className={`text-xl font-bold ${stat.color}`}>{stat.value}</div>
+                    { code: "200 OK", desc: "Message delivered or queued successfully." },
+                    { code: "400 Bad Request", desc: "Missing fields (sender, to, message) or invalid phone format." },
+                    { code: "401 Unauthorized", desc: "Invalid or missing x-api-key header." },
+                    { code: "402 Payment Required", desc: "Insufficient wallet balance. Top up credits in dashboard." },
+                    { code: "429 Rate Exceeded", desc: "Too many requests. Back off and retry." },
+                  ].map((err, idx) => (
+                    <div key={idx} className="p-3.5 flex items-center justify-between bg-slate-50/50">
+                      <code className="font-mono text-amber-700 font-semibold">{err.code}</code>
+                      <span className="text-slate-600">{err.desc}</span>
                     </div>
                   ))}
+                </div>
               </div>
             </section>
 
-            {/* Next/Prev Navigation */}
-            <div className="flex items-center justify-between pt-12 border-t border-slate-100">
-              <a href="#auth" className="flex items-center gap-4 group">
-                  <div className="h-10 w-10 rounded-full border border-slate-100 flex items-center justify-center text-slate-400 group-hover:bg-slate-50 transition-all">
-                      <ChevronRight className="h-4 w-4 rotate-180" />
+            {/* Webhooks */}
+            <section id="webhooks" className="scroll-mt-24 space-y-6 border-b border-slate-200/80 pb-12">
+              <div className="space-y-2">
+                <h2 className="text-2xl font-bold tracking-tight text-slate-900">Webhooks</h2>
+                <p className="text-slate-600 text-sm leading-relaxed">
+                  Receive real-time notifications for delivery reports directly to your server endpoint without polling.
+                </p>
+              </div>
+
+              <div className="bg-[#0d1117] p-4 rounded-xl border border-slate-800 font-mono text-xs text-zinc-300 space-y-2 shadow-md">
+                <div className="text-zinc-400 border-b border-zinc-800 pb-2 flex items-center justify-between">
+                  <span>Signed Event Payload</span>
+                  <span className="text-emerald-400">HTTP 200 POST</span>
+                </div>
+                <pre>{`{
+  "event": "sms.delivered",
+  "message_id": "msg_8091241",
+  "to": "233240000000",
+  "status": "DELIVERED",
+  "delivered_at": "2026-08-24T14:30:00Z",
+  "units_deducted": 1
+}`}</pre>
+              </div>
+            </section>
+
+            {/* Send SMS Endpoint Specification */}
+            <section id="send-sms" className="scroll-mt-24 space-y-6 border-b border-slate-200/80 pb-12">
+              <div className="space-y-3">
+                <div className="text-xs font-mono text-slate-500 uppercase tracking-wider">Endpoints</div>
+                <div className="flex items-center gap-3">
+                  <Badge className="bg-emerald-100 text-emerald-800 border-emerald-300 font-mono text-xs px-2.5 py-0.5">POST</Badge>
+                  <code className="text-sm md:text-base font-mono text-slate-900">/functions/v1/sms-send</code>
+                </div>
+                <h2 className="text-2xl font-bold tracking-tight text-slate-900">Send Single SMS</h2>
+                <p className="text-slate-600 text-sm leading-relaxed">
+                  Sends an SMS to one or multiple recipient phone numbers in Ghana (233XXXXXXXXX).
+                </p>
+              </div>
+
+              {/* Request Parameters */}
+              <div className="border border-slate-200 rounded-xl overflow-hidden text-xs">
+                <div className="p-3 bg-slate-100/80 border-b border-slate-200 font-semibold text-slate-700">
+                  JSON Body Parameters
+                </div>
+                <div className="divide-y divide-slate-200">
+                  <div className="p-4 space-y-1">
+                    <div className="flex items-center justify-between">
+                      <code className="font-mono text-[#3A57FC] font-bold">sender</code>
+                      <span className="text-[10px] text-emerald-700 font-mono uppercase font-semibold">Required</span>
+                    </div>
+                    <p className="text-slate-600">Approved Sender ID name (e.g. <code className="text-slate-900 font-mono">&quot;KASANOW&quot;</code>).</p>
                   </div>
-                  <div className="text-left">
-                      <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Previous</div>
-                      <div className="font-bold text-slate-900 group-hover:text-[#3A57FC] transition-colors">Authentication</div>
+
+                  <div className="p-4 space-y-1">
+                    <div className="flex items-center justify-between">
+                      <code className="font-mono text-[#3A57FC] font-bold">to</code>
+                      <span className="text-[10px] text-emerald-700 font-mono uppercase font-semibold">Required</span>
+                    </div>
+                    <p className="text-slate-600">Recipient number(s) in format <code className="text-slate-900 font-mono">&quot;233XXXXXXXXX&quot;</code> or comma-separated list.</p>
                   </div>
-              </a>
-              <a href="#bulk" className="flex items-center gap-4 group text-right">
-                  <div className="text-right">
-                      <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Next</div>
-                      <div className="font-bold text-slate-900 group-hover:text-[#3A57FC] transition-colors">Bulk Messaging</div>
+
+                  <div className="p-4 space-y-1">
+                    <div className="flex items-center justify-between">
+                      <code className="font-mono text-[#3A57FC] font-bold">message</code>
+                      <span className="text-[10px] text-emerald-700 font-mono uppercase font-semibold">Required</span>
+                    </div>
+                    <p className="text-slate-600">Text message body (e.g. <code className="text-slate-900 font-mono">&quot;Hello from Kasanow SMS reseller API&quot;</code>).</p>
                   </div>
-                  <div className="h-10 w-10 rounded-full border border-slate-100 flex items-center justify-center text-slate-400 group-hover:bg-slate-50 transition-all">
-                      <ChevronRight className="h-4 w-4" />
-                  </div>
-              </a>
-            </div>
+                </div>
+              </div>
+
+              {/* Sample Response */}
+              <div className="space-y-2">
+                <div className="text-xs font-semibold text-slate-600">Sample Response (200 OK)</div>
+                <div className="bg-[#0d1117] p-4 rounded-xl border border-slate-800 font-mono text-xs text-zinc-300 shadow-md">
+                  <pre>{`{
+  "status": "success",
+  "message_id": "msg_90128419",
+  "recipients_count": 2,
+  "units_charged": 2,
+  "balance_remaining": 98.0
+}`}</pre>
+                </div>
+              </div>
+            </section>
+
+            {/* Bulk Messaging */}
+            <section id="bulk" className="scroll-mt-24 space-y-6 border-b border-slate-200/80 pb-12">
+              <div className="space-y-3">
+                <div className="flex items-center gap-3">
+                  <Badge className="bg-emerald-100 text-emerald-800 border-emerald-300 font-mono text-xs px-2.5 py-0.5">POST</Badge>
+                  <code className="text-sm md:text-base font-mono text-slate-900">/functions/v1/sms-send</code>
+                </div>
+                <h2 className="text-2xl font-bold tracking-tight text-slate-900">Bulk Messaging</h2>
+                <p className="text-slate-600 text-sm leading-relaxed">
+                  To send bulk SMS to multiple recipients at once, supply comma-separated numbers in the <code className="text-[#3A57FC] font-mono">to</code> parameter.
+                </p>
+              </div>
+
+              <div className="bg-[#0d1117] p-4 rounded-xl border border-slate-800 font-mono text-xs text-zinc-300 space-y-2 shadow-md">
+                <div className="text-zinc-400 border-b border-zinc-800 pb-2">Bulk JSON Request Body</div>
+                <pre>{`{
+  "sender": "KASANOW",
+  "to": "233241112222, 233503334444, 233205556666",
+  "message": "Special Announcement: KasaNow Bulk SMS is active!"
+}`}</pre>
+              </div>
+            </section>
+
+            {/* OTP Verification */}
+            <section id="otp" className="scroll-mt-24 space-y-6 border-b border-slate-200/80 pb-12">
+              <div className="space-y-3">
+                <div className="flex items-center gap-3">
+                  <Badge className="bg-emerald-100 text-emerald-800 border-emerald-300 font-mono text-xs px-2.5 py-0.5">POST</Badge>
+                  <code className="text-sm md:text-base font-mono text-slate-900">/functions/v1/sms-send</code>
+                </div>
+                <h2 className="text-2xl font-bold tracking-tight text-slate-900">Verification & OTP</h2>
+                <p className="text-slate-600 text-sm leading-relaxed">
+                  Automated high-speed priority dispatch for time-critical 2-factor authentication passcodes.
+                </p>
+              </div>
+
+              <div className="bg-[#0d1117] p-4 rounded-xl border border-slate-800 font-mono text-xs text-zinc-300 space-y-2 shadow-md">
+                <div className="text-zinc-400 border-b border-zinc-800 pb-2">OTP Dispatch Request</div>
+                <pre>{`{
+  "sender": "KASANOW",
+  "to": "233241234567",
+  "message": "Your KasaNow verification code is: 849201. Valid for 5 minutes."
+}`}</pre>
+              </div>
+            </section>
+
+            {/* Delivery Reports */}
+            <section id="reports" className="scroll-mt-24 space-y-6 pb-12">
+              <div className="space-y-3">
+                <div className="flex items-center gap-3">
+                  <Badge className="bg-blue-100 text-blue-800 border-blue-300 font-mono text-xs px-2.5 py-0.5">GET</Badge>
+                  <code className="text-sm md:text-base font-mono text-slate-900">/functions/v1/sms-status?id=msg_90128419</code>
+                </div>
+                <h2 className="text-2xl font-bold tracking-tight text-slate-900">Delivery Reports</h2>
+                <p className="text-slate-600 text-sm leading-relaxed">
+                  Retrieve logs, carrier response status, delivery timestamps, and network details for any message.
+                </p>
+              </div>
+
+              <div className="bg-[#0d1117] p-4 rounded-xl border border-slate-800 font-mono text-xs text-zinc-300 space-y-2 shadow-md">
+                <div className="text-zinc-400 border-b border-zinc-800 pb-2">Status Response</div>
+                <pre>{`{
+  "message_id": "msg_90128419",
+  "status": "DELIVERED",
+  "network": "MTN GHANA",
+  "delivered_at": "2026-08-24T14:31:02Z"
+}`}</pre>
+              </div>
+            </section>
+
           </main>
+
+          {/* Right Sidebar ("On this page" TOC) */}
+          <aside className="w-48 shrink-0 hidden xl:block sticky top-20 h-[calc(100vh-100px)] overflow-y-auto pl-2 custom-scrollbar">
+            <div className="space-y-3 text-xs">
+              <div className="font-semibold text-slate-400 tracking-wide text-[11px]">
+                On this page
+              </div>
+              <ul className="space-y-2 text-slate-500 text-[11px] border-l border-slate-200 pl-3">
+                {sidebarLinks.flatMap(g => g.links).map((item, idx) => (
+                  <li key={idx}>
+                    <a
+                      href={`#${item.id}`}
+                      className={`block transition-colors hover:text-slate-900 ${
+                        activeSection === item.id ? "text-[#3A57FC] font-semibold text-xs" : ""
+                      }`}
+                    >
+                      {item.name}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </aside>
+
         </div>
       </div>
 
-      {/* Modern Meta-CTA */}
-      <section className="bg-slate-50 py-32 border-t border-slate-100 overflow-hidden relative">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[1px] bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
-        
-        <div className="container mx-auto max-w-5xl px-4 text-center">
-           <motion.div 
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="relative bg-white rounded-[64px] border border-slate-200/60 p-12 md:p-24 shadow-xl overflow-hidden"
-           >
-              <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-[#3A57FC]/5 rounded-full blur-[100px] -mr-64 -mt-64" />
-              <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-emerald-500/5 rounded-full blur-[100px] -ml-64 -mb-64" />
-              
-              <div className="relative z-10 space-y-10">
-                <div className="h-24 w-24 bg-[#3A57FC]/10 rounded-[32px] flex items-center justify-center text-[#3A57FC] mx-auto shadow-inner">
-                  <Terminal className="h-12 w-12" />
-                </div>
-                <h2 className="text-4xl md:text-6xl font-bold text-slate-900 tracking-tight leading-tight">Ready to integrate?</h2>
-                <p className="text-slate-500 text-xl max-w-sm mx-auto font-medium">Generate your API key and send your first message in minutes.</p>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <Button className="bg-[#3A57FC] hover:bg-[#4E67FF] text-white font-bold h-16 px-12 rounded-2xl text-lg shadow-xl shadow-[#3A57FC]/20 transition-all hover:scale-105">Create API Key</Button>
-                  <Button variant="outline" className="border-slate-200 text-slate-600 bg-white hover:bg-slate-50 font-bold h-16 px-12 rounded-2xl text-lg transition-all">Explore Postman</Button>
-                </div>
-              </div>
-           </motion.div>
-        </div>
-      </section>
-
       <style jsx global>{`
         .custom-scrollbar::-webkit-scrollbar {
-          width: 4px;
+          width: 3px;
         }
         .custom-scrollbar::-webkit-scrollbar-track {
           background: transparent;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb {
-          background: #e2e8f0;
+          background: #cbd5e1;
           border-radius: 10px;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-          background: #cbd5e1;
+          background: #94a3b8;
         }
       `}</style>
     </div>
