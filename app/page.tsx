@@ -138,12 +138,7 @@ export default function HomePage() {
                   Send thousands of messages instantly. Upload contacts, write your message, and reach everyone in
                   seconds—no API needed.
                 </p>
-                <Link
-                  href="#"
-                  className="inline-flex items-center text-sm font-semibold text-[#5B6EF5] hover:underline"
-                >
-                  Message Manager → <ArrowRight className="ml-1 h-4 w-4" />
-                </Link>
+
               </div>
 
               {/* Feature 2 */}
@@ -155,12 +150,7 @@ export default function HomePage() {
                 <p className="mb-4 text-gray-600">
                   Track delivery rates, engagement metrics, and campaign ROI with comprehensive real-time dashboards.
                 </p>
-                <Link
-                  href="#"
-                  className="inline-flex items-center text-sm font-semibold text-[#5B6EF5] hover:underline"
-                >
-                  Analytics Dashboard → <ArrowRight className="ml-1 h-4 w-4" />
-                </Link>
+
               </div>
 
               {/* Feature 3 */}
@@ -173,12 +163,7 @@ export default function HomePage() {
                   Organize contacts into segments, import from CSV or CRM, and manage your audience with powerful
                   filtering tools.
                 </p>
-                <Link
-                  href="#"
-                  className="inline-flex items-center text-sm font-semibold text-[#5B6EF5] hover:underline"
-                >
-                  Contact Manager → <ArrowRight className="ml-1 h-4 w-4" />
-                </Link>
+
               </div>
 
               {/* Feature 4 */}
@@ -190,12 +175,7 @@ export default function HomePage() {
                 <p className="mb-4 text-gray-600">
                   Plan campaigns in advance with smart scheduling. Set timezone-aware delivery for maximum impact.
                 </p>
-                <Link
-                  href="#"
-                  className="inline-flex items-center text-sm font-semibold text-[#5B6EF5] hover:underline"
-                >
-                  Campaign Scheduler → <ArrowRight className="ml-1 h-4 w-4" />
-                </Link>
+
               </div>
 
               {/* Feature 5 */}
@@ -207,12 +187,7 @@ export default function HomePage() {
                 <p className="mb-4 text-gray-600">
                   Send from anywhere with responsive web interface and dedicated mobile apps for iOS and Android.
                 </p>
-                <Link
-                  href="#"
-                  className="inline-flex items-center text-sm font-semibold text-[#5B6EF5] hover:underline"
-                >
-                  Mobile Apps → <ArrowRight className="ml-1 h-4 w-4" />
-                </Link>
+
               </div>
 
               {/* Feature 6 */}
@@ -224,12 +199,7 @@ export default function HomePage() {
                 <p className="mb-4 text-gray-600">
                   Receive replies, manage conversations, and engage with customers through our unified inbox.
                 </p>
-                <Link
-                  href="#"
-                  className="inline-flex items-center text-sm font-semibold text-[#5B6EF5] hover:underline"
-                >
-                  Inbox Manager → <ArrowRight className="ml-1 h-4 w-4" />
-                </Link>
+
               </div>
             </div>
 
