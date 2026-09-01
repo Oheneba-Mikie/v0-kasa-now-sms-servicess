@@ -27,45 +27,33 @@ export async function sendWelcomeEmail(email: string) {
       to: email,
       subject: 'Welcome to KasaNow Waitlist! 🚀',
       html: `
-        <div style="font-family: sans-serif; color: #1a1a1a; max-width: 600px; margin: 0 auto; line-height: 1.6;">
-            <div style="text-align: center; padding: 24px 0;">
-              <h1 style="color: #3A57FC; margin-bottom: 8px;">Welcome to KasaNow!</h1>
-              <p style="font-size: 18px; color: #666;">You're on the list. 🚀</p>
-            </div>
+        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #1a1a1a; max-width: 600px; margin: 0 auto; line-height: 1.6; padding: 20px;">
+          <div style="background-color: #0F172A; padding: 32px; border-radius: 16px 16px 0 0; text-align: center;">
+            <h1 style="color: #ffffff; margin: 0 0 8px 0; font-size: 24px; font-weight: 700;">Welcome to KasaNow</h1>
+            <p style="color: #60A5FA; margin: 0; font-size: 16px; font-weight: 600;">You’re officially on the waitlist.</p>
+          </div>
 
-            <div style="background-color: #ffffff; padding: 32px; border-radius: 12px; border: 1px solid #e5e7eb;">
-              <p style="font-size: 16px;">Hi there,</p>
-              <p style="font-size: 16px;">Thanks for joining the waitlist! We are getting ready to launch very soon, and we can't wait to show you what we've been building.</p>
-              
-              <h2 style="color: #333; margin-top: 32px;">Why KasaNow?</h2>
-              <div style="margin-bottom: 24px;">
-                <p><strong>🔑  No API Keys needed</strong></p>
-                <p style="color: #555; margin-top: -12px; margin-bottom: 16px;">Start sending SMS campaigns instantly without complex technical setup.</p>
-                
-                <p><strong>⚡  Instant Setup</strong></p>
-                <p style="color: #555; margin-top: -12px; margin-bottom: 16px;">Create an account and launch your first campaign in minutes.</p>
-                
-                <p><strong>🌍  Global Reach</strong></p>
-                <p style="color: #555; margin-top: -12px; margin-bottom: 16px;">Connect with customers anywhere in the world efficiently.</p>
-              </div>
+          <div style="background-color: #ffffff; padding: 32px; border-radius: 0 0 16px 16px; border: 1px solid #e2e8f0; border-top: none;">
+            <p style="font-size: 16px; color: #334155; margin-top: 0;">Hi there,</p>
+            <p style="font-size: 16px; color: #334155; margin-bottom: 20px;">
+              Thank you for joining the KasaNow waitlist. We’re preparing for launch and look forward to giving you access to a simple and reliable SMS communication platform.
+            </p>
+            <p style="font-size: 16px; color: #334155; margin-bottom: 20px;">
+              We’ll notify you as soon as KasaNow goes live.
+            </p>
+            <p style="font-size: 16px; color: #334155; margin-bottom: 24px;">
+              Thank you for your interest and for being part of the KasaNow journey.
+            </p>
 
-              <h2 style="color: #333; margin-top: 32px;">What to Expect Next</h2>
-              <ul style="color: #555; padding-left: 20px;">
-                <li>We’ll notify you the moment we go live.</li>
-                <li>As an early member, you’ll get exclusive access to new features.</li>
-                <li>Special onboarding support to help you get started.</li>
-              </ul>
-
-              <div style="margin-top: 40px; border-top: 1px solid #e5e7eb; padding-top: 24px; text-align: center;">
-                <p style="color: #888; font-size: 14px;">We are thrilled to have you with us on this journey.</p>
-                <p style="color: #3A57FC; font-weight: bold;">- The KasaNow Team</p>
-              </div>
-            </div>
-            
-            <div style="text-align: center; margin-top: 24px; color: #999; font-size: 12px;">
-              <p>© 2025 KasaNow Ltd. All rights reserved.</p>
+            <div style="margin-top: 32px; padding-top: 24px; border-top: 1px solid #f1f5f9;">
+              <p style="color: #3A57FC; font-weight: 700; margin: 0; font-size: 16px;">The KasaNow Team</p>
             </div>
           </div>
+
+          <div style="text-align: center; margin-top: 24px; color: #94a3b8; font-size: 12px;">
+            <p style="margin: 0;">© 2026 KasaNow Ltd. All rights reserved.</p>
+          </div>
+        </div>
       `,
     })
 
