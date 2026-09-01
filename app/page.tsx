@@ -203,14 +203,7 @@ export default function HomePage() {
               </div>
             </div>
 
-            <div className="mt-12 text-center">
-              <Link
-                href="#"
-                className="inline-flex items-center text-base font-semibold text-[#5B6EF5] hover:underline"
-              >
-                Explore All Features → <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
-            </div>
+
           </div>
         </section>
 
