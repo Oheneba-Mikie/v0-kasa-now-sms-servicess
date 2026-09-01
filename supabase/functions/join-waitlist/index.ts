@@ -17,11 +17,10 @@ serve(async (req) => {
   }
 
   try {
-    // Get Supabase client
-    const supabaseClient = createClient(
-      Deno.env.get('SUPABASE_URL') ?? '',
-      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
-    )
+    const supabaseUrl = Deno.env.get('SUPABASE_URL') || 'https://uwnfgigdzbxgsdhckhha.supabase.co'
+    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') || Deno.env.get('SUPABASE_ANON_KEY') || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV3bmZnaWdkemJ4Z3NkaGNraGhhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM4OTc1MDMsImV4cCI6MjA3OTQ3MzUwM30.2VNhJ-5u_U76xFVn1hAt_7vlWrOi2TlSBU_soI8ygfU'
+
+    const supabaseClient = createClient(supabaseUrl, supabaseKey)
 
     if (req.method !== 'POST') {
       return new Response(
@@ -47,6 +46,7 @@ serve(async (req) => {
     }
 
     // Insert into waitlist
+    let isAlreadyRegistered = false
     const { error: dbError } = await supabaseClient
       .from('waitlist')
       .insert([{ email, status: 'pending' }])
@@ -54,35 +54,67 @@ serve(async (req) => {
     if (dbError) {
       // Handle duplicate email
       if (dbError.code === '23505') {
+        isAlreadyRegistered = true
+      } else {
+        console.error('Database error:', dbError)
         return new Response(
-          JSON.stringify({ success: true, message: 'You are already on the waitlist!' }),
+          JSON.stringify({ success: false, message: `Failed to join waitlist: ${dbError.message}` }),
           { 
-            status: 200, 
+            status: 500, 
             headers: { ...corsHeaders, 'Content-Type': 'application/json' }
           }
         )
       }
-      console.error('Database error:', dbError)
-      return new Response(
-        JSON.stringify({ success: false, message: 'Failed to join waitlist. Please try again.' }),
-        { 
-          status: 500, 
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-        }
-      )
     }
 
-    // Get Resend API key from app_config
-    const { data: configData, error: configError } = await supabaseClient
+    // Determine Resend API Key (Check app_config first, then fall back to Deno.env)
+    let resendApiKey = ''
+    const { data: configData } = await supabaseClient
       .from('app_config')
       .select('key_value')
       .eq('key_name', 'RESEND_API_KEY')
       .eq('environment', 'production')
-      .single()
+      .maybeSingle()
+    
+    if (configData?.key_value && configData.key_value.startsWith('re_')) {
+      resendApiKey = configData.key_value
+    } else {
+      const envKey = Deno.env.get('RESEND_API_KEY')
+      if (envKey && envKey.startsWith('re_')) {
+        resendApiKey = envKey
+      } else if (configData?.key_value) {
+        resendApiKey = configData.key_value
+      } else if (envKey) {
+        resendApiKey = envKey
+      }
+    }
 
-    if (configError || !configData?.key_value) {
-      console.error('Failed to get Resend API key:', configError)
-      // Still return success for waitlist signup, but log email failure
+    // Determine Resend From Email
+    let resendFromEmail = ''
+    const { data: fromConfigData } = await supabaseClient
+      .from('app_config')
+      .select('key_value')
+      .eq('key_name', 'RESEND_FROM_EMAIL')
+      .eq('environment', 'production')
+      .maybeSingle()
+    
+    if (fromConfigData?.key_value && fromConfigData.key_value.includes('@')) {
+      resendFromEmail = fromConfigData.key_value
+    } else {
+      const envFrom = Deno.env.get('RESEND_FROM_EMAIL')
+      if (envFrom && envFrom.includes('@')) {
+        resendFromEmail = envFrom
+      } else {
+        resendFromEmail = 'KasaNow <sms@updates.kasanow.app>'
+      }
+    }
+
+    if (resendFromEmail && !resendFromEmail.includes('<')) {
+      resendFromEmail = `KasaNow <${resendFromEmail}>`
+    }
+
+    if (!resendApiKey) {
+      console.error('Resend API key not configured in environment or app_config table')
       return new Response(
         JSON.stringify({ success: true, message: 'Successfully joined the waitlist!' }),
         { 
@@ -92,16 +124,17 @@ serve(async (req) => {
       )
     }
 
-    // Send welcome email
+    // Send welcome email to user AND notification email to info@kasanow.app
+    let emailSent = false
     try {
-      const emailResponse = await fetch('https://api.resend.com/emails', {
+      const userWelcomePromise = fetch('https://api.resend.com/emails', {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${configData.key_value}`,
+          'Authorization': `Bearer ${resendApiKey}`,
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          from: 'KasaNow <hello@kasanow.app>',
+          from: resendFromEmail,
           to: email,
           subject: 'Welcome to KasaNow Waitlist! 🚀',
           html: `
@@ -148,15 +181,55 @@ serve(async (req) => {
         })
       })
 
-      if (!emailResponse.ok) {
-        console.error('Failed to send email:', await emailResponse.text())
-      }
+      const teamNotificationPromise = fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${resendApiKey}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          from: resendFromEmail,
+          to: 'info@kasanow.app',
+          reply_to: email,
+          subject: `🚀 New Waitlist Signup: ${email}`,
+          html: `
+            <div style="font-family: sans-serif; color: #1a1a1a; max-width: 600px; margin: 0 auto; line-height: 1.6; padding: 20px;">
+              <div style="background-color: #0F172A; padding: 24px; border-radius: 12px 12px 0 0; text-align: center;">
+                <h1 style="color: #ffffff; margin: 0; font-size: 20px;">New Waitlist Signup 🚀</h1>
+              </div>
+              <div style="background-color: #ffffff; padding: 24px; border-radius: 0 0 12px 12px; border: 1px solid #e2e8f0; border-top: none;">
+                <p style="font-size: 16px; margin-bottom: 12px;">A new user has reserved a spot on the KasaNow waitlist:</p>
+                <div style="background-color: #f8fafc; padding: 16px; border-radius: 8px; font-size: 16px; font-weight: bold; color: #3A57FC; text-align: center; margin-bottom: 20px;">
+                  <a href="mailto:${email}" style="color: #3A57FC; text-decoration: none;">${email}</a>
+                </div>
+                <div style="text-align: center; margin-top: 20px;">
+                  <a href="mailto:${email}?subject=Welcome%20to%20KasaNow" style="display: inline-block; background-color: #3A57FC; color: #ffffff; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 14px;">
+                    Reply to User
+                  </a>
+                </div>
+              </div>
+            </div>
+          `
+        })
+      })
+
+      const [userRes, teamRes] = await Promise.all([userWelcomePromise, teamNotificationPromise])
+
+      if (!userRes.ok) console.error('Failed user email:', await userRes.text())
+      if (!teamRes.ok) console.error('Failed team notification:', await teamRes.text())
+      if (userRes.ok) emailSent = true
     } catch (emailError) {
       console.error('Email sending error:', emailError)
     }
 
     return new Response(
-      JSON.stringify({ success: true, message: 'Successfully joined the waitlist!' }),
+      JSON.stringify({ 
+        success: true, 
+        isNew: !isAlreadyRegistered,
+        message: isAlreadyRegistered 
+          ? 'You are already on the waitlist! We have re-sent your confirmation email.' 
+          : 'Successfully joined the waitlist!'
+      }),
       { 
         status: 200, 
         headers: { ...corsHeaders, 'Content-Type': 'application/json' }
@@ -166,7 +239,7 @@ serve(async (req) => {
   } catch (error) {
     console.error('Unexpected error:', error)
     return new Response(
-      JSON.stringify({ success: false, message: 'An unexpected error occurred.' }),
+      JSON.stringify({ success: false, message: `An unexpected error occurred: ${String(error)}` }),
       { 
         status: 500, 
         headers: { ...corsHeaders, 'Content-Type': 'application/json' }

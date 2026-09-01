@@ -17,11 +17,12 @@ import {
     CheckCircle2
 } from "lucide-react"
 import { useState } from "react"
+import { submitContactForm } from "@/app/actions/submit-contact"
 
 const contactMethods = [
   { 
     title: "Global Email", 
-    value: "support@kasanow.com", 
+    value: "info@kasanow.app", 
     icon: <Mail className="h-6 w-6" />, 
     sub: "For general inquiries",
     color: "bg-purple-500/10 text-purple-500",
@@ -54,14 +55,33 @@ const itemVariants: Variants = {
 export default function ContactPage() {
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [submitted, setSubmitted] = useState(false)
+    const [errorMessage, setErrorMessage] = useState("")
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const [formData, setFormData] = useState({
+        name: "",
+        phone: "",
+        email: "",
+        message: ""
+    })
+
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
         setIsSubmitting(true)
-        setTimeout(() => {
+        setErrorMessage("")
+
+        try {
+            const res = await submitContactForm(formData)
+            if (res.success) {
+                setSubmitted(true)
+            } else {
+                setErrorMessage(res.message || "Failed to send message. Please try again.")
+            }
+        } catch (err) {
+            console.error("Error submitting contact form:", err)
+            setErrorMessage("An unexpected error occurred. Please try again.")
+        } finally {
             setIsSubmitting(false)
-            setSubmitted(true)
-        }, 1500)
+        }
     }
 
     return (
@@ -183,6 +203,11 @@ export default function ContactPage() {
                             
                             {!submitted ? (
                                 <form onSubmit={handleSubmit} className="w-full space-y-8">
+                                    {errorMessage && (
+                                        <div className="p-4 rounded-2xl bg-red-50 border border-red-200 text-red-600 text-sm font-medium">
+                                            {errorMessage}
+                                        </div>
+                                    )}
                                     <motion.div 
                                         variants={containerVariants}
                                         initial="hidden"
@@ -195,6 +220,8 @@ export default function ContactPage() {
                                                 <input 
                                                     required
                                                     type="text" 
+                                                    value={formData.name}
+                                                    onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
                                                     className="w-full h-16 bg-slate-50 rounded-2xl border border-transparent focus:border-[#3A57FC]/30 focus:bg-white focus:ring-4 focus:ring-[#3A57FC]/5 transition-all px-6 font-normal text-slate-700 placeholder:text-slate-300 outline-none shadow-inner" 
                                                     placeholder="e.g. Kwame Mensah" 
                                                 />
@@ -204,6 +231,8 @@ export default function ContactPage() {
                                                 <input 
                                                     required
                                                     type="tel" 
+                                                    value={formData.phone}
+                                                    onChange={(e) => setFormData(prev => ({ ...prev, phone: e.target.value }))}
                                                     className="w-full h-16 bg-slate-50 rounded-2xl border border-transparent focus:border-[#3A57FC]/30 focus:bg-white focus:ring-4 focus:ring-[#3A57FC]/5 transition-all px-6 font-normal text-slate-700 placeholder:text-slate-300 outline-none shadow-inner" 
                                                     placeholder="+233..." 
                                                 />
@@ -214,6 +243,8 @@ export default function ContactPage() {
                                             <input 
                                                 required
                                                 type="email" 
+                                                value={formData.email}
+                                                onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
                                                 className="w-full h-16 bg-slate-50 rounded-2xl border border-transparent focus:border-[#3A57FC]/30 focus:bg-white focus:ring-4 focus:ring-[#3A57FC]/5 transition-all px-6 font-normal text-slate-700 placeholder:text-slate-300 outline-none shadow-inner" 
                                                 placeholder="kwame@company.gh" 
                                             />
@@ -222,6 +253,8 @@ export default function ContactPage() {
                                             <label className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] ml-2">Message</label>
                                             <textarea 
                                                 required
+                                                value={formData.message}
+                                                onChange={(e) => setFormData(prev => ({ ...prev, message: e.target.value }))}
                                                 className="w-full h-40 bg-slate-50 rounded-[32px] border border-transparent focus:border-[#3A57FC]/30 focus:bg-white focus:ring-4 focus:ring-[#3A57FC]/5 transition-all p-8 font-normal text-slate-700 placeholder:text-slate-300 resize-none outline-none shadow-inner" 
                                                 placeholder="How can we help your business grow today?"
                                             ></textarea>

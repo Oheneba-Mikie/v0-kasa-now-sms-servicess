@@ -46,7 +46,11 @@ export async function getConfig(keyName: string): Promise<string | null> {
 }
 
 export async function getResendApiKey(): Promise<string | null> {
-  return await getConfig('RESEND_API_KEY')
+  const envKey = process.env.RESEND_API_KEY
+  if (envKey && envKey.startsWith('re_')) return envKey
+  const dbKey = await getConfig('RESEND_API_KEY')
+  if (dbKey && dbKey.startsWith('re_')) return dbKey
+  return envKey || dbKey || null
 }
 
 export async function getResendFromEmail(): Promise<string | null> {

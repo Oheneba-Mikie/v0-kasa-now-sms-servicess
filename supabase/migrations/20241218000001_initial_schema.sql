@@ -33,8 +33,10 @@ CREATE POLICY "Allow service role to read all" ON public.waitlist FOR SELECT USI
 -- Create policies for app_config table (only service role can access)
 CREATE POLICY "Allow service role full access to config" ON public.app_config USING (auth.role() = 'service_role');
 
--- Insert initial configuration (replace with your actual keys when deploying)
+-- Insert initial configuration
 INSERT INTO public.app_config (key_name, key_value, environment, description) VALUES
   ('RESEND_API_KEY', 'your_resend_api_key_here', 'production', 'Resend API key for sending emails'),
+  ('RESEND_FROM_EMAIL', 'KasaNow <hello@updates.kasanow.app>', 'production', 'Resend verified sender email address'),
   ('NEXT_PUBLIC_SUPABASE_URL', 'https://uwnfgigdzbxgsdhckhha.supabase.co', 'production', 'Supabase project URL'),
-  ('NEXT_PUBLIC_SUPABASE_ANON_KEY', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV3bmZnaWdkemJ4Z3NkaGNraGhhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM4OTc1MDMsImV4cCI6MjA3OTQ3MzUwM30.2VNhJ-5u_U76xFVn1hAt_7vlWrOi2TlSBU_soI8ygfU', 'production', 'Supabase anon key');
+  ('NEXT_PUBLIC_SUPABASE_ANON_KEY', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV3bmZnaWdkemJ4Z3NkaGNraGhhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM4OTc1MDMsImV4cCI6MjA3OTQ3MzUwM30.2VNhJ-5u_U76xFVn1hAt_7vlWrOi2TlSBU_soI8ygfU', 'production', 'Supabase anon key')
+ON CONFLICT (key_name, environment) DO UPDATE SET key_value = EXCLUDED.key_value, updated_at = timezone('utc'::text, now());
